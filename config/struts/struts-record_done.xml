@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+	
+<struts>
+	<package name="record_done" namespace="/record_done" extends="interceptors">
+		<action name="createTree" class="record.done.treeLoadAction" method="createInitTree"></action>
+		<action name="remoteExec" class="remoteExecuteCallerAction" method="remoteExecute"></action>
+		<action name="first_page_view" class="recordDonePageViewAction" method="findFirstPage">
+			<result name="success" >
+				/page/cronhub_record/done/CronhubHistoryView.jsp
+			</result>
+		</action>
+		<action name="next_page_view" class="recordDonePageViewAction" method="findNextPageNo">
+			<result name="success" >
+				/page/cronhub_record/done/CronhubHistoryView.jsp
+			</result>
+		</action>
+		<action name="prev_page_view" class="recordDonePageViewAction" method="findPrevPageNo">
+			<result name="success" >
+				/page/cronhub_record/done/CronhubHistoryView.jsp
+			</result>
+		</action>
+		<action name="last_page_view" class="recordDonePageViewAction" method="findLastPage">
+			<result name="success" >
+				/page/cronhub_record/done/CronhubHistoryView.jsp
+			</result>
+		</action>
+		<action name="getExecReturnString" class="recordDonePageViewAction" method="getExecReturnString"></action>
+	</package>
+</struts>

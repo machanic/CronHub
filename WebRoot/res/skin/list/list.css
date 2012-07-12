@@ -1,0 +1,48 @@
+@charset 'utf-8';
+
+.grid {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.grid input[type='checkbox'] {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+}
+.grid thead tr {
+	background: #dfeffc;
+}
+.grid thead th {
+	border: 1px solid #c5dbec;
+	line-height: 30px;
+}
+.grid thead th select{
+	width: auto;
+	height: 25px;
+	line-height: 25px;
+	padding: 0 3px;
+	border: 1px solid #cccccc;
+}
+.grid tbody td {
+	border-bottom: 1px solid #c5dbec;
+	line-height: 30px;
+	border: 1px solid #c5dbec;
+}
+.grid span {
+	white-space: nowrap;
+}
+.grid-tr-hover {
+	background: #d0e5f5;
+}
+.grid-tr-selected {
+	background: #f5f8f9;
+	color: #e17009;
+}
+
+.substr {
+	display: block;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}

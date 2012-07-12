@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"  
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	
+	<bean id="taskPageAddAction" class="org.cronhub.managesystem.modules.task.action.PageAddAction">	
+		<property name="dao">
+			<ref bean="taskDao"/>
+		</property>
+	</bean>
+	<bean id="taskPageViewAction" class="org.cronhub.managesystem.modules.task.action.PageViewAction">	
+		<property name="dao">
+			<ref bean="taskDao"/>
+		</property>
+		<property name="pageGen">
+			<ref bean="pageSqlGen"/>
+		</property>
+	</bean>
+	<bean id ="taskDao" class="org.cronhub.managesystem.modules.task.dao.impl.TaskDaoImpl">
+		<property name="jdbcTemplate">
+			<ref bean="jdbcTemplate"/>
+		</property>
+		<property name="daemonDao">
+			<ref bean="daemonDao"/>
+		</property>
+		<property name="doneRecordDao">
+			<ref bean="doneRecordDao"/>
+		</property>
+	</bean>
+	
+	<bean id="passiveModeNotifyCrontab" class="org.cronhub.managesystem.modules.task.boot.PassiveModeNotifyCrontab">
+		<property name="doneRecordDao">
+			<ref bean="doneRecordDao"/>
+		</property>
+		<property name="undoRecordDao">
+			<ref bean="undoRecordDao"/>
+		</property>
+		<property name="taskDao">
+			<ref bean="taskDao"/>
+		</property>
+		<property name="undoReportHttpUrl">
+			<value>${undoReportHttpUrl}</value>
+		</property>
+	</bean>
+	<bean id="immediateRemoteExecAction" class="org.cronhub.managesystem.modules.task.action.ImmediateRemoteExecuteAction">
+		<property name="processor">
+			<ref bean="remoteExecuteProcessor"/>
+		</property>
+	</bean>
+</beans>

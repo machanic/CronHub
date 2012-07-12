@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>form2</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+<script type="text/javascript" src="res/js/jquery/jquery-1.6.2.min.js"></script>
+
+<script type="text/javascript" src="res/js/validate/jquery.metadata.js"></script>
+<script type="text/javascript" src="res/js/validate/jquery.validate.min.js"></script>
+<script type="text/javascript" src="res/js/validate/messages_cn.js"></script>
+<script type="text/javascript" src="res/js/validate/extension.js"></script>
+
+<link rel="stylesheet" type="text/css" href="res/skin/all.css" />
+
+<script>
+$(function(){
+	// 表单校验属性设置
+	$.metadata.setType("attr", "validate");
+	
+	// 表单校验
+	var validate = $("#form1").validate({
+	    success: function(label) {
+		   label.html("&nbsp;").addClass("valid");
+	    }
+	});
+	
+	// Ajax重命名校验
+	//     用法参数说明：
+	//     1.这个检验规则的名字(自定义)
+	//     2.校验请求url
+	//     3.附加传的参数数组，为其他表单域的id数组，注意是id
+	//     4.校验错误的提示信息
+	$.uniqueValidate('uniqueUserName', 'data/validate/renameValidate.jsp', ['email', 'idcard'], '对不起，这个名称重复了');
+	
+});
+</script>
+</head>
+
+<body>
+	<div class="tab">
+		<a class="tab-selected"><img src="res/icons/16x16/application_side_list.png" />新建页面</a>
+	</div>
+	<form id="form1" name="form1" action="list.html" method="post">
+		<table class="formtable">
+		<tr>
+			<td width="80">
+				<label>用户姓名：</label>
+			</td>
+			<td>
+				<input type="text" id="username" name="username" class="input-text" validate="{required: true, rangelength: [3, 16]}" />
+				<b>*</b>
+				<span>用户姓名为3-16个字符，可以为数字、字母、下划线以及中文</span>
+			</td>
+		</tr>
+		<tr>
+			<td width="80">
+				<label>用户账号：</label>
+			</td>
+			<td>
+				<input type="text" id="loginname" name="loginname" class="input-text" validate="{required: true, rangelength: [3, 16], uniqueUserName: true}" />
+				<b>*</b>
+				<span>用户账号为3-16个字符，可以为数字、字母、下划线以及中文</span>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>认证方式：</label>
+			</td>
+			<td>
+				<input type="checkbox" id="logintype_0" name="logintype" value="0" validate="{required: true, minlength: 2, messages: {minlength: '至少选中两种登录方式'}}" />口令&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" id="logintype_1" name="logintype" value="1" />Ukey&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" id="logintype_2" name="logintype" value="2" />混合
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>密码：</label>
+			</td>
+			<td>
+				<input type="password" id="pass" name="pass" class="input-text" validate="{required: true, rangelength: [6, 16]}" />
+				<span>最小长度:6 最大长度:16</span>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>确认密码：</label>
+			</td>
+			<td>
+				<input type="password" id="repass" name="repass" class="input-text" validate="{required: true, rangelength: [6, 16], equalTo: '#pass'}" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>性别：</label>
+			</td>
+			<td>
+				<input type="radio" id="sex_0" name="sex" value="1" validate="{required: true}" />男&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" id="sex_1" name="sex" value="0" />女
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>E-mail：</label>
+			</td>
+			<td>
+				<input type="text" id="email" name="email" class="input-text" validate="{required: true, email: true}" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>固定电话：</label>
+			</td>
+			<td>
+				<input type="text" id="tel" name="tel" class="input-text" validate="{required: true, isTel: true}" />
+				<span>格式如：0731-12345678</span>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>手机号码：</label>
+			</td>
+			<td>
+				<input type="text" id="phone" name="phone" class="input-text" validate="{required: true, isMobile: true}" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>网站：</label>
+			</td>
+			<td>
+				<input type="text" id="url" name="url" class="input-text" style="width: 240px;" value="http://" validate="{required: true, url: true}" />
+				<a><img src="res/icons/16x16/application_side_list.png">选择</a>
+				<b>*</b>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>出生日期：</label>
+			</td>
+			<td>
+				<input type="text" id="birthday" name="birthday" class="input-text" validate="{required: true, dateISO: true}" />
+				<span>格式如：1990-10-01</span>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>工作年限：</label>
+			</td>
+			<td>
+				<textarea id="years" name="years" class="input-textarea" style="width: 240px;" validate="{required: true, digits: true, range: [1, 40]}"></textarea>
+				<a><img src="res/icons/16x16/application_side_list.png">选择</a>
+				<b>*</b>
+				<span>工作年限请输入整数哦</span>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>身份证号码：</label>
+			</td>
+			<td>
+				<input type="text" id="idcard" name="idcard" class="input-text" validate="{required: true, isIdCardNo: true}" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>地区：</label>
+			</td>
+			<td>
+				<select id="address" name="address" class="input-select" validate="{required: true}">
+					<option value="">请选择</option>
+					<option value="1">长沙市</option>
+					<option value="2">石河子市</option>
+					<option value="3">北京市</option>
+					<option value="4">东莞市</option>
+			    </select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>邮政编码：</label>
+			</td>
+			<td>
+				<input type="text" id="zipcode" name="zipcode" class="input-text" style="width: 240px;" validate="{required: true, isZipCode: true}" />
+				<a><img src="res/icons/16x16/application_side_list.png">选择</a>
+				<b>*</b>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>上传头像：</label>
+			</td>
+			<td>
+				<input type="file" id="photo" name="photo" class="input-file" validate="{required: true, accept: 'gif|jpg|png'}" />
+				<span>头像为jpg,gif或者png格式的图片</span>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>IP：</label>
+			</td>
+			<td>
+				<input type="text" id="serverIP" name="serverIP" class="input-text" validate="{required: true, ip: true}" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>&nbsp;</label>
+			</td>
+			<td>
+				<input type="checkbox" id="low" name="low" validate="{required: true}" />我已阅读并接受用户协议
+			</td>
+		</tr>
+		</table>
+	    <div class="toolbar">
+		    <button type="submit"><img src="res/icons/16x16/tick.png">确定</button>
+			<button type="button" onclick="location.href='list.html'"><img src="res/icons/16x16/arrow_redo.png">返回</button>
+	    </div>
+	</form>
+</body>
+</html>

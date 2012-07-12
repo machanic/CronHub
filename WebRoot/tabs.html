@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>tabs</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+<script type="text/javascript" src="res/js/jquery/jquery-1.6.2.min.js"></script>
+
+<script type="text/javascript" src="res/js/list/list.js"></script>
+
+<script type="text/javascript" src="res/js/highlight/highlight.js"></script>
+
+<script type="text/javascript" src="res/js/contextmenu/jquery.contextmenu.js"></script>
+
+<script type="text/javascript" src="res/js/zdialog/zDrag.js"></script>
+<script type="text/javascript" src="res/js/zdialog/zDialog.js"></script>
+
+<link rel="stylesheet" type="text/css" href="res/skin/all.css" />
+
+<script>
+var dialog = null;
+
+$(function() {
+	// grid contextmenu，注释掉的是禁用部分菜单项，更改菜单项图标和文字的例子
+	$('.grid tbody tr').contextMenu([
+			{'编辑': {id: 'item1', icon: 'res/icons/16x16/application_form_magnify.png', onclick: function() {
+				alert('选中行的id是：' + $(this).find('input[type=checkbox]').val());
+			}}},
+			{'删除': {id: 'item2', icon: 'res/icons/16x16/clock_edit.png', onclick: function() {
+				var _this = this;
+				Dialog.confirm('确定要删除该用户吗？', function() {
+					location.href = 'data/common/doSingle.jsp?id=' + $(_this).find('input[type=checkbox]').val();
+				});
+			}}},
+			{'启用/禁用': {id: 'item3', icon: 'res/icons/16x16/bug_add.png', onclick: function() {
+				alert('启用/禁用');
+			}}},
+			{'其他': {id: 'item4', icon: 'res/icons/16x16/cup_key.png', onclick: function() {
+				alert('其他');
+			}}},
+			{'获取选中tr': {id: 'item5', icon: 'res/icons/16x16/drive_network.png', onclick: function() {
+				alert(this.outerHTML);
+			}}}
+		]/*,
+		{
+			beforeShow: function(o) {
+				// 禁用某菜单项
+				if($(o).attr('value') % 2 == 0) {
+					$('#item1').addClass('context-menu-item-disabled');
+				}
+				// 改变菜单项名称和图标
+				if($(o).attr('value') % 2 == 0) {
+					$('#item2').find('.context-menu-item-inner').text('启用');
+					$('#item2').find('div').css('background-image', 'url(res/icons/16x16/drive_network.png)');
+				}
+				else {
+					$('#item2').find('.context-menu-item-inner').text('禁用');;
+					$('#item2').find('div').css('background-image', 'url(res/icons/16x16/calculator_delete.png)');
+				}
+			}
+		}*/
+	);
+	
+	// 操作完成提示
+	highlight('XXX操作添加\删除\操作完成\失败！');
+	
+	// 查询对话框
+	dialog = new Dialog({
+		Animator: false,
+		Width: 420,
+		Height: 200,
+		Title: '查询对话框',
+		InvokeElementId: 'dialog-form',
+		OKEvent: function() {
+			dialog.close();
+			$('#form1').submit();
+		}
+	});
+	
+});
+</script>
+</head>
+
+<body>
+	<div class="tab">
+		<a class="tab-selected"><img src="res/icons/16x16/application_side_list.png" />用户列表</a>
+		<a href="#"><img src="res/icons/16x16/application_side_list.png" />角色列表</a>
+		<a href="#"><img src="res/icons/16x16/application_side_list.png" />组织列表</a>
+	</div>
+	<div class="toolbar">
+		<a href="form.html"><img src="res/icons/16x16/application_form_add.png" />新建</a>
+		<a onclick="doBatch('data/common/doBatch.jsp', '确定要删除选中的用户吗？');"><img src="res/icons/16x16/application_form_delete.png" />删除</a>
+		<a onclick="doSingle('data/common/doSingle.jsp');"><img src="res/icons/16x16/application_form_edit.png" />编辑</a>
+		<a onclick="dialog.show();"><img src="res/icons/16x16/application_form_magnify.png" />搜索</a>
+	</div>
+	<table class="grid">
+		<thead>
+			<tr>
+				<th width="30"><span><input type="checkbox" /></span></th>
+				<th width="30"><span>状态</span></th>
+				<th><span>用户账号</span></th>
+				<th><span>用户单位</span></th>
+				<th><span>用户角色</span></th>
+				<th><span>操作人员</span></th>
+				<th><span>操作时间</span></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td align="center"><span><input type="checkbox" value="1" /></span></td>
+				<td align="center"><span><img src="res/icons/16x16/user_comment.png" /></span></td>
+				<td><span>user_1</span></td>
+				<td title="中国电信甘肃万维公司"><span class="substr" style="width: 100px;">中国电信甘肃万维公司</span></td>
+				<td><span>管理员</span></td>
+				<td><span>admin</span></td>
+				<td align="center"><span>2009-08-02</span></td>
+			</tr>
+			<tr>
+				<td align="center"><span><input type="checkbox" value="2" /></span></td>
+				<td align="center"><span><img src="res/icons/16x16/user_comment.png" /></span></td>
+				<td><span>user_2</span></td>
+				<td title="中国电信甘肃万维公司"><span class="substr" style="width: 100px;">中国电信甘肃万维公司</span></td>
+				<td><span>管理员</span></td>
+				<td><span>admin</span></td>
+				<td align="center"><span>2009-08-01</span></td>
+			</tr>
+			<tr>
+				<td align="center"><span><input type="checkbox" value="3" /></span></td>
+				<td align="center"><span><img src="res/icons/16x16/user_comment.png" /></span></td>
+				<td><span>user_3</span></td>
+				<td title="中国电信甘肃万维公司"><span class="substr" style="width: 100px;">中国电信甘肃万维公司</span></td>
+				<td><span>管理员</span></td>
+				<td><span>admin</span></td>
+				<td align="center"><span>2009-08-05</span></td>
+			</tr>
+			<tr>
+				<td align="center"><span><input type="checkbox" value="4" /></span></td>
+				<td align="center"><span><img src="res/icons/16x16/user_comment.png" /></span></td>
+				<td><span>user_4</span></td>
+				<td title="中国电信甘肃万维公司"><span class="substr" style="width: 100px;">中国电信甘肃万维公司</span></td>
+				<td><span>管理员</span></td>
+				<td><span>admin</span></td>
+				<td align="center"><span>2009-08-04</span></td>
+			</tr>
+			<tr>
+				<td align="center"><span><input type="checkbox" value="5" /></span></td>
+				<td align="center"><span><img src="res/icons/16x16/user_comment.png" /></span></td>
+				<td><span>user_5</span></td>
+				<td title="中国电信甘肃万维公司"><span class="substr" style="width: 100px;">中国电信甘肃万维公司</span></td>
+				<td><span>管理员</span></td>
+				<td><span>admin</span></td>
+				<td align="center"><span>2009-08-03</span></td>
+			</tr>
+			<tr>
+				<td align="center"><span><input type="checkbox" value="6" /></span></td>
+				<td align="center"><span><img src="res/icons/16x16/user_comment.png" /></span></td>
+				<td><span>user_6</span></td>
+				<td title="中国电信甘肃万维公司"><span class="substr" style="width: 100px;">中国电信甘肃万维公司</span></td>
+				<td><span>管理员</span></td>
+				<td><span>admin</span></td>
+				<td align="center"><span>2009-08-13</span></td>
+			</tr>
+			<tr>
+				<td align="center"><span><input type="checkbox" value="7" /></span></td>
+				<td align="center"><span><img src="res/icons/16x16/user_comment.png" /></span></td>
+				<td><span>user_7</span></td>
+				<td title="中国电信甘肃万维公司"><span class="substr" style="width: 100px;">中国电信甘肃万维公司</span></td>
+				<td><span>管理员</span></td>
+				<td><span>admin</span></td>
+				<td align="center"><span>2009-08-11</span></td>
+			</tr>
+			<tr>
+				<td align="center"><span><input type="checkbox" value="8" /></span></td>
+				<td align="center"><span><img src="res/icons/16x16/user_comment.png" /></span></td>
+				<td><span>user_8</span></td>
+				<td title="中国电信甘肃万维公司"><span class="substr" style="width: 100px;">中国电信甘肃万维公司</span></td>
+				<td><span>管理员</span></td>
+				<td><span>admin</span></td>
+				<td align="center"><span>2009-08-09</span></td>
+			</tr>
+			<tr>
+				<td align="center"><span><input type="checkbox" value="9" /></span></td>
+				<td align="center"><span><img src="res/icons/16x16/user_comment.png" /></span></td>
+				<td><span>user_9</span></td>
+				<td title="中国电信甘肃万维公司"><span class="substr" style="width: 100px;">中国电信甘肃万维公司</span></td>
+				<td><span>管理员</span></td>
+				<td><span>admin</span></td>
+				<td align="center"><span>2009-08-15</span></td>
+			</tr>
+			<tr>
+				<td align="center"><span><input type="checkbox" value="10" /></span></td>
+				<td align="center"><span><img src="res/icons/16x16/user_comment.png" /></span></td>
+				<td><span>user_10</span></td>
+				<td title="中国电信甘肃万维公司"><span class="substr" style="width: 100px;">中国电信甘肃万维公司</span></td>
+				<td><span>管理员</span></td>
+				<td><span>admin</span></td>
+				<td align="center"><span>2009-08-21</span></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="toolbar">
+		<a href="#"><img src="res/icons/16x16/arrow_redo.png" />首页</a>
+		<a href="#"><img src="res/icons/16x16/arrow_left.png" />上一页</a>
+		<a href="#"><img src="res/icons/16x16/arrow_right.png" />下一页</a>
+		<a href="#"><img src="res/icons/16x16/arrow_undo.png" />末页</a>
+		共0条记录 计0页 当前
+		<select>
+			<option>第0页</option>
+		</select>
+		每页显示
+		<select>
+			<option>10条</option>
+			<option>20条</option>
+			<option>30条</option>
+		</select>
+	</div>
+	<div id="dialog-form" style="display: none;">
+		<form id="form1" name="form1" action="tabs.html" method="post">
+			<table class="formtable">
+			<tr>
+				<td width="80">
+					<label>用户账号：</label>
+				</td>
+				<td>
+					<input type="text" id="loginname" name="loginname" class="input-text" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>用户状态：</label>
+				</td>
+				<td>
+					<input type="radio" id="state_0" name="state" value="0" /><img src="res/icons/16x16/user_comment.png" />在线&nbsp;&nbsp;&nbsp;
+					<input type="radio" id="state_1" name="state" value="1" /><img src="res/icons/16x16/user_gray.png" />离线&nbsp;&nbsp;&nbsp;
+					<input type="radio" id="state_2" name="state" value="2" /><img src="res/icons/16x16/user_delete.png" />停用
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>用户单位：</label>
+				</td>
+				<td>
+					<input type="text" id="org" name="org" class="input-text" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>用户角色：</label>
+				</td>
+				<td>
+					<select id="role" name="role" class="input-select">
+						<option value="">请选择</option>
+						<option value="1">超级管理员</option>
+						<option value="2">系统管理员</option>
+						<option value="3">管理员</option>
+						<option value="4">普通用户</option>
+				    </select>
+				</td>
+			</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "  http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>tree</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<script type="text/javascript" src="/res/js/jquery/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="/res/js/jqtree/jqtree.js"></script>
+<script type="text/javascript" src="/res/js/contextmenu/jquery.contextmenu.js"></script>
+<link rel="stylesheet" type="text/css" href="/res/skin/all.css" />
+<script type="text/javascript">
+$(function() {
+	var firstLoad = true;
+	// jqtree
+	var tree = new IconTree({
+		container: $('#tree'),
+		loadUrl: '/record_done/createTree.action?unfold_current_month=true',//后台只有一个action地址,怎么知道到底是第一次请求过来的,还是点击树中某一节点请求过来的呢？全凭有没有id请求参数过来作为判断依据,java后台使用了if (request .getParameterMap().containsKey( "id"))
+		dataType: 'xml',
+		timeout: 10000,
+		indent: 10,
+		createRequestParam: function(node) {
+			node.data = { id: node.id };
+		},
+		arrowClick: function(node) {
+			if(node.type!='day'){
+				node.toggle();
+			}
+		},
+		click: function(node) {
+			if(node.type=='day'){
+				self.parent.frames["rightframe"].location.href = encodeURI('/record_done/first_page_view.action?max_per_page=20&tableName='+node.tableName+"&filter={'equal':{'DATE_FORMAT(start_datetime,\"%Y%m%d\")':"+node.id+"}}");
+			}else{
+				node.toggle();
+			}
+		},
+		callback:function(data){
+			if(firstLoad){
+				var tableName = $("span[type='day']:first").attr("tableName");
+				var todayId = $("span[type='day']:first").attr("id");
+				var location = "/record_done/first_page_view.action?max_per_page=20&tableName="+tableName+"&filter={'equal':{'DATE_FORMAT(start_datetime,\"%Y%m%d\")':"+todayId+"}}";
+				self.parent.frames["rightframe"].location.href = encodeURI(location);
+				firstLoad=false;
+			}
+			$("#imgLoading").hide();
+		}
+		/**
+		success:function(data){
+			//alert("success");
+			alert($("#2011").attr('type'));
+		}
+		**/
+		//contextmenu: ctxmenu
+	});
+	tree.init();
+});
+</script>
+</head>
+
+<body>
+<div width="100%" style="text-align: center;">
+<div class="toolbar"><a><img src="/res/icons/16x16/calendar.png"/>启动日期</a></div>
+	<img id='imgLoading' src='/res/images/gif/loading.gif'/>
+</div>
+	<div id="tree"></div>
+</body>
+</html>

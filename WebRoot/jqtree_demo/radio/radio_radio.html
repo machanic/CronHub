@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>radio_radio</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+<script type="text/javascript" src="../../res/js/jquery/jquery-1.6.2.min.js"></script>
+
+<script type="text/javascript" src="../../res/js/jqtree/jqtree.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../../res/skin/all.css" />
+
+<script type="text/javascript">
+$(function() {
+	var tree = new RadioTree({
+		container: $('#tree'),
+		loadUrl: '../../data/jqtree/radio/data_radio.jsp',
+		dataType: 'json',
+		timeout: 10000,
+		indent: 30,
+		createRequestParam: function(node) {
+			node.data = { id: node.id };
+		},
+		arrowClick: function(node) {
+			node.toggle();
+		},
+		dblclick: function(node) {
+			node.toggle();
+		},
+		click: function(node) {
+			$('#log').html($('#log').html() + 'click --- id: ' + node.id + ', name: ' + node.name + '<br/>');
+		}/*,
+		radioClick: function(node) {
+			alert(node.name);
+		}*/
+	});
+	tree.init();
+	
+	//buttons
+	$('#btn_1').click(function() {
+		alert(tree.getCheckedNode());
+	});
+	$('#btn_2').click(function() {
+		alert(tree.val('id'));
+	});
+	$('#btn_3').click(function() {
+		alert(tree.val('name'));
+	});
+	$('#btn_4').click(function() {
+		alert(tree.val('customAttr'));
+	});
+});
+</script>
+</head>
+
+<body>
+	<div id="tree"></div>
+	
+	<button id="btn_1">选中节点</button>
+	<br />
+	<button id="btn_2">选中节点id</button>
+	<br />
+	<button id="btn_3">选中节点name</button>
+	<br />
+	<button id="btn_4">选中节点自定义属性的值</button>
+	
+	<div id="log" style="position: absolute;top: 0;right: 0;"></div>
+</body>
+</html>

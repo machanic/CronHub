@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>form</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+<script type="text/javascript" src="res/js/jquery/jquery-1.6.2.min.js"></script>
+
+<script type="text/javascript" src="res/js/validate/jquery.metadata.js"></script>
+<script type="text/javascript" src="res/js/validate/jquery.validate.min.js"></script>
+<script type="text/javascript" src="res/js/validate/messages_cn.js"></script>
+<script type="text/javascript" src="res/js/validate/extension.js"></script>
+
+<link rel="stylesheet" type="text/css" href="res/skin/all.css" />
+
+<script>
+$(function(){
+	// 表单校验属性设置
+	$.metadata.setType("attr", "validate");
+	
+	// 表单校验
+	var validate = $("#form1").validate({
+	    success: function(label) {
+		   label.html("&nbsp;").addClass("valid");
+	    }
+	});
+	
+	// Ajax重命名校验
+	//     用法参数说明：
+	//     1.这个检验规则的名字(自定义)
+	//     2.校验请求url
+	//     3.附加传的参数数组，为其他表单域的id数组，注意是id
+	//     4.校验错误的提示信息
+	$.uniqueValidate('uniqueUserName', 'data/validate/renameValidate.jsp', ['org'], '对不起，这个名称重复了');
+	
+});
+</script>
+</head>
+
+<body>
+	<div class="tab">
+		<a class="tab-selected"><img src="res/icons/16x16/application_side_list.png" />新建用户</a>
+	</div>
+	<form id="form1" name="form1" action="list.html" method="post">
+		<table class="formtable">
+		<tr>
+			<td width="80">
+				<label>用户姓名：</label>
+			</td>
+			<td>
+				<input type="text" id="username" name="username" class="input-text" validate="{required: true, rangelength: [3, 16]}" />
+				<b>*</b>
+				<span>用户姓名为3-16个字符，可以为数字、字母、下划线以及中文</span>
+			</td>
+		</tr>
+		<tr>
+			<td width="80">
+				<label>用户账号：</label>
+			</td>
+			<td>
+				<input type="text" id="loginname" name="loginname" class="input-text" validate="{required: true, rangelength: [3, 16], uniqueUserName: true}" />
+				<b>*</b>
+				<span>用户账号为3-16个字符，可以为数字、字母、下划线以及中文</span>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>用户单位：</label>
+			</td>
+			<td>
+				<input type="text" id="org" name="org" class="input-text" style="width: 240px;" validate="{required: true}" />
+				<a><img src="res/icons/16x16/application_side_list.png" />选择</a>
+				<b>*</b>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>用户角色：</label>
+			</td>
+			<td>
+				<select id="role" name="role" class="input-select" validate="{required: true}">
+					<option value="">请选择</option>
+					<option value="1">超级管理员</option>
+					<option value="2">系统管理员</option>
+					<option value="3">管理员</option>
+					<option value="4">普通用户</option>
+			    </select>
+				<b>*</b>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>描述：</label>
+			</td>
+			<td>
+				<textarea id="desc" name="desc" class="input-textarea"></textarea>
+				<b>*</b>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>操作人员：</label>
+			</td>
+			<td>
+				admin
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>操作时间：</label>
+			</td>
+			<td>
+				2011-03-21 12:00:00
+			</td>
+		</tr>
+		</table>
+	    <div class="toolbar">
+		    <button type="submit"><img src="res/icons/16x16/tick.png">确定</button>
+			<button type="button" onclick="location.href='list.html'"><img src="res/icons/16x16/arrow_redo.png">返回</button>
+	    </div>
+	</form>
+</body>
+</html>

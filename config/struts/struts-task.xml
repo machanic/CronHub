@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+	
+<struts>
+	<package name="task" namespace="/task" extends="interceptors">
+		<action name="task_add_form_submit" class="taskPageAddAction" method="submitAddForm">
+			<result name="success" type="redirect">
+				/task/task_first_page_view.action?max_per_page=20
+			</result>
+		</action>
+		<action name="task_first_page_view" class="taskPageViewAction" method="findFirstPage">
+			<result name="success" >
+				/page/dispatch_task/CronhubTaskView.jsp
+			</result>
+		</action>
+		<action name="task_next_page_view" class="taskPageViewAction" method="findNextPageNo">
+			<result name="success" >
+				/page/dispatch_task/CronhubTaskView.jsp
+			</result>
+		</action>
+		<action name="task_prev_page_view" class="taskPageViewAction" method="findPrevPageNo">
+			<result name="success" >
+				/page/dispatch_task/CronhubTaskView.jsp
+			</result>
+		</action>
+		<action name="task_last_page_view" class="taskPageViewAction" method="findLastPage">
+			<result name="success" >
+				/page/dispatch_task/CronhubTaskView.jsp
+			</result>
+		</action>
+		<action name="deleteOne" class="taskPageViewAction" method="deleteOneById"></action>
+		<action name="remoteExec" class="immediateRemoteExecAction" method="remoteExecute"></action>
+	</package>
+</struts>

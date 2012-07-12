@@ -1,0 +1,47 @@
+@charset 'utf-8';
+
+html, body {
+	color: #000;
+	background: #fff;
+}
+html, body,
+div, p,
+th, td,
+ul, li,
+h1, h2 ,h3, h4, h5, h6,
+a, span, img,
+form,
+input, button, textarea {
+	margin: 0;
+	padding: 0;
+}
+body {
+	padding: 2px;
+	font-size: 12px;
+	font-family: '微软雅黑', '宋体';
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	font-size: 12px;
+	font-family: '微软雅黑', '宋体';
+}
+input, button, textarea, select, option {
+	font-size: 12px;
+	font-family: '微软雅黑', '宋体';
+}
+img, a,
+input, button, textarea, select {
+	vertical-align: middle;
+}
+img {
+	border: 0;
+}
+a {
+	color: #000;
+	cursor: pointer;
+	text-decoration: none;
+}
+a:hover, a:active, a:visited {
+	color: #000;
+}

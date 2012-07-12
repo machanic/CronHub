@@ -1,0 +1,39 @@
+log4j.rootLogger=info, stdout
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=[%d{yyyy-MM-dd HH\:mm\:ss}] %p\t| %m%n
+
+log4j.logger.Validate=info, validate
+log4j.appender.validate=org.apache.log4j.DailyRollingFileAppender  
+log4j.appender.validate.File=/opt/modules/BoxStore2.2/logs/DispatchLogs/service.log
+log4j.appender.validate.DatePattern='.'yyyy-MM-dd'.bak'
+log4j.appender.validate.layout=org.apache.log4j.PatternLayout
+log4j.appender.validate.layout.ConversionPattern=[%d{yyyy-MM-dd HH\:mm\:ss}] %p\t| %m%n
+
+log4j.logger.Error=error, err
+log4j.appender.err=org.apache.log4j.DailyRollingFileAppender  
+log4j.appender.err.File=/opt/modules/BoxStore2.2/logs/DispatchLogs/error.log
+log4j.appender.err.DatePattern='.'yyyy-MM-dd'.bak'
+log4j.appender.err.layout=org.apache.log4j.PatternLayout
+log4j.appender.err.layout.ConversionPattern=[%d{yyyy-MM-dd HH\:mm\:ss}] %p\t| %m%n
+
+log4j.logger.DaemonError=error, daemonError
+log4j.appender.daemonError=org.apache.log4j.DailyRollingFileAppender  
+log4j.appender.daemonError.File=/opt/modules/BoxStore2.2/logs/DispatchLogs/daemonError.log
+log4j.appender.daemonError.DatePattern='.'yyyy-MM-dd'.bak'
+log4j.appender.daemonError.layout=org.apache.log4j.PatternLayout
+log4j.appender.daemonError.layout.ConversionPattern=[%d{yyyy-MM-dd HH\:mm\:ss}] %p\t| %m%n
+
+log4j.logger.RecordUndoLogger=info, recordUndoLogger
+log4j.appender.recordUndoLogger=org.apache.log4j.DailyRollingFileAppender  
+log4j.appender.recordUndoLogger.File=/opt/modules/BoxStore2.2/logs/DispatchLogs/recordUndoLogger.log
+log4j.appender.recordUndoLogger.DatePattern='.'yyyy-MM-dd'.bak'
+log4j.appender.recordUndoLogger.layout=org.apache.log4j.PatternLayout
+log4j.appender.recordUndoLogger.layout.ConversionPattern=[%d{yyyy-MM-dd HH\:mm\:ss}] %p\t| %m%n
+
+log4j.logger.RecordDoneLogger=info, recordDoneLogger
+log4j.appender.recordDoneLogger=org.apache.log4j.DailyRollingFileAppender  
+log4j.appender.recordDoneLogger.File=/opt/modules/BoxStore2.2/logs/DispatchLogs/recordDoneLogger.log
+log4j.appender.recordDoneLogger.DatePattern='.'yyyy-MM-dd'.bak'
+log4j.appender.recordDoneLogger.layout=org.apache.log4j.PatternLayout
+log4j.appender.recordDoneLogger.layout.ConversionPattern=[%d{yyyy-MM-dd HH\:mm\:ss}] %p\t| %m%n

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+<menu id="wwui_01_02" name="调度系统">
+	<menu id="wwui_01_02" name="调度记录管理">
+		<menu id='222d' name="记录查询"
+			url="page/commons/loading.html"
+			icon="res/icons/16x16/clock.png" />
+		<menu id="33" name="未完成列表" url="page/commons/loading.html" icon="res/icons/16x16/clock_go.png"/>
+			
+	</menu>
+	<menu id="ww" name="调度任务管理">
+		<menu id="22" name="增加调度任务"
+			icon="res/icons/16x16/application_form_add.png"
+			url="page/commons/loading.html" />
+			<menu id="22" name="增加调度流程(第二期)"
+			icon="res/icons/16x16/application_form_add.png"
+			url="page/commons/loading.html" />
+		<menu id="22" name="调度任务管理"
+			icon="res/icons/16x16/application_view_columns.png" url="page/commons/loading.html"/>
+		
+	</menu>
+	<menu id="23" name="daemon执行器管理">
+		<menu id="22" name="增加daemon执行器"
+			icon="res/icons/16x16/application_form_add.png"
+			url="page/dispatch_daemon/DispatchDaemonAdd.jsp" />
+		<menu id="22" name="daemon检测和管理" icon="res/icons/16x16/server_connect.png" url="/daemon/daemon_first_page_view.action?max_per_page=20" />
+	</menu>
+</menu>
+</root>

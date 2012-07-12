@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+	
+<struts>
+	<constant name= "struts.multipart.maxSize" value="10485760" />
+	<!-- 对象工厂 -->
+	<!--<constant name="struts.objectFactory" value="spring" /> -->
+	<!-- <constant name="struts.devMode" value="false" /> -->
+	<!-- 更改后缀名 -->
+	<!-- <constant name="struts.action.extension" value="action" />-->
+	<!-- 自动注入策略 -->
+	<!-- <constant name="struts.objectFactory.spring.autoWire" value="name" />-->
+	<!-- struts表单默认视图 -->
+	<!-- <constant name="struts.ui.theme" value="simple" />-->
+	<!-- 拦截器配置 -->
+ 	<include file="struts/*.xml"></include>   
+</struts>

@@ -1,0 +1,69 @@
+@charset 'utf-8';
+
+.jqnavi-node-horiz {
+	cursor: pointer;
+	height: 30px;
+	line-height: 30px;
+	float: left;
+	padding: 0 10px;
+}
+.jqnavi-node-horiz-hover {
+	background: #d0e5f5;
+	color: #1d5987;
+}
+.jqnavi-node-horiz-selected {
+	background: #f5f8f9;
+	font-weight: bold;
+	color: #e17009;
+}
+.jqnavi-node {
+	height: 30px;
+	line-height: 30px;
+	cursor: pointer;
+	white-space: nowrap;
+	border: 0;
+	border-bottom: 1px dotted #dddddd;
+}
+.jqnavi-node-hover {
+	background: #d0e5f5;
+	color: #1d5987;
+}
+.jqnavi-node-selected {
+	background: #f5f8f9;
+	font-weight: bold;
+	color: #e17009;
+}
+.jqnavi-name {
+	
+}
+.jqnavi-sub {
+	display: none;
+}
+.jqnavi-icon {
+	width: 16px;
+	height: 30px;
+	float: left;
+}
+.jqnavi-arrow {
+	
+}
+.jqnavi-arrow-close {
+	background: url(images/tree_arrows.gif) 0 7px no-repeat;
+}
+.jqnavi-arrow-close:hover {
+	background: url(images/tree_arrows.gif) -32px 7px no-repeat;
+}
+.jqnavi-arrow-open {
+	background: url(images/tree_arrows.gif) -16px 7px no-repeat;
+}
+.jqnavi-arrow-open:hover {
+	background: url(images/tree_arrows.gif) -48px 7px no-repeat;
+}
+.jqnavi-icon-close {
+	background: url(images/tree_folder.gif) 0 7px no-repeat;
+	margin-right: 3px;
+}
+.jqnavi-icon-open {
+	background: url(images/tree_folder_open.gif) 0 7px no-repeat;
+	margin-right: 3px;
+}

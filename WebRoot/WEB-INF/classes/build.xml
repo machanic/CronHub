@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="modAndWar" default="demo_192.168.101.9" basedir=".">
+	<description>
+		the default online service is  demo_192.168.101.9
+	</description>
+	
+	<property name="shellDir" value="../shell"/>
+	<!-- properties filename -->
+	<property name="185.properties" value="185ant.properties"/>
+	<property name="localhost.properties" value="localmachine.properties"/>
+	<property name="online85.properties" value="online85ant.properties"/>
+	<property name="test_online_185.properties" value="185DBCMS_online.properties"/>
+	<!-- properties filename -->
+	<property name="configDir" value="../config"/>
+	<property name="warDir" value="../war"/>
+	<property name="version" value="DispatchManageSystem_101.9"/>
+	<property name="tempRootPath" value="${warDir}/new"/>
+	<property name="warFilePath" value="${warDir}/${version}.war"/>
+	<property name="webRootDir" value="../WebRoot"/>
+ 	<property name="webxml.dir" value="${webRootDir}/WEB-INF/"/>
+ 	
+	<!-- 执行java代码 -->
+	<path id="jar">
+		<fileset dir="${webxml.dir}/lib">
+		            <include name="*.jar"/>
+		 </fileset>
+	</path>
+	<taskdef name="buildPreModProperties" classname="com.baofeng.boxstore.ant.BuildPreProperties">
+			 <classpath >
+			      <pathelement location="${webxml.dir}/classes" />
+		     </classpath>
+			<classpath refid="jar"/>
+	</taskdef>
+	
+	<!-- 执行java代码 -->
+	
+ 	<target name="localhost">
+	 	<property name="modFile" value="${localhost.properties}"/>
+ 		<antcall target="mission"></antcall>
+ 	</target>
+ 	
+	<target name="test_192.168.50.185">
+		 	<property name="modFile" value="192.168.50.185.properties"/>
+		<antcall target="mission"></antcall>
+	 	</target>
+	<target name="test_60.28.110.228">
+		<property name="modFile" value="60.28.110.228.properties"/>
+		<antcall target="mission"></antcall>
+	</target>
+	<target name="android_60.28.230.91">
+		<property name="modFile" value="60.28.230.91.properties"/>
+		<antcall target="mission"></antcall>
+	</target>
+	
+	<target name="demo_192.168.101.9">
+			<property name="modFile" value="192.168.101.9.properties"/>
+			<antcall target="mission"></antcall>
+	</target>
+	
+	<target name="mission">
+		<antcall target="war"/>
+		<!--
+		<antcall target="shellCopy"/>
+		<antcall target="zipAllAndClean"/>
+		-->
+	</target>
+	
+	<target name="war" depends="mod"> 
+		<war warfile="${warFilePath}" webxml="${webxml.dir}/web.xml">
+			<fileset dir="${webRootDir}"/>
+		</war>
+		<echo message="building war file ${warFilePath} done!"/>
+	</target>
+	<target name="mod">
+		<buildPreModProperties modRefFilePath="${modFile}" changeDestXmlFilePath="modProperties.xml"/>
+		<ant antfile="modProperties.xml" taskname="mod"/>
+	</target>
+	
+	<target name="shellCopy">
+		<copy toDir="${tempRootPath}">
+			<fileset dir="${shellDir}">
+				<include name="*.sh"/> 
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="zipAllAndClean">
+		<zip destfile="${warDir}/${version}.zip">
+			<fileset dir="${tempRootPath}">
+				<include name="*.*"/>
+			</fileset>
+		</zip>
+		<delete>
+			  <fileset dir="${tempRootPath}"> 
+			        <include name="*.*"/> 
+			   </fileset> 
+		</delete>
+	</target>
+	
+</project>

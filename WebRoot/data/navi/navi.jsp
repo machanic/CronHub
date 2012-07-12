@@ -1,0 +1,38 @@
+<%@ page language="java" import="java.util.*" contentType="application/json; charset=utf-8"%><%response.setHeader("pragma", "no-cache");
+response.setHeader("cache-control", "no-cache");
+response.setDateHeader("expires", 0);
+
+out.print("[");
+out.print("    {\"id\": \"wwui_01\", \"name\": \"系统管理\", \"nodes\": [");
+out.print("        {\"id\": \"wwui_01_01\", \"name\": \"首页\", \"url\": \"default.html\"},");
+out.print("        {\"id\": \"wwui_01_02\", \"name\": \"列表\", \"url\": \"list.html\"},");
+out.print("        {\"id\": \"wwui-01-03\", \"name\": \"表单\", \"open\": true, \"nodes\": [");
+out.print("            {\"id\": \"wwui-01-03-01\", \"name\": \"表单一\", \"url\": \"form.html\"},");
+out.print("            {\"id\": \"wwui-01-03-02\", \"name\": \"表单二\", \"url\": \"form2.html\"}");
+out.print("        ]},");
+out.print("        {\"id\": \"wwui_01_04\", \"name\": \"选项卡\", \"url\": \"tabs.html\"},");
+out.print("        {\"id\": \"wwui_01_05\", \"name\": \"树和列表\", \"url\": \"tree_grid_frameset.html\"},");
+out.print("        {\"id\": \"wwui_01_06\", \"name\": \"jqTree Demo\", \"url\": \"jqtree_index.html\"},");
+out.print("        {\"id\": \"wwui_01_07\", \"name\": \"zDialog Demo\", \"url\": \"zdialog_demo/dialog.html\"}");
+out.print("    ]},");
+out.print("    {\"id\": \"\", \"name\": \"公众参与\", \"nodes\": [");
+out.print("        {\"id\": \"\", \"name\": \"在线访谈\", \"url\": \"\"},");
+out.print("        {\"id\": \"\", \"name\": \"公众诉求\", \"url\": \"\"},");
+out.print("        {\"id\": \"\", \"name\": \"网上调查\", \"url\": \"\"},");
+out.print("        {\"id\": \"\", \"name\": \"论坛博客\", \"nodes\": [");
+out.print("            {\"id\": \"\", \"name\": \"政务论坛\", \"url\": \"\"},");
+out.print("            {\"id\": \"\", \"name\": \"政务博客\", \"url\": \"\"}");
+out.print("        ]}");
+out.print("    ]},");
+out.print("    {\"id\": \"\", \"name\": \"应用支撑\", \"nodes\": [");
+out.print("        {\"id\": \"\", \"name\": \"全文检索\", \"nodes\": [");
+out.print("            {\"id\": \"\", \"name\": \"索引建立\", \"url\": \"\"},");
+out.print("            {\"id\": \"\", \"name\": \"检索日志\", \"url\": \"\"}");
+out.print("        ]},");
+out.print("        {\"id\": \"\", \"name\": \"网页防篡改\", \"url\": \"\"},");
+out.print("        {\"id\": \"\", \"name\": \"多站点镜像同步\", \"url\": \"\"},");
+out.print("        {\"id\": \"\", \"name\": \"IP认证\", \"url\": \"\"},");
+out.print("        {\"id\": \"\", \"name\": \"UKey认证\", \"url\": \"\"}");
+out.print("    ]}");
+out.print("]");
+%>

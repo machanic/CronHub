@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="CronHubManageSystem"
+  id="myeclipse.1315276117001"
+  context-root="/"
+  j2ee-spec="5.0"
+  archive="CronHubManageSystem.war">
+  <attributes>
+    <attribute name="webrootdir" value="/WebRoot" />
+  </attributes>
+</project-module>
+

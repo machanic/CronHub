@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+	
+<struts>
+	<package name="daemon" namespace="/daemon" extends="interceptors">
+		<action name="daemon_add_form_submit" class="daemonPageAddAction" method="submitAddForm">
+			<result name="success" type="redirect">
+				/daemon/daemon_first_page_view.action?max_per_page=20
+			</result>
+		</action>
+		
+		<action name="daemon_first_page_view" class="daemonPageViewAction" method="findFirstPage">
+			<result name="success" >
+				/page/cronhub_daemon/CronhubDaemonView.jsp
+			</result>
+		</action>
+		<action name="daemon_next_page_view" class="daemonPageViewAction" method="findNextPageNo">
+			<result name="success" >
+				/page/cronhub_daemon/CronhubDaemonView.jsp
+			</result>
+		</action>
+		<action name="daemon_prev_page_view" class="daemonPageViewAction" method="findPrevPageNo">
+			<result name="success" >
+				/page/cronhub_daemon/CronhubDaemonView.jsp
+			</result>
+		</action>
+		<action name="daemon_last_page_view" class="daemonPageViewAction" method="findLastPage">
+			<result name="success" >
+				/page/cronhub_daemon/CronhubDaemonView.jsp
+			</result>
+		</action>
+		<action name="deleteOne" class="daemonPageViewAction" method="deleteOneById"></action>
+		<action name="updateDaemonPackage" class="daemonPageViewAction" method="updateDaemonPackage"></action>
+		<action name="getAlertMail" class="daemonPageAddAction" method="getAlertMail" />
+	</package>
+</struts>

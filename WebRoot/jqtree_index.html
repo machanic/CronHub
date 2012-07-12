@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>jqtree_index</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+<style>
+body { font-family: '微软雅黑'; font-size: 12px; margin: 0; padding: 0; }
+</style>
+</head>
+
+<body>
+<h3>jQuery jqTree Plugin</h3>
+<h5>Version: 1.6</h5>
+<h5>Company: 甘肃万维</h5>
+<h5>Author: 软件二部 王波</h5>
+<h5>Date: 2011-03-16</h5>
+<hr />
+<h3>普通树</h3>
+<ul>
+	<li><a target="_blank" href="jqtree_demo/normal/normal_wholetree.html">加载整个树结构</a></li>
+	<li><a target="_blank" href="jqtree_demo/normal/normal_notwhole.html">加载不完全树结构</a></li>
+	<li><a target="_blank" href="jqtree_demo/normal/normal_everynode.html">加载每个节点的子节点</a></li>
+	<li><a target="_blank" href="jqtree_demo/normal/normal_horiz.html">横向显示某一级节点(一般是末级节点)</a></li>
+</ul>
+<h3>树和右键菜单整合</h3>
+<ul>
+	<li><a target="_blank" href="jqtree_demo/normal/normal_withcontextmenu.html">和右键菜单整合示例</a></li>
+</ul>
+<h3>复选树checkbox</h3>
+<ul>
+	<li><a target="_blank" href="jqtree_demo/checkbox/checkbox_checkbox.html">复选树，选中和取消选中时默认级联影响上下级节点的选中状态</a></li>
+	<li><a target="_blank" href="jqtree_demo/checkbox/checkbox_checkinteract.html">选中和取消选中时是否级联影响上下级节点的选中状态</a></li>
+	<li><a target="_blank" href="jqtree_demo/checkbox/checkbox_disablesome.html">禁止选择某些节点(不显示复选框)</a></li>
+</ul>
+<h3>单选树radio</h3>
+<ul>
+	<li><a target="_blank" href="jqtree_demo/radio/radio_radio.html">单选树</a></li>
+	<li><a target="_blank" href="jqtree_demo/radio/radio_disablesome.html">禁止选择某些节点(不显示单选框)</a></li>
+</ul>
+<pre>
+一，使用说明：
+$(function() {
+	var tree = $('#tree').jqTree({
+		path: '../jslib/jqtree/',                // 相对于页面的js文件根路径
+		loadUrl: 'data.jsp',                     // 请求路径
+		dataType: 'json'                         // Ajax请求返回值类型，可选值：['json', 'xml']，默认值json
+		timeout: 10000,                          // 超时时间
+		indent: 30,                              // 节点缩进距离
+		treeType: 'checkbox',                    // 树类型 ，可选值：['normal', 'checkbox', 'radio']，默认值normal
+		data: {key: value},                      // 树初始加载时的请求参数对象，可以没有
+		createRequestParam: function(node) {     // 树节点Ajax请求下级节点时传入后台的参数定义
+			// 参数treeNode为click节点对象，包含大量属性，如：node.id, node.name, node.level, node.parentNode, node.[customType](任意自定义属性)等
+			// 创建请求参数对象赋给treeNode.data，可多个属性，便于后台判断，如此例可以在后台request.getParameter("id")
+			node.data = {id: node.id};
+		},
+		click: function(node) {                  // 单击事件处理函数，按需使用，不需要的话不写
+			// todo
+		},
+		contextmenu: object(contextmenu)         // 右键菜单，详细用法请见示例
+	});
+});
+
+二，后台数据格式说明：
+可以直接加载整个树结构，或者每个节点加载其下级节点，后台都是树节点的json数组或xml；根节点可以有一个或多个，一个根就是数组只有一个元素
+
+json格式：
+[
+	{id, name, nodes: [
+		{id, name, nodes: []},
+		{id, name, nodes: [
+			{id, name, nodes: null},
+			{id, name, nodes: []}
+		]},
+		{id, name},
+		{id, name, nodes: []}
+	]},
+	{id, name, nodes: []},
+	{id, name}
+]
+
+单个的树节点json：(属性比较多，并不是全部必须，按需配置，且大部分有其默认值)
+{
+	id: '',                         // 节点id
+	name: '',                       // 节点名字
+	open: boolean,                  // 节点下级是否展开，没有默认为true
+	checkbox: boolean,              // 节点是否显示checkbox，没有默认为true，这样就可以实现某些节点没有复选框，要求树type为checkbox
+	radio: boolean,                 // 节点是否显示radio，没有默认为true，这样就可以实现某些节点没有单选框，要求树type为radio
+	checked: boolean,               // 节点是否选中，没有默认为false，要求树type为checkbox或radio
+	horiz: boolean,                 // 节点是否横向排布，没有默认为false
+	icon: '',                       // 节点图标，没有默认为null，为null或者空字符串则显示默认图标，设置icon后，打开关闭节点的class样式将失去效果，打开关闭都为icon的图片设置
+	checkInteractParent: boolean,   // 节点选中时是否影响其父节点，没有默认为true
+	checkInteractSub: boolean,      // 节点选中时是否影响其子节点，没有默认为true
+	uncheckInteractParent: boolean, // 节点取消选中时是否影响其父节点，没有默认为true
+	uncheckInteractSub: boolean,    // 节点取消选中时是否影响其子节点，没有默认为true
+	isParent: boolean,              // 节点是否可以Ajax加载下级子节点；没有默认为false；nodes属性为数组(包括空数组)时，该属性无效
+	nodes: [......],                // 子节点数组，如果为数组(包括空数组)，则isParent属性将失去作用，节点不会Ajax加载下级；如果为null或者没有，由isParent属性决定其Ajax特性
+	class_arrow_close: '',          // 箭头关闭样式，需要自己在CSS文件中定义，将覆盖原有的class样式
+	class_icon_close: '',           // 图标关闭样式，需要自己在CSS文件中定义，将覆盖原有的class样式
+	class_arrow_open: '',           // 箭头打开样式，需要自己在CSS文件中定义，将覆盖原有的class样式
+	class_icon_open: '',            // 图标打开样式，需要自己在CSS文件中定义，将覆盖原有的class样式
+	class_loading: '',              // 加载中样式，需要自己在CSS文件中定义，将覆盖原有的class样式
+	customAttribute: value          // 可自定义任意多个属性，属性名自定
+	customAttribute: value          // 可自定义任意多个属性，属性名自定
+	customAttribute: value          // 可自定义任意多个属性，属性名自定
+	......
+}
+
+注意：关于isParent和nodes属性更详细的解释：
+1.nodes为有元素数组或者空数组的情况，isParent将失去作用，节点不可异步加载下级
+2.nodes为null或者不写
+	a.isParent为true，节点能异步加载下级
+	b.isParent为false或者不写，节点不可异步加载下级
+
+xml格式：(属性和json中说明的属性完全相同，也可以自定义属性，和json完全相同)
+
+&lt;jqtree&gt;
+	&lt;node id="" name=""&gt;&lt;/node&gt;
+	&lt;node id="" name=""&gt;
+		&lt;node id="" name=""&gt;
+			&lt;node id="" name=""&gt;&lt;/node&gt;
+			&lt;node id="" name=""&gt;&lt;/node&gt;
+		&lt;/node&gt;
+		&lt;node id="" name=""&gt;&lt;/node&gt;
+	&lt;/node&gt;
+	&lt;node id="" name=""&gt;&lt;/node&gt;
+	&lt;node id="" name=""&gt;&lt;/node&gt;
+&lt;/jqtree&gt;
+
+三，checkbox或radio树，获取选中值的方法：
+
+1.checkbox树：
+	tree.getCheckedNodes()
+		返回选中节点对象数组
+	tree.val(attrName)
+		返回选中节点指定属性值，由逗号分隔
+
+2.radio树：
+	tree.getCheckedNode()
+		返回选中节点对象
+	tree.val(attrName)
+		返回选中节点指定属性值
+</pre>
+<h3>下拉树</h3>
+<ul>
+	<li><a target="_blank" href="jqtree_demo/dropdown/dropdown_checkbox.html">复选下拉树</a></li>
+	<li><a target="_blank" href="jqtree_demo/dropdown/dropdown_radio.html">单选下拉树</a></li>
+</ul>
+<pre>
+一，使用说明：
+$(function() {
+	var tree = $('#testinput').jqTreeDropdown({
+		path: '../jslib/jqtree/',                // 相对于页面的js文件根路径
+		width: 280,                              // 宽度，可以不设置，自适应延伸
+		height: 300,                             // 高度，可以不设置，自适应延伸
+		top: $('#test').position().top + 23,     // 位置top
+		left: $('#test').position().left,        // 位置left
+		loadUrl: 'data.jsp',                     // 请求路径
+		dataType: 'json'                         // Ajax请求返回值类型，可选值：['json', 'xml']，默认值json
+		timeout: 10000,                          // 超时时间
+		indent: 30,                              // 节点缩进距离
+		treeType: 'checkbox',                    // 树类型，可选值： ['checkbox', 'radio']，默认值radio
+		data: {key: value},                      // 树初始加载时的请求参数对象，可以没有
+		createRequestParam: function(node) {     // 树节点Ajax请求下级节点时传入后台的参数定义
+			// 参数treeNode为click节点对象，包含大量属性，如：node.id, node.name, node.level, node.parentNode, node.[customType](任意自定义属性)等
+			// 创建请求参数对象赋给treeNode.data，可多个属性，便于后台判断，如此例可以在后台request.getParameter("id")
+			node.data = {id: node.id};
+		},
+		onDisappear: function(tree) {            // 选择完毕，下拉树隐藏时执行函数，用来获取并设置相关选中值
+			// 参数tree为树对象，可以调用相关方法获取选中值(方法具体见jqTree)
+			$('#testinput').val(tree.val('name'));
+		}
+	});
+});
+
+二，后台数据格式说明：
+	xml格式和json格式与jqTree完全相同
+</pre>
+</body>
+</html>

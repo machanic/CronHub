@@ -1,0 +1,636 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>zDialog</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+<script type="text/javascript" src="../res/js/zdialog/zDrag.js"></script>
+<script type="text/javascript" src="../res/js/zdialog/zDialog.js"></script>
+
+<style>
+body { font-family: '微软雅黑'; font-size: 12px; margin: 0; padding: 0; }
+</style>
+
+<script type="text/javascript">
+function open1() {
+	Dialog.open({
+		Animator: false,
+		URL:"one.html"
+	});
+}
+
+function open2() {
+	Dialog.open({
+		Animator: false,
+		URL: 'one.html',
+		Width: 800,
+		Height: 500,
+		Title: '这是我的测试啊'
+	});
+}
+
+function open3() {
+	Dialog.open({
+		Animator: false,
+		URL: 'one.html',
+		Width: 800,
+		Height: 600,
+		Title: '波波测试'
+	});
+}
+
+function open4() {
+	Dialog.open({
+		Animator: false,
+		Width: 800,
+		Height: 500,
+		Title: '测试直接输出HTML的方式',
+		InnerHtml: '<h1>直接输出HTML的方式</h1><div style="background: #dddddd;padding: 10px;">哇咔咔，测试一哈哈</div>',
+		OKEvent: function() {
+			Dialog.alert('点击了OK按钮');
+		}
+	});
+}
+
+function open5() {
+	Dialog.open({
+		Animator: false,
+		Width: 800,
+		Height: 500,
+		Title: '内容为页面内隐藏的元素',
+		InvokeElementId: 'forlogin',
+		OKEvent: function() {
+			Dialog.alert('ok');
+		}
+	});
+}
+
+function open6() {
+	Dialog.open({
+		Animator: false,
+		URL: 'one.html',
+		Width: 800,
+		height: 600,
+		Title: '弹出没有遮罩层的窗口',
+		Modal: false,
+		Left: 10,
+		Top: 10,
+		OKEvent: function() {
+			Dialog.close();
+		}
+	});
+}
+
+function closdlg() {
+    Dialog.close();
+}
+
+function open7() {
+	Dialog.open({
+		Animator: false,
+		URL: 'one.html',
+		Width: 300,
+		Height: 200,
+		Title: '在指定位置弹出窗口',
+		Top: '100%',
+		Left: '100%',
+		Modal: false
+	});
+}
+
+function open8() {
+	var dialog = new Dialog({
+		Animator: false,
+		URL: 'one.html',
+		Width: 700,
+		Height: 700,
+		Title: '返回值到调用页面'
+	});
+	dialog.OKEvent = function() {
+		document.getElementById('getval').value = dialog.innerFrame.contentWindow.document.getElementById('qq').value;
+		dialog.close();
+	};
+	dialog.show();
+}
+
+function open9() {
+	Dialog.alert("提示，你点击了一个按钮");
+}
+
+function open10() {
+	Dialog.confirm('警告：您确认要这样吗？', function(){Dialog.alert("好吧，你确定")}, function() {Dialog.alert('你点了取消')});
+}
+
+function open11() {
+	var dialog = new Dialog({
+		Animator: false,
+		URL: 'one.html',
+		Title: '创建其他按钮'
+	});
+	dialog.show();
+	dialog.addButton('next', '新增按钮', function() {
+		Dialog.confirm('警告：您确认要这样吗？', function(){Dialog.alert("好吧，你确定")}, function() {Dialog.alert('你点了取消')});
+	});
+}
+
+function open12() {
+	var dialog = new Dialog({
+		Animator: false,
+		URL: 'one.html',
+		Title: '带有说明栏的新窗口',
+		MessageTitle: '测试一哈MessageTitle',
+		Message: '测试一哈Message'
+	});
+	dialog.show();
+	dialog.addButton('next', '新增按钮', function() {
+		Dialog.confirm('警告：您确认要这样吗？', function(){Dialog.alert("好吧，你确定")}, function() {Dialog.alert('你点了取消')});
+	});
+}
+
+function open13() {
+	Dialog.open({
+		Animator: false,
+		URL: 'one.html'
+	});
+}
+
+function open14() {
+	Dialog.open({
+		Animator: false,
+		URL: 'one.html',
+		OnLoad: function() {
+			Dialog.alert('页面载入完成');
+		}
+	});
+}
+
+function open15() {
+	var dialog = new Dialog({
+		Animator: false,
+		URL: 'one.html',
+		Title: '点击取消或关闭按钮时执行的方法',
+		Width: 800,
+		Height: 700,
+		Drag: false,
+		ShowButtonRow: true,
+		CancelEvent: function() {
+			Dialog.confirm('确定要关闭这个对话框？', function() {Dialog.alert('点了确定')}, function() {Dialog.alert('点了取消')});
+		}
+	});
+	dialog.show();
+}
+
+function open16() {
+	var dialog = new Dialog({
+		Animator: false,
+		URL: 'one.html',
+		Title: '修改窗体大小',
+		ShowButtonRow: true,
+		OkButtonText: '改变窗口大小'
+	});
+	dialog.OKEvent = function() {
+		dialog.setSize(800, 500);
+		dialog.okButton.disabled = true;
+	}
+	dialog.show();
+}
+
+function open17() {
+	Dialog.open({
+		Animator: false,
+		Title: '操作提示',
+		Width: 250,
+		Height: 50,
+		AutoClose: 3,
+		ShowCloseButton: false,
+		InnerHtml: '<table height="100%"><tr><td>用户添加成功</td></tr></table>',
+		Top: 0,
+		Left: '50%',
+		Modal: false
+	});
+}
+
+function open18() {
+	Dialog.open({
+		Animator: false,
+		URL: 'one.html',
+		Title: '设置确定按钮及取消按钮的属性',
+		OkButtonText: '这是确定哈',
+		CancelButtonText: '这是取消哈',
+		ShowButtonRow: true
+	});
+}
+
+function open19() {
+	var dialog = new Dialog({
+		Animator: false,
+		URL: 'two.html',
+		Title: '窗体内的按钮操作父Dialog'
+	});
+	dialog.CancelEvent = function() {
+		Dialog.alert('关闭了');
+		dialog.close();
+	};
+	dialog.show();
+}
+
+function open20() {
+	var diag = new Dialog();
+	diag.URL = "one.html";
+	diag.OKEvent=function(){diag.innerDoc.getElementById('form1').submit();diag.submited=true;};
+	diag.OnLoad=function(){
+		if(diag.submited){
+			alert('表单已经提交成功\n'+location+'\n接下来将刷新父窗口。');
+			diag.openerWindow.location.reload();
+            try{
+				diag.close();
+            }catch(e){}
+		}
+	};
+	diag.show();
+}
+</script>
+</head>
+
+<body>
+<h2>zDialog v2.1 - samples</h2>
+
+<h4>提取自<a href="http://www.zving.com/products/zcms/">ZCMS</a>的弹出框：</h4>
+<ol>
+	<li>代替window.open、window.alert、window.confirm；提供良好的用户体验；</li>
+	<li>水晶质感，设计细腻，外观漂亮；</li>
+	<li>兼容ie6/7/8、firefox2/3、Opera；弹出框在ie6下不会被select控件穿透；</li>
+	<li>无外部css文件，引用Dialog.js即可使用；</li>
+	<li>对iframe下的应用作了充分考虑，适合复杂的系统应用；</li>
+	<li>Dialog显示的内容（三种）：1、指向一个URL的iframe窗口；2、页面内隐藏的元素中的html内容；3、直接输出一段html内容；</li>
+	<li>按ESC键可关闭弹出框；</li>
+</ol>
+
+<h4>主调函数参数说明：</h4>
+<span style="color:blue; ">Dialog.open({ID,Title,URL,InnerHtml,InvokeElementId,Width,Height,Top,Left,Drag,OKEvent,ShowButtonRow,MessageTitle,Message,AutoClose,OnLoad})</span><br>
+<ul>
+	<li><span style="color:red;">ID</span>：窗口id号，可省略。每个窗口的id必须是唯一的不能重复。</li>
+	<li><span style="color:red;">Title</span>：窗口标题。如不写此项默认值为""。</li>
+	<li><span style="color:red;">URL</span>：  窗口内容页地址，或使用相对路径或绝对路径，注意如果使用<a href="#;">http://www.host.com</a>形式的绝对地址，则http://不能省略。</li>
+	<li><span style="color:red;">InnerHtml</span>：  窗口内容html代码，用于直接输出html内容，注意不要让生成的内容因为不适当的宽度或定位方式而破坏了Dialog的外观。</li>
+	<li><span style="color:red;">InvokeElementId</span>：  本页面内隐藏的元素的id，用于显示页面内隐藏的元素中的html内容，注意不要让内容因为不适当的宽度或定位方式而破坏了Dialog的外观。</li>
+	<li><span style="color:red;">Width</span>：窗口宽度（dialog内容区宽度），值为数值型，默认值为窗口可见宽的40%。</li>
+	<li><span style="color:red;">Height</span>：窗口高度（dialog内容区高度），值为数值型，默认值为Dialog宽的50%。</li>
+	<li><span style="color:red;">Left</span>：窗口距浏览器左边距离，值为数值型或字符串型（当使用百分比时为字符串型），如Left:"0%",Top:"0%"为左上，Left:"50%",Top:"50%"为居中，Left:"100%",Top:"100%"为右下。</li>
+	<li><span style="color:red;">Top</span>：窗口距浏览器顶端距离，值为数值型或字符串型（百分比）。</li>
+	<li><span style="color:red;">Drag</span>：是否允许拖动窗口，值为布尔型(true|false)，默认值为true，注意需要页面引用了Drag.js。</li>
+	<li><span style="color:red;">OKEvent</span>：点击确定按钮后执行的函数。</li>
+	<li><span style="color:red;">CancelEvent</span>：点击取消按钮或点击关闭按钮后执行的函数，默认为关闭本Dialog。</li>
+	<li><span style="color:red;">OkButtonText</span>：默认的确定按钮上的文字，值为字符串型，默认值为"确 定"。</li>
+	<li><span style="color:red;">CancelButtonText</span>：默认的取消按钮上的文字，值为字符串型，默认值为"取 消"。</li>
+	<li><span style="color:red;">ShowButtonRow</span>：是否不显示按钮栏，值为布尔型(true|false)，默认值为false，当定义了OKEvent或调用了addButton时自动设为true。</li>
+	<li><span style="color:red;">MessageTitle,Message</span>：自定义的窗口说明栏中的小标题和说明。</li>
+	<li><span style="color:red;">ShowMessageRow</span>：是否显示窗口说明栏，值为布尔型(true|false)，默认值为false，当定义了MessageTitle或Message时自动设为true。</li>
+	<li><span style="color:red;">AutoClose</span>：是否自行关闭，值为数值型，默认值为false。</li>
+	<li><span style="color:red;">ShowCloseButton</span>：是否显示关闭按钮，值为布尔型(true|false)，默认值为true。</li>
+	<li><span style="color:red;">OnLoad</span>：窗口内容载入完成后执行的程序，值为函数型。</li>
+	<li><span style="color:red;">MsgForESC</span>：按ESC时弹出的提示信息，默认为空，不弹出提示信息，值为字符串。</li>
+	<li><span style="color:red;">Animator</span>：遮罩背景是否渐变出现，值为布尔型(true|false)，在ie6及其以下版本ie中默认为false，其他浏览器默认为true。</li>
+</ul>
+
+<h3>1. 普通窗口 </h3>
+<div>
+	<input type="button" value="普通窗口" onclick="open1()"/><select><option>在IE6下能够挡住select控件</option></select>
+	<pre>
+	Dialog.open({
+		Animator: false,
+		URL:"one.html"
+	});
+	</pre>
+</div>
+
+<h3>2. 设定了高宽和标题的普通窗口 </h3>
+<div>
+	<input type="button" value="设定了高宽和标题的普通窗口" onclick="open2()"/>
+	<pre>
+	Dialog.open({
+		Animator: false,
+		URL: 'one.html',
+		Width: 800,
+		Height: 500,
+		Title: '这是我的测试啊'
+	});
+	</pre>
+</div>
+
+<h3>3. 内容页为外部连接的窗口</h3>
+<div>
+	<input type="button" value="内容页为外部连接的窗口" onclick="open3()"/>
+	<pre>
+	Dialog.open({
+		Animator: false,
+		URL: 'one.html',
+		Width: 800,
+		Height: 600,
+		Title: '波波测试'
+	});
+	</pre>
+</div>
+
+<h3>4. 内容页为html代码的窗口</h3>
+<div>
+	<input type="button" value="内容页为html代码的窗口" onclick="open4()"/>
+	<pre>
+	Dialog.open({
+		Animator: false,
+		Width: 800,
+		Height: 500,
+		Title: '测试直接输出HTML的方式',
+		InnerHtml: '&lt;h1&gt;直接输出HTML的方式&lt;/h1&gt;&lt;div style=&quot;background: #dddddd;padding: 10px;&quot;&gt;哇咔咔，测试一哈哈&lt;/div&gt;',
+		OKEvent: function() {
+			Dialog.alert('点击了OK按钮');
+		}
+	});
+	</pre>
+</div>
+
+<h3>5. 内容页为隐藏的元素的html内容</h3>
+<div>
+	<input type="button" value="内容页为隐藏的元素的html内容" onclick="open5()"/>
+	<pre>
+	Dialog.open({
+		Animator: false,
+		Width: 800,
+		Height: 500,
+		Title: '内容为页面内隐藏的元素',
+		InvokeElementId: 'forlogin',
+		OKEvent: function() {
+			Dialog.alert('ok');
+		}
+	});
+	</pre>
+	<div id="forlogin">
+		<table width="100%" border="0" align="center" cellpadding="4" cellspacing="4" bordercolor="#666666">
+		<tr>
+			<td colspan="2" bgcolor="#eeeeee">用户登陆</td>
+		</tr>
+		<tr>
+			<td width="50" align="right">用户名</td>
+			<td><input type="text" id="username" /></td>
+		</tr>
+		<tr>
+			<td align="right">密　码</td>
+			<td><input type="text" id="userpwd"  /></td>
+		</tr>
+		</table>
+	</div>
+</div>
+  
+<h3>6. 在调用页面按钮关闭弹出窗口</h3>
+<div>
+	<input type="button" value="弹出没有遮罩层的窗口" onclick="open6()"/>
+	<input type="button" value="关闭弹出窗口" onclick="closdlg();"/>
+	<pre>
+	Dialog.open({
+		Animator: false,
+		URL: 'one.html',
+		Width: 800,
+		height: 600,
+		Title: '弹出没有遮罩层的窗口',
+		Modal: false,
+		Left: 10,
+		Top: 10,
+		OKEvent: function() {
+			Dialog.close();
+		}
+	});
+	</pre>
+	<span>关闭窗口按钮代码：<font color="#800000"> Dialog.close();</font></span>
+</div>
+
+<h3>7. 在指定位置弹出窗口</h3>
+<div>
+	<input type="button" value="在指定位置弹出窗口" onclick="open7()"/>
+	<pre>
+	Dialog.open({
+		Animator: false,
+		URL: 'one.html',
+		Width: 300,
+		Height: 200,
+		Title: '在指定位置弹出窗口',
+		Top: '100%',
+		Left: '100%',
+		Modal: false
+	});
+	</pre>
+	<span>注：可使用数字或百分比（带百分比符号的字符串）来定义相对于当前窗口的位置，换算效果同css中用百分比定义背景图位置，如Left:"0%",Top:"0%"为左上，Left:"50%",Top:"50%"为居中，Left:"100%",Top:"100%"为右下。</span>
+</div>
+
+<h3>8. 返回值到调用页面</h3>
+<div>
+	<input type="button" value="返回值到调用页面" onclick="open8()"/>
+	<input type="text" id="getval" value="窗口的值返回到这里"/>
+	<pre>
+	var dialog = new Dialog({
+		Animator: false,
+		URL: 'one.html',
+		Width: 700,
+		Height: 700,
+		Title: '返回值到调用页面'
+	});
+	dialog.OKEvent = function() {
+		document.getElementById('getval').value = dialog.innerFrame.contentWindow.document.getElementById('qq').value;
+		dialog.close();
+	};
+	dialog.show();
+	</pre>
+</div>
+
+<h3>9. 代替window.alert及window.confirm</h3>
+<div>
+	<input type="button" value="alert" onclick="open9()"/>
+	<input type="button"  value="confirm" onclick="open10();"/>
+	<pre>
+	Dialog.alert("提示，你点击了一个按钮");
+	Dialog.confirm('警告：您确认要这样吗？', function(){Dialog.alert("好吧，你确定")}, function() {Dialog.alert('你点了取消')});
+	</pre>
+	<span>注：Dialog.alert(msg, func, w, h)第二个参数为点击“确定”按钮后执行的函数。<br>
+	Dialog.confirm(msg, funcOK, funcCal, w, h)第二个参数为点击“确定”按钮后执行的函数，第三个参数为点击“取消”按钮后执行的函数。</span>
+</div>
+
+<h3>10. 创建其它按钮</h3>
+<div>
+	<input type="button" value="创建其它按钮" onclick="open11()"/>
+	<pre>
+	var dialog = new Dialog({
+		Animator: false,
+		URL: 'one.html',
+		Title: '创建其他按钮'
+	});
+	dialog.show();
+	dialog.addButton('next', '新增按钮', function() {
+		Dialog.confirm('警告：您确认要这样吗？', function(){Dialog.alert("好吧，你确定")}, function() {Dialog.alert('你点了取消')});
+	});
+	</pre>
+</div>
+
+<h3>11. 带有内容说明栏的新窗口</h3>
+<div>
+	<input type="button" value="弹出带说明栏的新窗口" onclick="open12()"/>
+	<pre>
+	var dialog = new Dialog({
+		Animator: false,
+		URL: 'one.html',
+		Title: '带有说明栏的新窗口',
+		MessageTitle: '测试一哈MessageTitle',
+		Message: '测试一哈Message'
+	});
+	dialog.show();
+	dialog.addButton('next', '新增按钮', function() {
+		Dialog.confirm('警告：您确认要这样吗？', function(){Dialog.alert("好吧，你确定")}, function() {Dialog.alert('你点了取消')});
+	});
+	</pre>
+</div>
+
+<h3>12. 显示窗体内容页面标题</h3>
+<div>
+	<input type="button" value="显示窗体内容页面标题" onclick="open13()"/>
+	<pre>
+	Dialog.open({
+		Animator: false,
+		URL: 'one.html'
+	});
+	</pre>
+	<span>注：如果窗体内为iframe内容页，并且没有设置Title属性，并且引用页和当前页在同一个域内，则显示显示窗体内容页面标题。</span>
+</div>
+
+<h3>13. 在弹窗的内容载入完成后，执行方法</h3>
+<div>
+	<input type="button" value="在弹窗载入完成后，执行方法" onclick="open14()"/>
+	<pre>
+	Dialog.open({
+		Animator: false,
+		URL: 'one.html',
+		OnLoad: function() {
+			Dialog.alert('页面载入完成');
+		}
+	});
+	</pre>
+	<span>注：如果窗体内为iframe内容页，要在载入完成后对内容页作操作，必须考虑访问权限，如引用页和当前页应在同一个域内。</span>
+</div>
+
+<h3>14. 点击取消及关闭时执行方法</h3>
+<div>
+	<input type="button" value="点击取消及关闭时执行方法 " onclick="open15()"/>
+	<pre>
+	var dialog = new Dialog({
+		Animator: false,
+		URL: 'one.html',
+		Title: '点击取消或关闭按钮时执行的方法',
+		Width: 800,
+		Height: 700,
+		Drag: false,
+		ShowButtonRow: true,
+		CancelEvent: function() {
+			Dialog.confirm('确定要关闭这个对话框？', function() {Dialog.alert('点了确定')}, function() {Dialog.alert('点了取消')});
+		}
+	});
+	dialog.show();
+	</pre>
+</div>
+
+<h3>15. 不允许拖拽</h3>
+<div>
+	<input type="button" value="不允许拖拽" onclick="Dialog.open({Drag:false,URL:'one.html'});"/>
+	<pre>
+	Dialog.open({Drag:false,URL:'one.html'});
+	</pre>
+</div>
+
+<h3>16. 动态改变窗口大小</h3>
+<div>
+	<input type="button" value="动态改变窗口大小" onclick="open16()"/>
+	<pre>
+	var dialog = new Dialog({
+		Animator: false,
+		URL: 'one.html',
+		Title: '修改窗体大小',
+		ShowButtonRow: true,
+		OkButtonText: '改变窗口大小'
+	});
+	dialog.OKEvent = function() {
+		dialog.setSize(800, 500);
+		dialog.okButton.disabled = true;
+	}
+	dialog.show();
+	</pre>
+</div>
+
+<h3>17. 弹出窗口自动关闭</h3>
+<div>
+	<input type="button" value="自动关闭" onclick="open17()"/>
+	<pre>
+	Dialog.open({
+		Animator: false,
+		Title: '操作提示',
+		Width: 250,
+		Height: 50,
+		AutoClose: 3,
+		ShowCloseButton: false,
+		InnerHtml: '&lt;table height=&quot;100%&quot;&gt;&lt;tr&gt;&lt;td&gt;用户添加成功&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;',
+		Top: 0,
+		Left: '50%',
+		Modal: false
+	});
+	</pre>
+	<span>注：AutoClose为自动关闭时间，单位秒</span>
+</div>
+
+<h3>18. 设置确定按钮及取消按钮的属性</h3>
+<div>
+	<input type="button" value="设置确定按钮及取消按钮的属性" onclick="open18()"/>
+	<pre>
+	Dialog.open({
+		Animator: false,
+		URL: 'one.html',
+		Title: '设置确定按钮及取消按钮的属性',
+		OkButtonText: '这是确定哈',
+		CancelButtonText: '这是取消哈',
+		ShowButtonRow: true
+	});
+	</pre>
+</div>
+  
+<h3>19. 窗体内的按钮操作父Dialog</h3>
+<div>
+	<input type="button" value="窗体内的按钮操作父Dialog" onclick="open19()"/>
+	<pre>
+	var dialog = new Dialog({
+		Animator: false,
+		URL: 'two.html',
+		Title: '窗体内的按钮操作父Dialog'
+	});
+	dialog.CancelEvent = function() {
+		Dialog.alert('关闭了');
+		dialog.close();
+	};
+	dialog.show();
+	</pre>
+</div>
+
+<h3>20. 提交表单后，刷新父窗口</h3>
+<div>
+	<input type="button" value="提交表单后，刷新父窗口" onclick="open20()"/>
+	<pre>
+	var diag = new Dialog();
+	diag.URL = "one.html";
+	diag.OKEvent=function(){diag.innerDoc.getElementById('form1').submit();diag.submited=true;};
+	diag.OnLoad=function(){
+		if(diag.submited){
+			alert('表单已经提交成功\n'+location+'\n接下来将刷新父窗口。');
+			diag.openerWindow.location.reload();
+            try{
+				diag.close();
+            }catch(e){}
+		}
+	};
+	diag.show();
+	</pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>one</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+<script type="text/javascript" src="../res/js/zdialog/zDrag.js"></script>
+<script type="text/javascript" src="../res/js/zdialog/zDialog.js"></script>
+
+<style>
+body { font-family: '微软雅黑'; font-size: 12px; margin: 0; padding: 0; }
+</style>
+
+<script type="text/javascript">
+function fun2() {
+	ownerDialog.close();
+}
+
+function fun3() {
+	var dialog = new Dialog({
+		URL: 'two.html',
+		Width: 500,
+		Height: 400,
+		Title: '内容页为外部链接的窗口',
+		OkButtonText: '关闭本弹出框及父弹出框'
+	});
+	dialog.OKEvent = function() {
+		dialog.close();
+		dialog.openerDialog.close();
+	};
+	dialog.show();
+}
+</script>
+</head>
+
+<body>
+	<div id="forlogin">
+		<form id="form1" name="form1" action="one.html" method="post">
+			<table width="100%" border="0" align="center" cellpadding="4" cellspacing="4" bordercolor="#666666">
+			<tr>
+				<td colspan="2" bgcolor="#eeeeee">这儿是弹出窗口中的表单</td>
+			</tr>
+			<tr>
+				<td width="150" align="right">你的QQ：</td>
+				<td><input type="text" id="qq" /></td>
+			</tr>
+			<tr>
+				<td width="150" align="right">你的E-mail：</td>
+				<td><input type="text" id="mail" /></td>
+			</tr>
+			<tr>
+				<td align="right">你从哪儿获知本程序的？</td>
+				<td><input type="text" id="track" /></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="button" onClick="fun3()" value="再弹出一个Dialog" />
+					<input type="button" onClick="fun2()" value="关闭所在Dialog" />
+				</td>
+			</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>

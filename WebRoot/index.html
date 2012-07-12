@@ -1,0 +1,154 @@
+<html>
+<head>
+<title>暴风调度系统</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+<script type="text/javascript" src="res/js/jquery/jquery-1.6.2.min.js"></script>
+
+<script type="text/javascript" src="res/js/navi/navi.js"></script>
+
+<script type="text/javascript" src="res/js/zdialog/zDrag.js"></script>
+<script type="text/javascript" src="res/js/zdialog/zDialog.js"></script>
+
+<link rel="stylesheet" type="text/css" href="res/skin/all.css" />
+
+<script>
+$(function() {
+	// navi
+	var navi = new NaviTree({
+		container_horiz: $('#td-navi'),
+		container_vertical: $('#left-navi'),
+		loadUrl: 'data/navi/navi.xml',
+		dataType: 'xml',
+		timeout: 10000,
+		indent: 6,
+		click: function(node) {
+			node.toggle();
+			if(node.url) {
+				main.location.href = node.url;
+			}
+		}
+	});
+	navi.init();
+//	$.easing.def = "easeInOutBounce"; 
+	//$.easing.def = "jswing"; 
+	$("#top-right").animate({ marginRight: '4em', opacity: "show"}, {duration: 2500});
+	//$("#top-right").animate({ scrollLeft: $(this).scrollLeft()+100}, {duration: 2500});	
+});
+var daemon_id=0;
+var machine_ip="";
+var machine_port=0;
+</script>
+
+<style>
+body {
+	padding: 0;
+	overflow: hidden;
+}
+#td-top {
+	height: 50px;
+	background: #f5f8f9;
+	color: #e17009;
+}
+#td-navi {
+	height: 30px;
+	border: 1px solid #c5dbec;
+	background: #dfeffc;
+}
+#td-left {
+	width: 170px;
+	vertical-align: top;
+}
+#td-toggle {
+	width: 3px;
+	padding: 0 1px;
+	vertical-align: middle;
+	border-left: 1px solid #c5dbec;
+	border-right: 1px solid #c5dbec;
+}
+#top-logo {
+	height: 50px;
+	float: left;
+	width: 279px; /*修改为logo图片width*/
+	background: url() no-repeat; /*在这里添加logo图片路径*/
+}
+#top-right {
+	color: #000000;
+	height: 50px;
+	line-height: 25px;
+	text-align: center;
+	white-space: nowrap;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+#top-right span {
+	color: #e17009;
+	font-weight: bold;
+}
+#top-right a,
+#top-right a:hover,
+#top-right a:active,
+#top-right a:visited {
+	color: #0066cc;
+	font-weight: bold;
+}
+#top-right a:hover {
+	text-decoration: underline;
+}
+#left-navi {
+	overflow: auto;
+	height: 100%;
+}
+</style>
+</head>
+
+<body scroll="no">
+	<table width="100%" height="100%">
+	<tr>
+		<td id="td-top">
+			<div id="top-logo"><img src="/res/images/logo/logo.jpg"/></div>
+			<!-- 
+			<div id="top-right">
+				<div>当前用户：<span>Admin</span>&nbsp;角色：<span>系统管理员</span></div>
+				<div>
+					[&nbsp;<a href="default.html" target="main">首页</a>&nbsp;|
+					<a href="#" target="main">消息(0)</a>&nbsp;|
+					<a href="#" target="main">退出登录</a>&nbsp;|
+					<a href="#" target="main">修改密码</a>&nbsp;]
+				</div>
+			</div>
+			 -->
+			 <div id="top-right" style="margin-right:20em;display:none">
+			 	<div><img src="/res/images/logo/logo_designer.jpg"/></div>
+			 </div>
+		</td>
+	</tr>
+	<tr>
+		<td id="td-navi">
+			
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table width="100%" height="100%">
+			<tr>
+				<td id="td-left">
+					<div id="left-navi">
+						
+					</div>
+				</td>
+				<td id="td-toggle">
+				</td>
+				<td>
+					<iframe id="main" name="main" src="/page/cronhub_record/done/CronhubHistoryStruct.html" width="100%" height="100%" scrolling="yes" frameborder="0"></iframe>
+				</td>
+			</tr>
+			</table>
+		</td>
+	</tr>
+	<!-- 马晨的copyright 
+	<tr><td>copyright and designed by 马晨 2011</td></tr>-->
+	</table>
+</body>
+</html>

@@ -1,0 +1,17 @@
+@charset 'utf-8';
+
+label.error {
+	width: 240px;
+	padding-left: 20px;
+	color: red;
+	background: url(/res/icons/16x16/cancel.png) no-repeat 3px 2px;
+	position: absolute;
+	left: 380px;
+	top: 15px;
+}
+label.valid {
+	background: url(/res/icons/16x16/accept.png) no-repeat 3px 2px;
+}
+input.error {
+	
+}

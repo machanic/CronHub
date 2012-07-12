@@ -1,0 +1,72 @@
+@charset 'utf-8';
+
+.formtable {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.formtable label {
+	display: inline-block;
+}
+.formtable td {
+	border-bottom: 1px dotted #ccc;
+	padding: 10px;
+	position: relative;
+	align:center
+}
+.formtable span {
+	display: block;
+	color: #aaa;
+}
+.formtable b {
+	color: red;
+	padding: 0 3px;
+}
+.formtable td div {
+	position: relative;
+}
+.toTop, .toTop:active, .toTop:visited {
+	color: #0066cc;
+	display: block;
+	padding: 10px 0;
+}
+.toTop:hover {
+	color: #e17009;
+	text-decoration: underline;
+}
+.input-shorttext {
+	width: 100px;
+	height: 25px;
+	line-height: 25px;
+	padding: 0 3px;
+	border: 1px solid #cccccc;
+}
+.input-text,
+.input-file,
+.input-textarea,
+.input-select {
+	width: 300px;
+	height: 25px;
+	line-height: 25px;
+	padding: 0 3px;
+	border: 1px solid #cccccc;
+}
+.input-shortselect{
+	width: 150px;
+	height: 25px;
+	line-height: 25px;
+	padding: 0 3px;
+	border: 1px solid #cccccc;
+}
+.input-file {
+	width: 308px;
+}
+.input-textarea {
+	height: 100px;
+	resize: none;
+}
+.input-select {
+	width: 308px;
+	height: 27px;
+	line-height: 27px;
+}

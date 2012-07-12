@@ -1,0 +1,43 @@
+@charset 'utf-8';
+
+.toolbar {
+	padding: 5px 0;
+}
+.toolbar a, .formtable a {
+	border: 1px solid #c5dbec;
+	display: inline-block;
+	height: 25px;
+	line-height: 25px;
+	padding: 0 5px;
+	cursor: pointer;
+	text-decoration: none;
+	background: #dfeffc;
+}
+.toolbar a:hover, .formtable a:hover {
+	border: 1px solid #79b7e7;
+	background: #d0e5f5;
+}
+.toolbar a img, .formtable a img {
+	margin-right: 5px;
+	vertical-align: middle;
+}
+
+button {
+	border: 1px solid #c5dbec;
+	height: 27px;
+	line-height: 27px;
+	margin: 0 2px;
+	cursor: pointer;
+	background: #fff;
+	padding: 0 5px;
+	background: #dfeffc;
+}
+button:hover {
+	border: 1px solid #79b7e7;
+	background: #d0e5f5;
+}
+button img {
+	margin-right: 5px;
+	vertical-align: middle;
+}
+

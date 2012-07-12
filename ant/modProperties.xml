@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="modProperties" default="mod" basedir="."> 
+  <property name="classesDir" value="${webRootDir}/WEB-INF/classes"/>  
+  <target name="mod" depends="copy"> 
+    <echo message="begin change using file ${modFile}"/>  
+    <property file="${modFile}"/>  
+    <!-- 
+		<replaceregexp byline="true">
+							<regexp pattern="^[^\#]$(replaceStr)=(.+)$" />
+							<substitution expression="load_template_name=${load_template_name}" />
+							<fileset dir="${classesDir}" includes="application.properties" />
+		</replaceregexp>
+		 
+		 
+		<loadproperties srcFile="${modFile}">
+			<filterchain>
+				<filterreader classname="org.apache.tools.ant.filters.LineContainsRegExp">
+					<param name="replaceStr" type="regexp" value="^[^\#](.+)=(.+)$" >
+						<replaceregexp byline="true">
+							<regexp pattern="^[^\#]$(replaceStr)=(.+)$" />
+							<substitution expression="load_template_name=${load_template_name}" />
+							<fileset dir="${build.conf}" includes="application.properties" />
+						</replaceregexp>
+					</param>
+				</filterreader>
+				</filterchain>
+		</loadproperties>
+				<for list="${mods}" param="item">
+					<sequential>
+						<propertyfile file="${classesDir}/application.properties" comment="the file properties to set">
+							<entry key="${item.key}" value="${item.value}"/>
+						</propertyfile>		
+					</sequential>
+					<sequential>
+						<propertyfile file="${classesDir}/log4j.properties" comment="the file properties to set">
+							<entry key="${item.key}" value="${item.value}"/>
+						</propertyfile>		
+					</sequential>
+				</for>
+				
+		-->  
+    <!-- 
+		<filterset id="propertiesFilter" begintoken="=" endtoken="$">
+			<filtersfile file="${modFile}"/>
+		</filterset>
+		<copy todir="${classesDir}">
+			<fileset dir="${configDir}">
+				<include name="application.properties"></include>
+				<include name="log4j.properties"></include>
+			</fileset>
+			<filterset refid="propertiesFilter"/>
+		</copy>
+		 -->  
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.validate.File=.*$"/>
+      <substitution expression="log4j.appender.validate.File=${log4j.appender.validate.File}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.logger.Validate=.*$"/>
+      <substitution expression="log4j.logger.Validate=${log4j.logger.Validate}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.logger.RecordUndoLogger=.*$"/>
+      <substitution expression="log4j.logger.RecordUndoLogger=${log4j.logger.RecordUndoLogger}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.validate.layout.ConversionPattern=.*$"/>
+      <substitution expression="log4j.appender.validate.layout.ConversionPattern=${log4j.appender.validate.layout.ConversionPattern}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.daemonError.File=.*$"/>
+      <substitution expression="log4j.appender.daemonError.File=${log4j.appender.daemonError.File}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.recordDoneLogger.DatePattern=.*$"/>
+      <substitution expression="log4j.appender.recordDoneLogger.DatePattern=${log4j.appender.recordDoneLogger.DatePattern}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.err=.*$"/>
+      <substitution expression="log4j.appender.err=${log4j.appender.err}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.recordUndoLogger=.*$"/>
+      <substitution expression="log4j.appender.recordUndoLogger=${log4j.appender.recordUndoLogger}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.daemonError.layout=.*$"/>
+      <substitution expression="log4j.appender.daemonError.layout=${log4j.appender.daemonError.layout}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.stdout.layout=.*$"/>
+      <substitution expression="log4j.appender.stdout.layout=${log4j.appender.stdout.layout}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.validate=.*$"/>
+      <substitution expression="log4j.appender.validate=${log4j.appender.validate}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^db.password=.*$"/>
+      <substitution expression="db.password=${db.password}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.recordDoneLogger.layout.ConversionPattern=.*$"/>
+      <substitution expression="log4j.appender.recordDoneLogger.layout.ConversionPattern=${log4j.appender.recordDoneLogger.layout.ConversionPattern}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.logger.Error=.*$"/>
+      <substitution expression="log4j.logger.Error=${log4j.logger.Error}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.err.layout.ConversionPattern=.*$"/>
+      <substitution expression="log4j.appender.err.layout.ConversionPattern=${log4j.appender.err.layout.ConversionPattern}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.recordDoneError.DatePattern=.*$"/>
+      <substitution expression="log4j.appender.recordDoneError.DatePattern=${log4j.appender.recordDoneError.DatePattern}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^db.username=.*$"/>
+      <substitution expression="db.username=${db.username}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.stdout=.*$"/>
+      <substitution expression="log4j.appender.stdout=${log4j.appender.stdout}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^alertFromUserMail=.*$"/>
+      <substitution expression="alertFromUserMail=${alertFromUserMail}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.err.DatePattern=.*$"/>
+      <substitution expression="log4j.appender.err.DatePattern=${log4j.appender.err.DatePattern}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.recordUndoLogger.layout.ConversionPattern=.*$"/>
+      <substitution expression="log4j.appender.recordUndoLogger.layout.ConversionPattern=${log4j.appender.recordUndoLogger.layout.ConversionPattern}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.daemonError.layout.ConversionPattern=.*$"/>
+      <substitution expression="log4j.appender.daemonError.layout.ConversionPattern=${log4j.appender.daemonError.layout.ConversionPattern}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.recordUndoLogger.layout=.*$"/>
+      <substitution expression="log4j.appender.recordUndoLogger.layout=${log4j.appender.recordUndoLogger.layout}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.rootLogger=.*$"/>
+      <substitution expression="log4j.rootLogger=${log4j.rootLogger}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.recordDoneError.layout=.*$"/>
+      <substitution expression="log4j.appender.recordDoneError.layout=${log4j.appender.recordDoneError.layout}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.recordDoneError.File=.*$"/>
+      <substitution expression="log4j.appender.recordDoneError.File=${log4j.appender.recordDoneError.File}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.err.layout=.*$"/>
+      <substitution expression="log4j.appender.err.layout=${log4j.appender.err.layout}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.validate.layout=.*$"/>
+      <substitution expression="log4j.appender.validate.layout=${log4j.appender.validate.layout}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^alertDestMail=.*$"/>
+      <substitution expression="alertDestMail=${alertDestMail}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.err.File=.*$"/>
+      <substitution expression="log4j.appender.err.File=${log4j.appender.err.File}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.recordUndoLogger.DatePattern=.*$"/>
+      <substitution expression="log4j.appender.recordUndoLogger.DatePattern=${log4j.appender.recordUndoLogger.DatePattern}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^alertFromPassword=.*$"/>
+      <substitution expression="alertFromPassword=${alertFromPassword}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.daemonError.DatePattern=.*$"/>
+      <substitution expression="log4j.appender.daemonError.DatePattern=${log4j.appender.daemonError.DatePattern}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^undoReportHttpUrl=.*$"/>
+      <substitution expression="undoReportHttpUrl=${undoReportHttpUrl}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.validate.DatePattern=.*$"/>
+      <substitution expression="log4j.appender.validate.DatePattern=${log4j.appender.validate.DatePattern}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.logger.RecordDoneLogger=.*$"/>
+      <substitution expression="log4j.logger.RecordDoneLogger=${log4j.logger.RecordDoneLogger}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.recordDoneLogger.layout=.*$"/>
+      <substitution expression="log4j.appender.recordDoneLogger.layout=${log4j.appender.recordDoneLogger.layout}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^serverRootUrl=.*$"/>
+      <substitution expression="serverRootUrl=${serverRootUrl}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.logger.DaemonError=.*$"/>
+      <substitution expression="log4j.logger.DaemonError=${log4j.logger.DaemonError}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^alertHostMail=.*$"/>
+      <substitution expression="alertHostMail=${alertHostMail}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.recordDoneLogger=.*$"/>
+      <substitution expression="log4j.appender.recordDoneLogger=${log4j.appender.recordDoneLogger}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.stdout.layout.ConversionPattern=.*$"/>
+      <substitution expression="log4j.appender.stdout.layout.ConversionPattern=${log4j.appender.stdout.layout.ConversionPattern}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.recordDoneLogger.File=.*$"/>
+      <substitution expression="log4j.appender.recordDoneLogger.File=${log4j.appender.recordDoneLogger.File}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^db.jdbcurl=.*$"/>
+      <substitution expression="db.jdbcurl=${db.jdbcurl}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.daemonError=.*$"/>
+      <substitution expression="log4j.appender.daemonError=${log4j.appender.daemonError}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.recordUndoLogger.File=.*$"/>
+      <substitution expression="log4j.appender.recordUndoLogger.File=${log4j.appender.recordUndoLogger.File}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.logger.RecordDoneError=.*$"/>
+      <substitution expression="log4j.logger.RecordDoneError=${log4j.logger.RecordDoneError}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true">
+      <regexp pattern="^log4j.appender.recordDoneError=.*$"/>
+      <substitution expression="log4j.appender.recordDoneError=${log4j.appender.recordDoneError}"/>
+      <fileset dir="${classesDir}">
+        <include name="application.properties"/>
+        <include name="log4j.properties"/>
+      </fileset>
+    </replaceregexp>
+  </target>  
+  <target name="clean"> 
+    <delete> 
+      <fileset dir="${classesDir}"> 
+        <include name="*.properties"/> 
+      </fileset> 
+    </delete>  
+    <echo message="clean ${classesDir}'s properties done!"/> 
+  </target>  
+  <target name="copy" depends="clean"> 
+    <copy todir="${classesDir}"> 
+      <fileset dir="${configDir}"> 
+        <include name="application.properties"/>  
+        <include name="log4j.properties"/> 
+      </fileset> 
+    </copy>  
+    <echo message="copy properties done!"/> 
+  </target> 
+</project>

@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>normal_withcontextmenu</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+<script type="text/javascript" src="../../res/js/jquery/jquery-1.6.2.min.js"></script>
+
+<script type="text/javascript" src="../../res/js/jqtree/jqtree.js"></script>
+
+<script type="text/javascript" src="../../res/js/contextmenu/jquery.contextmenu.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../../res/skin/all.css" />
+
+<script type="text/javascript">
+$(function() {
+	// jqtree contextmenu
+	var ctxmenu = $(window).contextMenu([
+			{'修改': {id: 'item1', icon: '../../res/icons/16x16/application_form_magnify.png', onclick: function() {
+				//rightframe.location.href = 'create.do?id=' + this.id;
+				alert('id: ' + this.id + ' --- name: ' + this.name);
+			}}},
+			{'详细信息': {id: 'item2', icon: '../../res/icons/16x16/bug_add.png', onclick: function() {
+				alert('详细信息');
+			}}},
+			{'用户角色': {id: 'item3', icon: '../../res/icons/16x16/calculator_delete.png', onclick: function() {
+				alert('用户角色');
+			}}},
+			{'删除': {id: 'item4', icon: '../../res/icons/16x16/clock_edit.png', onclick: function() {
+				alert('删除');
+			}}},
+			{'其他': {id: 'item5', icon: '../../res/icons/16x16/cup_key.png', onclick: function() {
+				alert('其他');
+			}}}
+		]
+	);
+	
+	// jqtree
+	var tree = new IconTree({
+		container: $('#tree'),
+		loadUrl: '../../data/jqtree/normal/data_everynode.jsp',
+		timeout: 10000,
+		indent: 30,
+		createRequestParam: function(node) {
+			node.data = { id: node.id };
+		},
+		arrowClick: function(node) {
+			node.toggle();
+		},
+		dblclick: function(node) {
+			node.toggle();
+		},
+		click: function(node) {
+			$('#log').html($('#log').html() + 'click --- id: ' + node.id + ', name: ' + node.name + '<br/>');
+		},
+		contextmenu: ctxmenu
+	});
+	tree.init();
+});
+</script>
+</head>
+
+<body>
+	<div id="tree"></div>
+	
+	<div id="log" style="position: absolute;top: 0;right: 0;"></div>
+</body>
+</html>

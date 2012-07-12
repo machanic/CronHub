@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+	
+<struts>
+	<package name="record_undo" namespace="/record_undo" extends="interceptors">
+		<action name="report" class="reportUndoAction" method="reportUndoSave">
+		</action>
+		<action name="createTree" class="record.undo.treeLoadAction" method="createInitTree"></action>
+		<action name="first_page_view" class="recordUndoPageViewAction" method="findFirstPage">
+			<result name="success" >
+				/page/cronhub_record/undo/CronhubHistoryView.jsp
+			</result>
+		</action>
+		<action name="next_page_view" class="recordUndoPageViewAction" method="findNextPageNo">
+			<result name="success" >
+				/page/cronhub_record/undo/CronhubHistoryView.jsp
+			</result>
+		</action>
+		<action name="prev_page_view" class="recordUndoPageViewAction" method="findPrevPageNo">
+			<result name="success" >
+				/page/cronhub_record/undo/CronhubHistoryView.jsp
+			</result>
+		</action>
+		<action name="last_page_view" class="recordUndoPageViewAction" method="findLastPage">
+			<result name="success" >
+				/page/cronhub_record/undo/CronhubHistoryView.jsp
+			</result>
+		</action>
+	</package>
+</struts>

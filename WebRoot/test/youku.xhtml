@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>test.xhtml</title>
+		<meta http-equiv="keywords" content="enter,your,keywords,here" />
+		<meta http-equiv="description" content="A short description of this page." />
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		
+		<!--<link rel="stylesheet" type="text/css" href="styles.css">-->
+		<script type="text/javascript" src="/res/js/jquery/jquery-1.6.2.min.js"></script>
+		<script type="text/javascript">
+		
+		$(function(){
+			var url = "http://v.youku.com/player/getPlayList/VideoIDS/XMzE4NzYwNDgw";
+			function callback(data){
+			alert(data);
+			}
+			ajaxReq(url,callback);
+		});
+		function ajaxReq(url,callback){
+			var iframe = document.createElement("iframe");
+			iframe.setAttribute('id',"ajaxFrame");
+			iframe.src =url;
+			if (iframe.attachEvent){
+			    iframe.attachEvent("onload", function(){
+			       callback($("#ajaxFrame").contents());
+			    });
+			} else {
+			    iframe.onload = function(){
+			         callback($("#ajaxFrame").contents());
+			    };
+			}
+			document.body.appendChild(iframe);
+		}
+		</script>
+	</head>
+	<body>
+		<p>
+		</p>
+	</body>
+</html>

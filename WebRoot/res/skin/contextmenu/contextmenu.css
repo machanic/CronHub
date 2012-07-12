@@ -1,0 +1,40 @@
+@charset 'utf-8';
+
+.context-menu-theme-vista {
+	background:#FAFAFA;
+	border:1px solid #aaa;
+}
+.context-menu-theme-vista .context-menu-item {
+	text-align:left;
+	cursor:pointer;
+}
+.context-menu-theme-vista .context-menu-separator {
+	margin:0px 0px 0px 32px;
+	font-size:0px;
+	border-top:1px solid #C5C5C5;
+	border-bottom:1px solid #F5F5F5;
+}
+.context-menu-theme-vista .context-menu-item-hover {
+	border: 1px solid #79b7e7;
+	background: #d0e5f5;
+}
+.context-menu-theme-vista .context-menu-item .context-menu-item-inner {
+	padding:4px 16px 4px 35px;
+	margin-left:1px;
+	background-color:none;
+	background-repeat:no-repeat;
+	background-position:3px center;
+	background-image:none;
+}
+.context-menu-theme-vista .context-menu-item-hover .context-menu-item-inner {
+	padding:3px 15px 3px 35px;
+	margin-left:0px;
+}
+.context-menu-theme-vista .context-menu-item-disabled {
+	color:#A7A7A7;
+}
+
+.context-menu-selected {
+	color: red;
+	background: #FFFACD;
+}

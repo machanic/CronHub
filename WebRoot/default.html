@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>default</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+<script type="text/javascript" src="res/js/jquery/jquery-1.6.2.min.js"></script>
+
+<script type="text/javascript" src="res/js/tab/tab.js"></script>
+
+<link rel="stylesheet" type="text/css" href="res/skin/all.css" />
+
+<script>
+$(function() {
+	// Ajax Tab
+	var tab1 = new AjaxTab({
+		container: $('#tab1'),
+		selectedIndex: 1,
+		items: [
+			{ text: '选项卡一', loadUrl: 'data/tabs/tab-1.jsp', icon: 'res/icons/16x16/application_side_list.png' },
+			{ text: '选项卡二', loadUrl: 'data/tabs/tab-2.jsp', icon: 'res/icons/16x16/application_side_list.png' },
+			{ text: '选项卡三', loadUrl: 'data/tabs/tab-3.jsp', icon: 'res/icons/16x16/application_side_list.png' }
+		]
+	});
+	
+	// Ajax Tab
+	var tab2 = new AjaxTab({
+		container: $('#tab2'),
+		items: [
+			{ text: '选项卡一', loadUrl: 'data/tabs/tab-4.jsp', icon: 'res/icons/16x16/application_side_list.png' }
+		]
+	});
+	
+	// Ajax Tab
+	var tab3 = new AjaxTab({
+		container: $('#tab3'),
+		items: [
+			{ text: '选项卡一', loadUrl: 'data/tabs/tab-5.jsp', icon: 'res/icons/16x16/application_side_list.png' }
+		]
+	});
+	
+	// Normal Tab
+	var tab4 = new Tab({
+		container: $('#tab4'),
+		selectedIndex: 2
+	});
+	
+});
+</script>
+
+<style>
+.column {
+	width: 49%;
+	float: left;
+}
+.tab-more {
+	text-align: right;
+	padding: 5px;
+}
+.list-item {
+	border-bottom: 1px dashed #aaaaaa;
+	text-align: right;
+}
+.list-item-l {
+	float: left;
+	text-align: left;
+	line-height: 28px;
+	width: 50%;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.list-item-r {
+	line-height: 28px;
+	color: green;
+	white-space: nowrap;
+}
+</style>
+</head>
+
+<body>
+	<div class="column">
+		<div id="tab1"></div>
+		<div id="tab2"></div>
+	</div>
+	<div class="column">
+		<div id="tab3"></div>
+		<div id="tab4">
+			<div>
+				<a><img src="res/icons/16x16/application_side_list.png" />用户列表</a>
+				<a><img src="res/icons/16x16/application_side_list.png" />角色列表</a>
+				<a><img src="res/icons/16x16/application_side_list.png" />组织列表</a>
+			</div>
+			<div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form_edit.png />浙江开通基层党建手机信息系统</div><span class=list-item-r>网易</span></div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form_edit.png />我国拟修改选举法 民主政治发展重要一步</div><span class=list-item-r>泡泡网</span></div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form_edit.png />春节黄金周内蒙古自治区国内旅游收入4.32亿元</div><span class=list-item-r>开心网</span></div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form.png />【声音】任志强：我的收入由国资委决定</div><span class=list-item-r>CSDN</span></div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form.png />昆明市年度精品案例出炉 “污点证人”制度成亮点</div><span class=list-item-r>新浪网</span></div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form.png />云南保山全力保证人畜饮水</div><span class=list-item-r>天涯论坛</span></div>
+				<div class=tab-more><a href=#>更多»</a></div>
+			</div>
+			<div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form_edit.png />快讯：胡锦涛举行仪式欢迎奥巴马首次访华</div><span class=list-item-r>2010-09-08 08:30:00</span></div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form_edit.png />中国平安首笔赔付山东威海坠车事故532万元</div><span class=list-item-r>2010-09-08 08:30:00</span></div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form_edit.png />上实发展4亿转让海际地产</div><span class=list-item-r>2010-09-08 08:30:00</span></div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form.png />ST星美新重组方案最迟5个交易日内揭晓</div><span class=list-item-r>2010-09-08 08:30:00</span></div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form.png />中国对美汽车双反调查进入登记应诉阶段</div><span class=list-item-r>2010-09-08 08:30:00</span></div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form.png />图们江区域开发新规划获国务院批准</div><span class=list-item-r>2010-09-08 08:30:00</span></div>
+				<div class=tab-more><a href=#>更多»</a></div>
+			</div>
+			<div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form_edit.png />奥巴马在上海与数百中国青年面对面</div><span class=list-item-r>2010-09-08 08:30:00</span></div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form_edit.png />广东首例甲流死亡病例去世后才确诊</div><span class=list-item-r>2010-09-08 08:30:00</span></div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form_edit.png />统计局官员称三代人积蓄才可买房</div><span class=list-item-r>2010-09-08 08:30:00</span></div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form.png />武钢与委内瑞拉签铁矿石中国价格长期协议</div><span class=list-item-r>2010-09-08 08:30:00</span></div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form.png />电价月底拟每度上调2.5分 下游企业承压</div><span class=list-item-r>2010-09-08 08:30:00</span></div>
+				<div class=list-item><div class=list-item-l><img src=res/icons/16x16/application_form.png />美国阿特兰蒂斯号航天飞机发射升空</div><span class=list-item-r>2010-09-08 08:30:00</span></div>
+				<div class=tab-more><a href=#>更多»</a></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"  
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	
+	<bean id="reportUndoAction" class="org.cronhub.managesystem.modules.record.undo.action.ReportUndoAction">	
+		<property name="undoRecordDao">
+			<ref bean="undoRecordDao"/>
+		</property>
+		<property name="taskDao">
+			<ref bean="taskDao"/>
+		</property>
+	</bean>
+	<bean id="undoRecordDao" class="org.cronhub.managesystem.modules.record.undo.dao.impl.UndoRecordDaoImpl">
+		<property name="jdbcTemplate">
+			<ref bean="jdbcTemplate"/>
+		</property>
+		<property name="daemonDao">
+			<ref bean="daemonDao"/>
+		</property>
+		<property name="taskDao">
+			<ref bean="taskDao"/>
+		</property>
+	</bean>
+	<bean id="record.undo.treeLoadAction" class="org.cronhub.managesystem.modules.record.undo.action.TreeLoadAction">
+		<property name="recordDao">
+			<ref bean="undoRecordDao"/>
+		</property>
+	</bean>
+	<bean id="recordUndoPageViewAction" class="org.cronhub.managesystem.modules.record.undo.action.PageViewAction">
+		<property name="undoRecordDao">
+			<ref bean="undoRecordDao"/>
+		</property>
+		<property name="pageGen">
+			<ref bean="pageSqlGen"/>
+		</property>
+	</bean>
+</beans>
