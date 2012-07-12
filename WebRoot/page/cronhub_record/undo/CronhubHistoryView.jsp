@@ -59,6 +59,7 @@ $(function() {
 		}*/
 	);
 	
+	$("#btnKill").click(function(){Dialog.alert("此功能暂未开发完成");});
 	// 操作完成提示
 	highlight('还有未完成的任务');
 	
@@ -145,7 +146,7 @@ img[src="/res/icons/16x16/magnifier.png"]{
 	<div class="toolbar">
 		<a id="btnCmdUnfold"><img src="/res/icons/16x16/table_sort.png" />命令展开</a>
 		<a id="btnCmdfold"><img src="/res/icons/16x16/table_sort.png" />命令折叠</a>
-		<a href="#" onclick='Dialog.alert(暂不支持此"杀死进程"功能);'><img src="/res/icons/16x16/kill_application_osx_terminal.png" />杀死</a>
+		<a id="btnKill"><img src="/res/icons/16x16/kill_application_osx_terminal.png" />杀死</a>
 		<a onclick="doBatch('data/common/doBatch.jsp', '确定要删除选中的用户吗？');"><img src="/res/icons/16x16/application_osx_terminal.png" />杀死并重新执行</a>
 		<input id="txtMachineIp" type="text" valid="validationIp" stat="like" trigger="click" trigger_target="btnSearchByIp" invalid_msg="请填入正确ip的一部分" name="filter_state_machine_ip" value="请输入机器ip" class="input-shorttext" onclick="if('请输入机器ip' == $(this).val()){$(this).val('');}"/><a id="btnSearchByIp"><img src="/res/icons/16x16/application_form_magnify.png" />按照ip搜索</a>
 		<input id="txtRealCmd" type="text" valid="validationCmd" invalid_msg="请输入命令.." stat="like" trigger="click" trigger_target="btnRealCmd"  name="filter_state_real_cmd" value="请输入命令..." class="input-shorttext" onclick="if('请输入命令...' == $(this).val()){$(this).val('');}"/><a id="btnRealCmd"><img src="/res/icons/16x16/application_form_magnify.png" />按照命令过滤</a>
