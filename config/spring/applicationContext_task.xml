@@ -45,6 +45,9 @@
 		<property name="undoReportHttpUrl">
 			<value>${undoReportHttpUrl}</value>
 		</property>
+		<property name="processor">
+			<ref bean="remoteExecuteProcessor"/>
+		</property>
 	</bean>
 	<bean id="immediateRemoteExecAction" class="org.cronhub.managesystem.modules.task.action.ImmediateRemoteExecuteAction">
 		<property name="processor">

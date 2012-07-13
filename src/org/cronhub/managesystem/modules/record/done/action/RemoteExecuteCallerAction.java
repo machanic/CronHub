@@ -25,7 +25,7 @@ public class RemoteExecuteCallerAction extends ActionSupport{
 		final String tableName = req.getParameter("tableName");
 		TaskRecordDone record = null;
 		try {
-			record = this.processor.remoteExecute(id,tableName,1);
+			record = this.processor.remoteExecute(id,tableName,Params.EXECTYPE_BTNREDO);
 		} catch (Exception e) {
 			PageIOUtils.printToPage(e.getMessage());
 			e.printStackTrace();

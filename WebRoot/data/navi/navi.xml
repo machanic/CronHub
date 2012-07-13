@@ -12,10 +12,10 @@
 	<!-- 
 		<menu id="22" name="增加调度任务"
 			icon="res/icons/16x16/application_form_add.png"
-			url="page/dispatch_task/CronhubTaskAdd.jsp" />
+			url="page/cronhub_task/CronhubTaskAdd.jsp" />
 			<menu id="22" name="增加调度流程(第二期)"
 			icon="res/icons/16x16/application_form_add.png"
-			url="page/dispatch_task/CronhubTaskAdd.jsp" />
+			url="page/cronhub_task/CronhubTaskAdd.jsp" />
 		 -->
 		<menu id="22" name="调度任务管理"
 			icon="res/icons/16x16/application_view_columns.png" url="/task/task_first_page_view.action?max_per_page=20"/>

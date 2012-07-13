@@ -167,10 +167,10 @@ img[src="/res/icons/16x16/magnifier.png"]{
 					<td align="center"><span><input type="checkbox"  value="<s:property value='#daemonbean.id' />" /></span></td>
 					<td align="center"><span><s:property value="#daemonbean.id" /></span></td>
 					<td align="center"><span><s:property value="#daemonbean.daemon_version_name" /></span></td>
-					<td align="center"><span><img onClick="parent.daemon_id=<s:property value='#daemonbean.id'/>;parent.machine_ip='<s:property value="#daemonbean.machine_ip" />';parent.machine_port=<s:property value="#daemonbean.machine_port" />;window.location='/page/dispatch_task/CronhubTaskAdd.jsp';" src="/res/icons/16x16/table_add.png" title="添加新任务" style="cursor:pointer"/></span></td>
+					<td align="center"><span><img onClick="parent.daemon_id=<s:property value='#daemonbean.id'/>;parent.machine_ip='<s:property value="#daemonbean.machine_ip" />';parent.machine_port=<s:property value="#daemonbean.machine_port" />;window.location='/page/cronhub_task/CronhubTaskAdd.jsp';" src="/res/icons/16x16/table_add.png" title="添加新任务" style="cursor:pointer"/></span></td>
 					<td align="center"><span><s:property value="#daemonbean.machine_ip" /></span></td>
 					<td align="center"><span><s:property value="#daemonbean.machine_port" /></span></td>
-					<!--<td align="center"><span><s:if test="#daemonbean.tasks==null">0</s:if><s:else><s:property value="#daemonbean.tasks.size()" /></s:else>&nbsp;<img onClick="window.location='/page/dispatch_task/CronhubTaskView.jsp';" src="/res/icons/16x16/table_go.png" style="cursor:pointer"/></span></td>-->
+					<!--<td align="center"><span><s:if test="#daemonbean.tasks==null">0</s:if><s:else><s:property value="#daemonbean.tasks.size()" /></s:else>&nbsp;<img onClick="window.location='/page/cronhub_task/CronhubTaskView.jsp';" src="/res/icons/16x16/table_go.png" style="cursor:pointer"/></span></td>-->
 					<td align="center"><span>${daemonbean.conn_status == true ? '<font style="color:green">通信正常</font>':'<font style="color:red">通信失败</font>'}</span></td>
 					<!--<td align="center"><span><a><img src="/res/icons/16x16/server_lightning.png" onClick='Dialog.alert("此功能暂不开放")'/></span></a></td> -->
 					<td align="center"><span>${daemonbean.must_lostconn_email == true ? '<font style="color:green">是</font>':'<font style="color:red">否</font>'}</span></td>

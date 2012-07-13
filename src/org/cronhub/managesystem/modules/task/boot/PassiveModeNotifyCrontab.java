@@ -22,6 +22,7 @@ import org.cronhub.managesystem.commons.thrift.call.IExecuter;
 import org.cronhub.managesystem.commons.thrift.call.RemoteCaller;
 import org.cronhub.managesystem.commons.thrift.gen.ExecuteDoneReportResult;
 import org.cronhub.managesystem.commons.thrift.gen.ExecutorService.Client;
+import org.cronhub.managesystem.commons.thrift.process.RemoteExecutCmdProcessor;
 import org.cronhub.managesystem.commons.utils.container.WebContainer;
 import org.cronhub.managesystem.modules.record.done.dao.IDoneRecordDao;
 import org.cronhub.managesystem.modules.record.undo.dao.IUndoRecordDao;
@@ -43,6 +44,41 @@ public class PassiveModeNotifyCrontab extends ContextLoaderListener{
 	private static final FillConfig fillConfig = FillConfig.getFillDaemonInstance();
 	private String undoReportHttpUrl;
 	
+	private RemoteExecutCmdProcessor processor;
+	
+	private Runnable crontabExecThread = new Runnable(){
+		@Override
+		public void run() {
+			Scheduler sch = new Scheduler();
+			sch.addTaskCollector(new TaskCollector(){
+				@Override
+				public TaskTable getTasks() {
+					TaskTable table = new TaskTable();
+					List<Task> tasks = taskDao.findAll(wherePassiveRunMode, fillConfig);
+					for(final Task task : tasks){
+						table.add(new SchedulingPattern(task.getCron_exp()),new it.sauronsoftware.cron4j.Task(){
+							@Override
+							public void execute(TaskExecutionContext context)
+									throws RuntimeException {
+								try {
+									processor.remoteExecute(task, Params.EXECTYPE_CRONTAB);
+								} catch (Exception e) {
+									throw new RuntimeException("task is failed while executing task:"+task.getId());
+								}
+							}
+						});
+					}
+					return table;
+				}
+			});
+			sch.start();
+		}
+	};
+	
+	/***
+	 * 通知进程，已经作废,被crontabExecThread取代
+	 */
+	@Deprecated
 	private Runnable notifyExecThread = new Runnable(){
 		@Override
 		public void run() {
@@ -116,11 +152,9 @@ public class PassiveModeNotifyCrontab extends ContextLoaderListener{
 			});
 			sch.start();
 		}
-		
 	};
-
 	private void startCrontabThread(){
-		Thread cronThread = new Thread(this.notifyExecThread);
+		Thread cronThread = new Thread(this.crontabExecThread);
 		cronThread.setDaemon(true);
 		cronThread.start();
 	}
@@ -148,6 +182,7 @@ public class PassiveModeNotifyCrontab extends ContextLoaderListener{
 	public void setUndoReportHttpUrl(String undoReportHttpUrl) {
 		this.undoReportHttpUrl = undoReportHttpUrl;
 	}
-
-
-}
+	public void setProcessor(RemoteExecutCmdProcessor processor) {
+		this.processor = processor;
+	}
+	}

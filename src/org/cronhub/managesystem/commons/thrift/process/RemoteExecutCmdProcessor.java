@@ -3,10 +3,14 @@ package org.cronhub.managesystem.commons.thrift.process;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import net.sf.json.JSONObject;
+
 import org.cronhub.managesystem.commons.dao.bean.Task;
 import org.cronhub.managesystem.commons.dao.bean.TaskRecordDone;
 import org.cronhub.managesystem.commons.dao.config.FillConfig;
+import org.cronhub.managesystem.commons.logger.AppLogger;
 import org.cronhub.managesystem.commons.params.Params;
+import org.cronhub.managesystem.commons.params.daemon.ParamCommons;
 import org.cronhub.managesystem.commons.thrift.call.IExecuter;
 import org.cronhub.managesystem.commons.thrift.call.RemoteCaller;
 import org.cronhub.managesystem.commons.thrift.gen.ExecuteDoneReportResult;
@@ -15,7 +19,7 @@ import org.cronhub.managesystem.modules.record.done.dao.IDoneRecordDao;
 import org.cronhub.managesystem.modules.record.undo.dao.IUndoRecordDao;
 import org.cronhub.managesystem.modules.task.dao.ITaskDao;
 
-import net.sf.json.JSONObject;
+import com.baofeng.dispatchexecutor.utils.ReplaceRealCmdUtils;
 
 
 public class RemoteExecutCmdProcessor {
@@ -24,7 +28,7 @@ public class RemoteExecutCmdProcessor {
 	private IDoneRecordDao doneRecordDao;
 	private IUndoRecordDao undoRecordDao;
 	private ITaskDao taskDao;
-	
+	private SimpleDateFormat sdf = new SimpleDateFormat(ParamCommons.DATE_FORMAT);
 	public void setTaskDao(ITaskDao taskDao) {
 		this.taskDao = taskDao;
 	}
@@ -120,29 +124,45 @@ public class RemoteExecutCmdProcessor {
 		this.doneRecordDao.update(record);
 		return record;
 	}
+	
+	
+	
 	/***
-	 * 这个方法表示在点击"当场执行按钮"时的执行流程,从任务列表中拉出一个taskId去执行,但没有点击"重新执行"时让loading开始旋转的步骤
-	 * @param taskId
+	 * 这个方法表示在点击"当场执行按钮"时以及"crontab时"的执行流程,从任务列表中拉出一个taskId去执行,但没有点击"重新执行"时让loading开始旋转的步骤
+	 * @param task 任务
+	 * @param exec_type 执行类型:0--crontab执行，1--手动重执行,2--自动重执行,3--当场执行等
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean remoteExecute(final Long taskId) throws Exception{
-		FillConfig config = new FillConfig(true,true);
-		Task task = this.taskDao.findById(taskId,config);
-		final String shell_cmd = task.getShell_cmd();
+	public boolean remoteExecute(final Task task,final Integer exec_type) throws Exception{
 		String machine_ip = task.getDaemon().getMachine_ip();
 		int machine_port =task.getDaemon().getMachine_port();
 		IExecuter executer = new IExecuter(){
 			@Override
 			public Object execute(Client client) throws Exception {
-				return client.executeCmd(shell_cmd, taskId, true, undoReportHttpUrl, 3, false);
+				return client.executeCmd(task.getShell_cmd(), task.getId(), true, undoReportHttpUrl, exec_type, false);
 			}
 		};
 		ExecuteDoneReportResult result;
+		Date startDate = new Date();
 		try {
 			result = (ExecuteDoneReportResult)RemoteCaller.call(machine_ip, machine_port, executer, null);
 		} catch (Exception e) {
-			throw new Exception(Params.PAGE_CONN_LOST_MSG+",task_id:"+taskId+",服务器ip:"+machine_ip+",端口号:"+machine_port);
+			//如果通信失败，则在本机器上使用shell现场时间替换，并且在本地机器上执行该命令，并记入-99的结果码
+			TaskRecordDone record = new TaskRecordDone();
+			record.setTask_id(task.getId());
+			record.setReal_cmd(ReplaceRealCmdUtils.replaceCmdFromOriginalToReal(task.getShell_cmd()));
+			record.setExit_code(Params.DB_EXITCODE_ERROR_PING);
+			record.setComplete_success(false);
+			record.setStart_datetime(startDate);//不能这么写，因为有可能干活5小时的中间第3小时执行失败，（网络异常）而发生问题。
+			record.setEnd_datetime(new Date());
+			record.setExec_type(exec_type);
+			record.setExec_return_str("无法ping通daemon端[ip:"+task.getDaemon().getMachine_ip()+",port:"+task.getDaemon().getMachine_port()+"],执行命令:"+task.getShell_cmd()+"的时候无法通信");
+			record.setCurrent_redo_times(0);
+			record.setOn_processing(false);
+			doneRecordDao.insert(record);
+			AppLogger.errorLogger.error("error in execute exec_type:"+Params.EXECTYPE_REPRESENT.get(exec_type)+" . ip:"+task.getDaemon().getMachine_ip()+",cmd:"+task.getShell_cmd()+".",e);
+			throw new Exception(Params.PAGE_CONN_LOST_MSG+",task_id:"+task.getId()+",服务器ip:"+machine_ip+",端口号:"+machine_port);
 		}
 		TaskRecordDone record = new TaskRecordDone();
 		record.setTask_id(result.getTask_id());
@@ -162,7 +182,18 @@ public class RemoteExecutCmdProcessor {
 		record.setOn_processing(false);
 		doneRecordDao.insert(record);
 		undoRecordDao.deleteById(result.getTask_record_undo_id());
+		AppLogger.recordDoneLogger.info(String.format("execute type:%s done!ip:%s,port:%s.insert to record_done table.[start_datetime:%s,end_datetime:%s].Delete from record_undo table.record_undo_id=%s",Params.EXECTYPE_REPRESENT.get(exec_type),task.getDaemon().getMachine_ip(),task.getDaemon().getMachine_port(),sdf.format(record.getStart_datetime()),sdf.format(record.getEnd_datetime()),result.getTask_record_undo_id()));
 		return result.isSuccess();
-		
+	}
+	/***
+	 * 这个方法表示在点击"当场执行按钮"时的执行流程,从任务列表中拉出一个taskId去执行,但没有点击"重新执行"时让loading开始旋转的步骤
+	 * @param taskId
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean remoteExecuteOnSpot(final Long taskId) throws Exception{
+		FillConfig config = new FillConfig(true,true);
+		Task task = this.taskDao.findById(taskId,config);
+		return remoteExecute(task,Params.EXECTYPE_SPOT);
 	}
 }

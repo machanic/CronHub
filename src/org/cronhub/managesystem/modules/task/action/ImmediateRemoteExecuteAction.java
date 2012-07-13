@@ -23,7 +23,7 @@ public class ImmediateRemoteExecuteAction extends ActionSupport {
 		boolean success = false;
 		JSONObject ajaxJson = new JSONObject(); 
 		try {
-			success = this.processor.remoteExecute(id);
+			success = this.processor.remoteExecuteOnSpot(id);
 		} catch (Exception e) {
 			ajaxJson.put("error",e.getMessage());
 		}

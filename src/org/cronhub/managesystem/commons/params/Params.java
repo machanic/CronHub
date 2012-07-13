@@ -18,7 +18,9 @@ public class Params {
 	public static final String MACHINE_IP = "machine_ip";
 	public static final String FILTER = "filter";
 	public static final Integer EXECTYPE_CRONTAB = 0;
+	public static final Integer EXECTYPE_BTNREDO = 1;
 	public static final Integer EXECTYPE_AUTOREDO= 2;
+	public static final Integer EXECTYPE_SPOT = 3;
 	public static final String PAGE_UNFOLD_CURRENT_MONTH="unfold_current_month";
 	public static final Integer TYPE_START_DATETIME = 0;
 	public static final Integer TYPE_END_DATETIME = 1;
@@ -36,5 +38,13 @@ public class Params {
 	static{
 		TYPE_DATETIME_MAP.put(TYPE_START_DATETIME, "start_datetime");
 		TYPE_DATETIME_MAP.put(TYPE_END_DATETIME, "end_datetime");
+	}
+	public static final Map<Integer,String> EXECTYPE_REPRESENT = new HashMap<Integer,String>();
+	static{
+		EXECTYPE_REPRESENT.put(EXECTYPE_CRONTAB, "crontab");
+		EXECTYPE_REPRESENT.put(EXECTYPE_BTNREDO, "button_redo");
+		EXECTYPE_REPRESENT.put(EXECTYPE_AUTOREDO, "auto_redo");
+		EXECTYPE_REPRESENT.put(EXECTYPE_SPOT, "on_spot_execute");
+		
 	}
 }

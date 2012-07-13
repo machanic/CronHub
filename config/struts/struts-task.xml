@@ -12,22 +12,22 @@
 		</action>
 		<action name="task_first_page_view" class="taskPageViewAction" method="findFirstPage">
 			<result name="success" >
-				/page/dispatch_task/CronhubTaskView.jsp
+				/page/cronhub_task/CronhubTaskView.jsp
 			</result>
 		</action>
 		<action name="task_next_page_view" class="taskPageViewAction" method="findNextPageNo">
 			<result name="success" >
-				/page/dispatch_task/CronhubTaskView.jsp
+				/page/cronhub_task/CronhubTaskView.jsp
 			</result>
 		</action>
 		<action name="task_prev_page_view" class="taskPageViewAction" method="findPrevPageNo">
 			<result name="success" >
-				/page/dispatch_task/CronhubTaskView.jsp
+				/page/cronhub_task/CronhubTaskView.jsp
 			</result>
 		</action>
 		<action name="task_last_page_view" class="taskPageViewAction" method="findLastPage">
 			<result name="success" >
-				/page/dispatch_task/CronhubTaskView.jsp
+				/page/cronhub_task/CronhubTaskView.jsp
 			</result>
 		</action>
 		<action name="deleteOne" class="taskPageViewAction" method="deleteOneById"></action>
