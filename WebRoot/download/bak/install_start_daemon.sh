@@ -2,14 +2,19 @@
 
 if [ $# = 0 ];
 then
-    echo "please input port number.for example 2012";
+    echo "please input boot port number.for example 2012";
     exit
 fi
+#current_path example /opt/modules/daemon  
 current_path=`pwd`;
 jdk_bin="jdk.bin";
 jdk_bin_path=$current_path"/"$jdk_bin;
 java_home=$current_path"/jdk1.6.0_30";
-base_url="http://60.28.110.228:8085/download/";
+echo "please input the cronhub center server's ip..."
+read center_server_ip;
+echo "please input the cronhub center server's port..."
+read center_server_port;
+base_url="http://${center_server_ip}:${center_server_port}/download/";
 jdk_download_url=$base_url"jdk-6u30-linux-x64.bin"
 jsvc_zip="jsvc.zip";
 jsvc_dir="jsvc";
@@ -66,11 +71,12 @@ echo -e "#description:dispatch_daemon
 #chkconfig:231 80 80
 case \"\$1\" in
 start)
-\t/opt/modules/daemon/jsvc/jsvc -home /opt/modules/daemon/jdk1.6.0_30 -Xmx2000m -pidfile /opt/modules/daemon/$1.pid -cp /opt/modules/daemon/DispatchSystemDaemon.jar com.baofeng.dispatchexecutor.boot.DaemonBoot -p $1
+\t${current_path}/jsvc/jsvc -home ${current_path}/jdk1.6.0_30 -Xmx2000m -pidfile ${current_path}/$1.pid -cp ${current_path}/DispatchSystemDaemon.jar com.baofeng.dispatchexecutor.boot.DaemonBoot -p $1
 \t;;
 esac
 " > /etc/init.d/dispatch_daemon
 /sbin/chkconfig --add dispatch_daemon
 chmod +x /etc/init.d/dispatch_daemon
 /sbin/service dispatch_daemon start
+#the final start cmd
 #$jsvc_target_bin -home $java_home -Xmx2000m -pidfile $current_path"/"$1".pid" -cp $daemon_jar_path com.baofeng.dispatchexecutor.boot.DaemonBoot -p $1
