@@ -1,6 +1,7 @@
 #!/bin/bash
 function usage(){
 	echo "Usage Example: ./install_start.sh -d /opt/modules/daemon -s 2012 -i 192.168.0.1 -p 8080"
+	echo "Options:";
 	echo "-d  install directory path";
 	echo "-s daemon boot start port";
 	echo "-i  cronhub center server's ip used for download daemon's jar and  jdk and jsvc  and so on"
@@ -8,6 +9,7 @@ function usage(){
 }
 if [ $# -ne 8 ];
 then
+:<<BLOCK
     echo "please input the directory path that you want to install";
     read install_path;
     echo "please input the cronhub center server's ip..."
@@ -16,9 +18,8 @@ then
     read center_server_port;
     echo "please input the daemon boot start port..."
     read daemon_port;
-:<<BLOCK
-	usage
 BLOCK
+	usage
     exit -1
 else
 	while getopts ":d:i:h:p:s:" flag

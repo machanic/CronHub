@@ -88,7 +88,7 @@ public class RemoteExecutCmdProcessor {
 				record.setCurrent_redo_times(record.getCurrent_redo_times()+1);
 			}
 			record.setEnd_datetime(new Date());
-			record.setExit_code(Params.DB_EXITCODE_ERROR_PING); //此行从-1修改为-99
+			record.setExit_code(Params.DB_EXITCODE_ERROR_PING); //此行从-1修改为-99,我认为上面的Exception抛出是网络原因造成的
 			record.setComplete_success(false);
 			this.doneRecordDao.update(record);
 			JSONObject errorJson = new JSONObject(); //errorJson供前端ajax显示使用
