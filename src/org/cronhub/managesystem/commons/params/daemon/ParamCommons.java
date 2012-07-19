@@ -13,4 +13,5 @@ public class ParamCommons {
 	public static final String REPORT_EXEC_TYPE = "exec_type";
 	public static final String REPORT_RUN_STATUS = "run_status";
 	public static final String REPORT_SHELL_CMD = "shell_cmd";
+	public static final String REPORT_UNDO_IDENTIFIER = "report_undo_identifier";
 }

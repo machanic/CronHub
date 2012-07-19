@@ -1,6 +1,5 @@
 package org.cronhub.managesystem.modules.record.undo.action;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -13,6 +12,7 @@ import org.cronhub.managesystem.commons.dao.bean.Task;
 import org.cronhub.managesystem.commons.dao.bean.TaskRecordUndo;
 import org.cronhub.managesystem.commons.dao.config.FillConfig;
 import org.cronhub.managesystem.commons.logger.AppLogger;
+import org.cronhub.managesystem.commons.params.Params;
 import org.cronhub.managesystem.commons.params.daemon.ParamCommons;
 import org.cronhub.managesystem.commons.utils.PageIOUtils;
 import org.cronhub.managesystem.modules.record.undo.dao.IUndoRecordDao;
@@ -44,6 +44,7 @@ public class ReportUndoAction extends ActionSupport {
 		
 		String shell_cmd = req.getParameter(ParamCommons.REPORT_SHELL_CMD);
 		String real_cmd = req.getParameter(ParamCommons.REPORT_REAL_CMD);
+		String report_undo_identifier = req.getParameter(ParamCommons.REPORT_UNDO_IDENTIFIER);
 		Date start_date  = new Date();
 //		try {
 //			start_date  = sdf.parse(req.getParameter(ParamCommons.REPORT_START_TIME));
@@ -65,6 +66,7 @@ public class ReportUndoAction extends ActionSupport {
 		record.setStart_datetime(start_date);
 		record.setExec_type(exec_type);
 		Long insertId = undoRecordDao.insert(record);
+		Params.REPORT_UNDO_IDENTIFIER_ID.put(report_undo_identifier, insertId);
 		AppLogger.recordUndoLogger.info(String.format("report undo save to db:[task_id:%s,real_cmd:%s,run_status:%s,start_date:%s,exec_type:%s]",task_id,real_cmd,run_status,sdf.format(start_date),exec_type));
 		JSONObject jsonPrint = new JSONObject();
 		jsonPrint.put("task_record_undo_id", insertId);

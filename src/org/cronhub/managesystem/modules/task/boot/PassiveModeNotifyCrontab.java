@@ -9,6 +9,7 @@ import it.sauronsoftware.cron4j.TaskTable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.ServletContextEvent;
 
@@ -21,6 +22,7 @@ import org.cronhub.managesystem.commons.params.daemon.ParamCommons;
 import org.cronhub.managesystem.commons.thrift.call.IExecuter;
 import org.cronhub.managesystem.commons.thrift.call.RemoteCaller;
 import org.cronhub.managesystem.commons.thrift.gen.ExecuteDoneReportResult;
+import org.cronhub.managesystem.commons.thrift.gen.Extra;
 import org.cronhub.managesystem.commons.thrift.gen.ExecutorService.Client;
 import org.cronhub.managesystem.commons.thrift.process.RemoteExecutCmdProcessor;
 import org.cronhub.managesystem.commons.utils.container.WebContainer;
@@ -97,7 +99,10 @@ public class PassiveModeNotifyCrontab extends ContextLoaderListener{
 									@Override
 									public Object execute(Client client)
 											throws Exception {
-										ExecuteDoneReportResult result = client.executeCmd(task.getShell_cmd(), task.getId(), true, undoReportHttpUrl, Params.EXECTYPE_CRONTAB,false);
+										Extra extra = new Extra();
+										String report_undo_identifier = UUID.randomUUID().toString();
+										extra.setReport_undo_identifier(report_undo_identifier);
+										ExecuteDoneReportResult result = client.executeCmd(task.getShell_cmd(), task.getId(), true, undoReportHttpUrl, Params.EXECTYPE_CRONTAB,false,extra);
 										System.out.println("execute cmd:"+task.getShell_cmd()+".result:"+result.getExec_return_str());
 										TaskRecordDone record = new TaskRecordDone();
 										record.setTask_id(result.getTask_id());

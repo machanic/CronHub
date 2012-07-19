@@ -13,7 +13,7 @@
 	<!-- properties filename -->
 	<property name="configDir" value="../config"/>
 	<property name="warDir" value="../war"/>
-	<property name="version" value="DispatchManageSystem_101.9"/>
+	<property name="version" value="CronhubManageSystem_101.9"/>
 	<property name="tempRootPath" value="${warDir}/new"/>
 	<property name="warFilePath" value="${warDir}/${version}.war"/>
 	<property name="webRootDir" value="../WebRoot"/>

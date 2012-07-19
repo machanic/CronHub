@@ -2,6 +2,7 @@ package org.cronhub.managesystem.commons.thrift.process;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 import net.sf.json.JSONObject;
 
@@ -14,6 +15,7 @@ import org.cronhub.managesystem.commons.params.daemon.ParamCommons;
 import org.cronhub.managesystem.commons.thrift.call.IExecuter;
 import org.cronhub.managesystem.commons.thrift.call.RemoteCaller;
 import org.cronhub.managesystem.commons.thrift.gen.ExecuteDoneReportResult;
+import org.cronhub.managesystem.commons.thrift.gen.Extra;
 import org.cronhub.managesystem.commons.thrift.gen.ExecutorService.Client;
 import org.cronhub.managesystem.modules.record.done.dao.IDoneRecordDao;
 import org.cronhub.managesystem.modules.record.undo.dao.IUndoRecordDao;
@@ -66,10 +68,15 @@ public class RemoteExecutCmdProcessor {
 //		final String real_cmd = req.getParameter("real_cmd");
 //		final String ip = req.getParameter("machine_ip");
 //		final Integer port = Integer.parseInt(req.getParameter("machine_port"));
+		
+		//下面三句话是防止远程执行了一半的时候,将唯一标识码放入远端，再通过http post汇报给这里的Params.REPORT_UNDO_IDENTIFIER_ID的Map，最后出异常时从这个Map取出undo_report_id，删去
+		final Extra extra = new Extra();
+		String report_undo_identifier = UUID.randomUUID().toString();
+		extra.setReport_undo_identifier(report_undo_identifier);
 		IExecuter executer = new IExecuter(){
 			@Override
 			public Object execute(Client client) throws Exception {
-				return client.executeCmd(real_cmd, task_id, true, undoReportHttpUrl, execType, delTempFile);
+				return client.executeCmd(real_cmd, task_id, true, undoReportHttpUrl, execType, delTempFile,extra);
 			}
 //			@Override
 //			public String getName() {
@@ -83,8 +90,8 @@ public class RemoteExecutCmdProcessor {
 			record.setOn_processing(false);
 			record.setExec_type(execType);
 			if(execType != Params.EXECTYPE_AUTOREDO){
-				record.setStart_datetime(new Date());//不等于自动重执行类型时,设置初始时间
-			}else{//如果是自动重新时,设置current_redo_times+1
+				record.setStart_datetime(new Date());//不等于"自动重执行"类型时,重新设置初始时间
+			}else{//如果是"自动重执行"类型时,设置current_redo_times+1
 				record.setCurrent_redo_times(record.getCurrent_redo_times()+1);
 			}
 			record.setEnd_datetime(new Date());
@@ -101,10 +108,14 @@ public class RemoteExecutCmdProcessor {
 			errorJson.put(Params.PAGE_RECORD_EXEC_RETURN_STR, record.getExec_return_str());
 			errorJson.put(Params.PAGE_RECORD_START_DATETIME, record.getStart_datetime_ISO());
 			errorJson.put("id",doneRecordId);
-			if(result!=null){
-				undoRecordDao.deleteById(result.getTask_record_undo_id());
-			}
+			
 			throw new Exception(errorJson.toString());
+		}finally{
+			//如果已经汇报到未完成表了,那么Map中必然有,删除之
+			if(Params.REPORT_UNDO_IDENTIFIER_ID.containsKey(report_undo_identifier)){
+				undoRecordDao.deleteById(Params.REPORT_UNDO_IDENTIFIER_ID.get(report_undo_identifier));
+				Params.REPORT_UNDO_IDENTIFIER_ID.remove(report_undo_identifier);
+			}
 		}
 		record.setComplete_success(result.isSuccess());
 		record.setExit_code(result.getComplete_status());
@@ -137,21 +148,32 @@ public class RemoteExecutCmdProcessor {
 	public boolean remoteExecute(final Task task,final Integer exec_type) throws Exception{
 		String machine_ip = task.getDaemon().getMachine_ip();
 		int machine_port =task.getDaemon().getMachine_port();
+		
+		//下面三句话是防止远程执行了一半的时候,将唯一标识码放入远端，再通过http post汇报给这里的Params.REPORT_UNDO_IDENTIFIER_ID的Map，最后出异常时从这个Map取出undo_report_id，删去
+		final Extra extra = new Extra();
+		String report_undo_identifier = UUID.randomUUID().toString();
+		extra.setReport_undo_identifier(report_undo_identifier);
 		IExecuter executer = new IExecuter(){
 			@Override
 			public Object execute(Client client) throws Exception {
-				return client.executeCmd(task.getShell_cmd(), task.getId(), true, undoReportHttpUrl, exec_type, false);
+				
+				return client.executeCmd(task.getShell_cmd(), task.getId(), true, undoReportHttpUrl, exec_type, false,extra);
 			}
 		};
 		ExecuteDoneReportResult result;
 		Date startDate = new Date();
 		try {
 			result = (ExecuteDoneReportResult)RemoteCaller.call(machine_ip, machine_port, executer, null);
-		} catch (Exception e) {
+		} catch (Exception e) { //修复一个严重的bug，当远程执行的时候，一开始的undoReport表是从远端的daemon程序以http post的方式存入undo表,然后再以方法调用的结果作为返回，如果执行一半网络断掉，这样就无法获得远端的执行结果了
+			//修复办法如下:将远端的执行结果在post到undo的action的时候，就存入一个Map中,key为我执行这个方法时产生的UUID随机码
 			//如果通信失败，则在本机器上使用shell现场时间替换，并且在本地机器上执行该命令，并记入-99的结果码
 			TaskRecordDone record = new TaskRecordDone();
 			record.setTask_id(task.getId());
-			record.setReal_cmd(ReplaceRealCmdUtils.replaceCmdFromOriginalToReal(task.getShell_cmd()));
+			if(task.getMust_replace_cmd()){//如果通信失败而且task属性标识为必须替换为现场真实的时间,就要在本机使用shell现场时间替换
+				record.setReal_cmd(ReplaceRealCmdUtils.replaceCmdFromOriginalToReal(task.getShell_cmd()));
+			}else{
+				record.setReal_cmd(task.getShell_cmd());
+			}
 			record.setExit_code(Params.DB_EXITCODE_ERROR_PING);
 			record.setComplete_success(false);
 			record.setStart_datetime(startDate);//不能这么写，因为有可能干活5小时的中间第3小时执行失败，（网络异常）而发生问题。
@@ -163,6 +185,12 @@ public class RemoteExecutCmdProcessor {
 			doneRecordDao.insert(record);
 			AppLogger.errorLogger.error("error in execute exec_type:"+Params.EXECTYPE_REPRESENT.get(exec_type)+" . ip:"+task.getDaemon().getMachine_ip()+",cmd:"+task.getShell_cmd()+".",e);
 			throw new Exception(Params.PAGE_CONN_LOST_MSG+",task_id:"+task.getId()+",服务器ip:"+machine_ip+",端口号:"+machine_port);
+		}finally{
+			//如果已经汇报到未完成表了,那么Map中必然有,删除之
+			if(Params.REPORT_UNDO_IDENTIFIER_ID.containsKey(report_undo_identifier)){
+				undoRecordDao.deleteById(Params.REPORT_UNDO_IDENTIFIER_ID.get(report_undo_identifier));
+				Params.REPORT_UNDO_IDENTIFIER_ID.remove(report_undo_identifier);
+			}
 		}
 		TaskRecordDone record = new TaskRecordDone();
 		record.setTask_id(result.getTask_id());

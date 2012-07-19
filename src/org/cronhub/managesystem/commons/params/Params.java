@@ -3,6 +3,7 @@ package org.cronhub.managesystem.commons.params;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Params {
 	public static final String TABLE_DAEMON = "daemon";
@@ -45,6 +46,6 @@ public class Params {
 		EXECTYPE_REPRESENT.put(EXECTYPE_BTNREDO, "button_redo");
 		EXECTYPE_REPRESENT.put(EXECTYPE_AUTOREDO, "auto_redo");
 		EXECTYPE_REPRESENT.put(EXECTYPE_SPOT, "on_spot_execute");
-		
 	}
+	public static final ConcurrentHashMap<String, Long> REPORT_UNDO_IDENTIFIER_ID = new ConcurrentHashMap<String, Long>();
 }

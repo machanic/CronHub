@@ -89,10 +89,10 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/cron4j-2.2.4.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mybatis-3.1.0-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mybatis-spring-1.0.3-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/libthrift-0.7.0.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/slf4j-api-1.5.8.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/slf4j-log4j12-1.5.8.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ant.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/DispatchSystemDaemon.jar" sourcepath="/DispatchSystemExecutor"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/DispatchSystemDaemon.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/libthrift-0.8.0.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>
