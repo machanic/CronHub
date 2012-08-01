@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -111,13 +112,13 @@ public class TreeLoadAction extends ActionSupport {
 		}
 		Calendar todayCalendar = Calendar.getInstance();//先调用getInstance得到一个Calendar的对象
 		todayCalendar.setTime(new Date());//然后将Date（这里为现场时间new Date）的对象设置入Calendar调用setTime即可,随后Calendar就可以取出月份,年份,每月几号等信息了
-		int currentYear = todayCalendar.get(Calendar.YEAR);
-		int currentMonth = todayCalendar.get(Calendar.MONTH)+1;//Calendar的Month居然是从0开始的，详见API：一年中的第一个月是 JANUARY，它为 0；最后一个月取决于一年中的月份数。
-		int currentDay = todayCalendar.get(Calendar.DAY_OF_MONTH);//而Calendar的DAY_OF_MONTH是从1开始的,详见API:get 和 set 的字段数字，指示一个月中的某天。它与 DATE 是同义词。一个月中第一天的值为 1。
+//		int currentYear = todayCalendar.get(Calendar.YEAR);
+//		int currentMonth = todayCalendar.get(Calendar.MONTH)+1;//Calendar的Month居然是从0开始的，详见API：一年中的第一个月是 JANUARY，它为 0；最后一个月取决于一年中的月份数。
+//		int currentDay = todayCalendar.get(Calendar.DAY_OF_MONTH);//而Calendar的DAY_OF_MONTH是从1开始的,详见API:get 和 set 的字段数字，指示一个月中的某天。它与 DATE 是同义词。一个月中第一天的值为 1。
 		for(Map.Entry<Integer, List<Integer>> year_month : year_months.entrySet()){
 			int year = year_month.getKey();
 			Element yearElement = root.addElement("node");
-			if(unfoldCurrentMonth && currentYear == year){
+			if(unfoldCurrentMonth && Collections.max(year_months.keySet()).equals(year)){//修改为最大年份的就展开
 				yearElement.addAttribute("open", "true");
 			}else{
 				yearElement.addAttribute("open", "false");
@@ -125,7 +126,7 @@ public class TreeLoadAction extends ActionSupport {
 			yearElement.addAttribute("id",String.valueOf(year)).addAttribute("name", String.format("%s年", year)).addAttribute("type", "year").addAttribute("isParent", "false");
 			for(int month : year_month.getValue()){
 				Element monthElement = yearElement.addElement("node");
-				if(unfoldCurrentMonth && currentMonth == month){
+				if(unfoldCurrentMonth && Collections.max(year_month.getValue()).equals(month)){//修改此处bug,发现如果几天没有数据，但新来的一天是新的月的第一天，这样就不能展开文件夹了,修改为最大的月份就会展开
 					monthElement.addAttribute("open", "true");//王波的ajax树的属性展开，则该文件夹展开了
 				}else{
 					monthElement.addAttribute("open", "false");//王波的ajax树的属性关闭，则该文件夹关闭了
@@ -138,7 +139,7 @@ public class TreeLoadAction extends ActionSupport {
 				ym.set(year, month-1, 01);
 				
 				monthElement.addAttribute("id",monthFormat.format(ym.getTime())).addAttribute("name",String.format("%s月",month)).addAttribute("type", "month").addAttribute("isParent", "true");
-				if(unfoldCurrentMonth && currentMonth == month){
+				if(unfoldCurrentMonth && Collections.max(year_month.getValue()).equals(month)){ //修改为最大的月份会自动加载天的数据
 					loadDayDataToMonth(monthElement,todayCalendar);
 				}
 			}
