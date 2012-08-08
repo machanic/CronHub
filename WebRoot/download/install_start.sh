@@ -56,7 +56,7 @@ base_url="http://${center_server_ip}:${center_server_port}/download/";
 jdk_download_url=$base_url"jdk-6u30-linux-x64.bin"
 jsvc_zip="jsvc.zip";
 jsvc_dir="jsvc";
-jsvc_url=$base_url$jsvc_zip;
+jsvc_url=${base_url}${jsvc_zip};
 jar_name="DispatchSystemDaemon.jar";
 daemon_url=$base_url$jar_name;
 daemon_jar_path=$install_path"/"$jar_name;
@@ -64,22 +64,34 @@ jsvc_dir=$install_path"/"$jsvc_dir;
 jsvc_target_bin=$jsvc_dir"/jsvc";
 
 #install jdk
-if [ ! -e $jdk_bin_path ];
-then
-    wget $jdk_download_url -O $jdk_bin_path;
-    chmod 755 $jdk_bin_path;
-    $jdk_bin_path;
+if [ ! $JAVA_HOME ];
+    then
+        if [ ! -e $jdk_bin_path ];
+        then
+            wget $jdk_download_url -O $jdk_bin_path;
+            chmod 755 $jdk_bin_path;
+        fi;
+        if [ ! -d $java_home ];
+        then
+            $jdk_bin_path;
+        fi;
+elif [ $JAVA_HOME ];
+    then
+        echo "set java_home :$JAVA_HOME"
+        java_home=$JAVA_HOME;
 fi;
 
 #install jsvc
 if [ ! -e $install_path"/"$jsvc_zip ];
 then
     wget $jsvc_url;
-fi
+fi;
+
 if [[ -e $install_path"/"$jsvc_zip && ! -e $jsvc_target_bin ]];
 then
-    unzip $jsvc_zip;
+    unzip -o $jsvc_zip;
 fi;
+
 if [ ! -e $jsvc_target_bin ];
 then
     cd $jsvc_dir;
@@ -89,6 +101,7 @@ then
     make;
     cd $install_path;
 fi;
+
 
 #install daemon jar
 if [ ! -e $daemon_jar_path ];
@@ -104,6 +117,7 @@ then
     echo "killing service to reboot service...";
     sleep 2;
 fi;
+
 #add to system service
 cmd="$jsvc_target_bin -home $java_home -Xmx2000m -pidfile $install_path/$daemon_port.pid -cp $daemon_jar_path com.baofeng.dispatchexecutor.boot.DaemonBoot -p $daemon_port";
 echo -e "#description:cronhub_daemon
@@ -122,5 +136,4 @@ chmod +x /etc/init.d/cronhub_daemon
 echo "all done"
 #the final start cmd
 #$jsvc_target_bin -home $java_home -Xmx2000m -pidfile $install_path"/"$daemon_port".pid" -cp $daemon_jar_path com.baofeng.dispatchexecutor.boot.DaemonBoot -p $daemon_port
-
 

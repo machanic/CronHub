@@ -20,107 +20,190 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class PageViewAction extends ActionSupport {
 	private PageSqlGenerater pageGen;
+
 	public void setPageGen(PageSqlGenerater pageGen) {
 		this.pageGen = pageGen;
 	}
+
 	private IDoneRecordDao doneRecordDao;
 
 	public void setDoneRecordDao(IDoneRecordDao doneRecordDao) {
 		this.doneRecordDao = doneRecordDao;
 	}
+
 	private static final String defaultOrderBy = "ORDER BY end_datetime DESC";
-	public String findFirstPage(){
+
+	public String findFirstPage() {
 		final String whereSql = FilterSqlGenerater.genWhereSql();
 		final FillConfig fillConfig = FillConfig.getFillAllInstance();
 		final StringBuilder orderSql = new StringBuilder(defaultOrderBy);
-		if(ServletActionContext.getRequest().getParameterMap().containsKey("sort_column") && ServletActionContext.getRequest().getParameterMap().containsKey("sort_order")){
+		if (ServletActionContext.getRequest().getParameterMap().containsKey(
+				"sort_column")
+				&& ServletActionContext.getRequest().getParameterMap()
+						.containsKey("sort_order")) {
 			orderSql.delete(0, orderSql.length());
-			orderSql.append(" ORDER BY "+ServletActionContext.getRequest().getParameter("sort_column")+" "+ServletActionContext.getRequest().getParameter("sort_order"));
+			orderSql.append(" ORDER BY "
+					+ ServletActionContext.getRequest().getParameter(
+							"sort_column")
+					+ " "
+					+ ServletActionContext.getRequest().getParameter(
+							"sort_order"));
 		}
-		final String tableName = ServletActionContext.getRequest().getParameter("tableName");
-		final String join_table = "("+tableName+" LEFT JOIN task ON "+tableName+".task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id";
-		IFindByPage<TaskRecordDone> ifinder = new IFindByPage<TaskRecordDone>(){
+		final String tableName = ServletActionContext.getRequest()
+				.getParameter("tableName");
+		final String join_table = "("
+				+ tableName
+				+ " LEFT JOIN task ON "
+				+ tableName
+				+ ".task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id";
+		IFindByPage<TaskRecordDone> ifinder = new IFindByPage<TaskRecordDone>() {
 			@Override
-			public List<TaskRecordDone> findByPage(int currentPage, int maxPerPage) {
-				List<TaskRecordDone> findList =  doneRecordDao.findByPage(tableName,whereSql+orderSql.toString()+pageGen.generateFirst(maxPerPage),fillConfig);
+			public List<TaskRecordDone> findByPage(int currentPage,
+					int maxPerPage) {
+				List<TaskRecordDone> findList = doneRecordDao
+						.findByPage(tableName, whereSql + orderSql.toString()
+								+ pageGen.generateFirst(maxPerPage), fillConfig);
 				return findList;
 			}
 		};
-		PageActionUtils.findFirstPage(ifinder, this.pageGen.getTotalCountFromTable(join_table,whereSql));
-		ServletActionContext.getRequest().setAttribute("tableName",tableName);
+		PageActionUtils.findFirstPage(ifinder, this.pageGen
+				.getTotalCountFromTable(join_table, whereSql));
+		ServletActionContext.getRequest().setAttribute("tableName", tableName);
 		return SUCCESS;
 	}
-	public String findNextPageNo(){
+
+	public String findNextPageNo() {
 		final String whereSql = FilterSqlGenerater.genWhereSql();
 		final FillConfig fillConfig = FillConfig.getFillAllInstance();
 		final StringBuilder orderSql = new StringBuilder(defaultOrderBy);
-		if(ServletActionContext.getRequest().getParameterMap().containsKey("sort_column") && ServletActionContext.getRequest().getParameterMap().containsKey("sort_order")){
+		if (ServletActionContext.getRequest().getParameterMap().containsKey(
+				"sort_column")
+				&& ServletActionContext.getRequest().getParameterMap()
+						.containsKey("sort_order")) {
 			orderSql.delete(0, orderSql.length());
-			orderSql.append(" ORDER BY "+ServletActionContext.getRequest().getParameter("sort_column")+" "+ServletActionContext.getRequest().getParameter("sort_order"));
+			orderSql.append(" ORDER BY "
+					+ ServletActionContext.getRequest().getParameter(
+							"sort_column")
+					+ " "
+					+ ServletActionContext.getRequest().getParameter(
+							"sort_order"));
 		}
-		final String tableName = ServletActionContext.getRequest().getParameter("tableName");
-		final String join_table = "("+tableName+" LEFT JOIN task ON "+tableName+".task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id";
-		IFindByPage<TaskRecordDone> ifinder = new IFindByPage<TaskRecordDone>(){
+		final String tableName = ServletActionContext.getRequest()
+				.getParameter("tableName");
+		final String join_table = "("
+				+ tableName
+				+ " LEFT JOIN task ON "
+				+ tableName
+				+ ".task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id";
+		IFindByPage<TaskRecordDone> ifinder = new IFindByPage<TaskRecordDone>() {
 			@Override
-			public List<TaskRecordDone> findByPage(int currentPage, int maxPerPage) {
-				List<TaskRecordDone> findList =  doneRecordDao.findByPage(tableName,whereSql+orderSql.toString()+pageGen.generateNext(join_table, currentPage, maxPerPage, whereSql),fillConfig);
+			public List<TaskRecordDone> findByPage(int currentPage,
+					int maxPerPage) {
+				List<TaskRecordDone> findList = doneRecordDao.findByPage(
+						tableName, whereSql
+								+ orderSql.toString()
+								+ pageGen.generateNext(join_table, currentPage,
+										maxPerPage, whereSql), fillConfig);
 				return findList;
 			}
 		};
-		PageActionUtils.findNextPageNo(ifinder, this.pageGen.getTotalCountFromTable(join_table,whereSql));
-		ServletActionContext.getRequest().setAttribute("tableName",tableName);
+		PageActionUtils.findNextPageNo(ifinder, this.pageGen
+				.getTotalCountFromTable(join_table, whereSql));
+		ServletActionContext.getRequest().setAttribute("tableName", tableName);
 		return SUCCESS;
 	}
-	public String findPrevPageNo(){
+
+	public String findPrevPageNo() {
 		final String whereSql = FilterSqlGenerater.genWhereSql();
 		final FillConfig fillConfig = FillConfig.getFillAllInstance();
 		final StringBuilder orderSql = new StringBuilder(defaultOrderBy);
-		if(ServletActionContext.getRequest().getParameterMap().containsKey("sort_column") && ServletActionContext.getRequest().getParameterMap().containsKey("sort_order")){
+		if (ServletActionContext.getRequest().getParameterMap().containsKey("sort_column")
+				&& ServletActionContext.getRequest().getParameterMap()
+						.containsKey("sort_order")) {
 			orderSql.delete(0, orderSql.length());
-			orderSql.append(" ORDER BY "+ServletActionContext.getRequest().getParameter("sort_column")+" "+ServletActionContext.getRequest().getParameter("sort_order"));
+			orderSql.append(" ORDER BY "
+					+ ServletActionContext.getRequest().getParameter(
+							"sort_column")
+					+ " "
+					+ ServletActionContext.getRequest().getParameter(
+							"sort_order"));
 		}
-		final String tableName = ServletActionContext.getRequest().getParameter("tableName");
-		final String join_table = "("+tableName+" LEFT JOIN task ON "+tableName+".task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id";
-		IFindByPage<TaskRecordDone> ifinder = new IFindByPage<TaskRecordDone>(){
+		final String tableName = ServletActionContext.getRequest()
+				.getParameter("tableName");
+		final String join_table = "("
+				+ tableName
+				+ " LEFT JOIN task ON "
+				+ tableName
+				+ ".task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id";
+		IFindByPage<TaskRecordDone> ifinder = new IFindByPage<TaskRecordDone>() {
 			@Override
-			public List<TaskRecordDone> findByPage(int currentPage, int maxPerPage) {
-				List<TaskRecordDone> findList =  doneRecordDao.findByPage(tableName,whereSql+orderSql.toString()+pageGen.generatePrev(currentPage, maxPerPage),fillConfig);
+			public List<TaskRecordDone> findByPage(int currentPage,
+					int maxPerPage) {
+				List<TaskRecordDone> findList = doneRecordDao
+						.findByPage(tableName,
+								whereSql
+										+ orderSql.toString()
+										+ pageGen.generatePrev(currentPage,
+												maxPerPage), fillConfig);
 				return findList;
 			}
 		};
-		PageActionUtils.findPrevPageNo(ifinder, this.pageGen.getTotalCountFromTable(join_table,whereSql));
-		ServletActionContext.getRequest().setAttribute("tableName",tableName);
+		PageActionUtils.findPrevPageNo(ifinder, this.pageGen
+				.getTotalCountFromTable(join_table, whereSql));
+		ServletActionContext.getRequest().setAttribute("tableName", tableName);
 		return SUCCESS;
 	}
-	public String findLastPage(){
+
+	public String findLastPage() {
 		final String whereSql = FilterSqlGenerater.genWhereSql();
 		final FillConfig fillConfig = FillConfig.getFillAllInstance();
 		final StringBuilder orderSql = new StringBuilder(defaultOrderBy);
-		if(ServletActionContext.getRequest().getParameterMap().containsKey("sort_column") && ServletActionContext.getRequest().getParameterMap().containsKey("sort_order")){
+		if (ServletActionContext.getRequest().getParameterMap().containsKey(
+				"sort_column")
+				&& ServletActionContext.getRequest().getParameterMap()
+						.containsKey("sort_order")) {
 			orderSql.delete(0, orderSql.length());
-			orderSql.append(" ORDER BY "+ServletActionContext.getRequest().getParameter("sort_column")+" "+ServletActionContext.getRequest().getParameter("sort_order"));
+			orderSql.append(" ORDER BY "
+					+ ServletActionContext.getRequest().getParameter(
+							"sort_column")
+					+ " "
+					+ ServletActionContext.getRequest().getParameter(
+							"sort_order"));
 		}
-		final String tableName = ServletActionContext.getRequest().getParameter("tableName");
-		final String join_table = "("+tableName+" LEFT JOIN task ON "+tableName+".task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id";
-		IFindByPage<TaskRecordDone> ifinder = new IFindByPage<TaskRecordDone>(){
+		final String tableName = ServletActionContext.getRequest()
+				.getParameter("tableName");
+		final String join_table = "("
+				+ tableName
+				+ " LEFT JOIN task ON "
+				+ tableName
+				+ ".task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id";
+		IFindByPage<TaskRecordDone> ifinder = new IFindByPage<TaskRecordDone>() {
 			@Override
-			public List<TaskRecordDone> findByPage(int currentPage, int maxPerPage) {
-				List<TaskRecordDone> findList =  doneRecordDao.findByPage(tableName,whereSql+orderSql.toString()+pageGen.generateLast(join_table, maxPerPage, whereSql),fillConfig);
+			public List<TaskRecordDone> findByPage(int currentPage,
+					int maxPerPage) {
+				List<TaskRecordDone> findList = doneRecordDao.findByPage(
+						tableName, whereSql
+								+ orderSql.toString()
+								+ pageGen.generateLast(join_table, maxPerPage,
+										whereSql), fillConfig);
 				return findList;
 			}
 		};
-		PageActionUtils.findLastPage(ifinder, this.pageGen.getTotalCountFromTable(join_table,whereSql));
-		ServletActionContext.getRequest().setAttribute("tableName",tableName);
+		PageActionUtils.findLastPage(ifinder, this.pageGen
+				.getTotalCountFromTable(join_table, whereSql));
+		ServletActionContext.getRequest().setAttribute("tableName", tableName);
 		return SUCCESS;
 	}
-	public String getExecReturnString(){
-		HttpServletRequest req= ServletActionContext.getRequest();
+
+	public String getExecReturnString() {
+		HttpServletRequest req = ServletActionContext.getRequest();
 		Long id = Long.valueOf(req.getParameter("id"));
 		String tableName = req.getParameter("tableName");
-		FillConfig fillConfig = new FillConfig(false,false);
-		TaskRecordDone record = this.doneRecordDao.findById(id, tableName, fillConfig);
+		FillConfig fillConfig = new FillConfig(false, false);
+		TaskRecordDone record = this.doneRecordDao.findById(id, tableName,
+				fillConfig);
 		JSONObject ajaxJson = new JSONObject();
-		ajaxJson.put("id",id);
+		ajaxJson.put("id", id);
 		ajaxJson.put("return_str", record.getExec_return_str());
 		PageIOUtils.printToPage(ajaxJson.toString());
 		return NONE;
