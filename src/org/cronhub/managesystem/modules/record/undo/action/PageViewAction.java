@@ -44,6 +44,7 @@ public class PageViewAction extends ActionSupport {
 		ServletActionContext.getRequest().setAttribute("tableName",join_table);
 		return SUCCESS;
 	}
+	
 	public String findNextPageNo(){
 		final String whereSql = FilterSqlGenerater.genWhereSql();
 		final FillConfig fillConfig = FillConfig.getFillAllInstance();
@@ -64,6 +65,7 @@ public class PageViewAction extends ActionSupport {
 		ServletActionContext.getRequest().setAttribute("tableName",join_table);
 		return SUCCESS;
 	}
+	
 	public String findPrevPageNo(){
 		final String whereSql = FilterSqlGenerater.genWhereSql();
 		final FillConfig fillConfig = FillConfig.getFillAllInstance();
@@ -84,6 +86,7 @@ public class PageViewAction extends ActionSupport {
 		ServletActionContext.getRequest().setAttribute("tableName",join_table);
 		return SUCCESS;
 	}
+	
 	public String findLastPage(){
 		final String whereSql = FilterSqlGenerater.genWhereSql();
 		final FillConfig fillConfig = FillConfig.getFillAllInstance();

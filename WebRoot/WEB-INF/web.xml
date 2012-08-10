@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" 
-	xmlns="http://java.sun.com/xml/ns/javaee" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<web-app version="2.4"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_4.xsd">
+
+<!-- 删去2.5的头，貌似不支持EL表达式 
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-  </welcome-file-list>
-  	<filter>
+ -->
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	<!-- 控制jsp支持EL表达式 -->
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<el-ignored>false</el-ignored>
+		</jsp-property-group>
+	</jsp-config>
+
+	<filter>
 		<filter-name>struts-cleanup</filter-name>
-		<filter-class>org.apache.struts2.dispatcher.ActionContextCleanUp</filter-class>
+		<filter-class>
+			org.apache.struts2.dispatcher.ActionContextCleanUp
+		</filter-class>
 	</filter>
 	<filter>
 		<filter-name>struts2</filter-name>
-		<filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
+		<filter-class>
+			org.apache.struts2.dispatcher.FilterDispatcher
+		</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>struts2</filter-name>
@@ -21,37 +40,45 @@
 	</filter-mapping>
 	<!-- 工程编码过滤器 -->
 	<filter>
-	    <filter-name>characterEncodingFilter</filter-name>
-	    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-	    	<init-param>
-	        	<param-name>encoding</param-name>
-	        	<param-value>UTF-8</param-value>
-	    	</init-param>
+		<filter-name>characterEncodingFilter</filter-name>
+		<filter-class>
+			org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
 	</filter>
-	
+
 	<!-- 先启动spring的listener,再启动其他listener -->
 	<listener>
-	   	<listener-class>
-	    org.springframework.web.context.ContextLoaderListener
-	   </listener-class>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
 	</listener>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:spring/*.xml</param-value>
 	</context-param>
-	
-	
+
+
 	<!-- 被动模式下中央服务器crontab通知执行的init方法 -->
 	<listener>
-		<listener-class>org.cronhub.managesystem.modules.task.boot.PassiveModeNotifyCrontab</listener-class>
+		<listener-class>
+			org.cronhub.managesystem.modules.task.boot.PassiveModeNotifyCrontab
+		</listener-class>
 	</listener>
-	
+
 	<!-- daemon通信报警检测功能模块 -->
 	<listener>
-		<listener-class>org.cronhub.managesystem.modules.daemon.boot.CommunicateDetect</listener-class>
+		<listener-class>
+			org.cronhub.managesystem.modules.daemon.boot.CommunicateDetect
+		</listener-class>
 	</listener>
 	<!-- 自动重执行功能模块 -->
 	<listener>
-		<listener-class>org.cronhub.managesystem.modules.record.done.boot.AutoRedoRemoteExec</listener-class>
+		<listener-class>
+			org.cronhub.managesystem.modules.record.done.boot.AutoRedoRemoteExec
+		</listener-class>
 	</listener>
 </web-app>

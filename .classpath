@@ -47,12 +47,9 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jakarta-oro.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jaxen-1.1-beta-7.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jdbc2_0-stdext.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jsf-api.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jsf-impl.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/json-lib-2.3-jdk15.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/json.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jsonplugin-0.34.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jstl.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jta.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jtds1.2.jar"/>

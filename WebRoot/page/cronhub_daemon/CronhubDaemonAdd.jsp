@@ -105,9 +105,9 @@ $(function(){
 			</td>
 			<td>
 				<div>
-				<input type="text" id="machine_port" name="daemon.machine_port" class="input-text" validate="{required: true,digits:true,pingPort:true,rangelength: [1, 4]}" />
+				<input type="text" id="machine_port" name="daemon.machine_port" class="input-text" validate="{required: true,digits:true,rangelength: [1, 4],pingPort:true}" />
 				<b>*</b>
-				<span>为daemon管理器表中申请的daemon执行器端口,端口号只能是数字</span>
+				<span>为daemon管理器表中申请的daemon执行器端口,端口号只能是数字,且别超过4位</span>
 				</div>
 			</td>
 		</tr>
