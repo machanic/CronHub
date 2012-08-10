@@ -125,15 +125,26 @@ echo -e "#description:cronhub_daemon
 case \"\$1\" in
 start)
 \t${install_path}/jsvc/jsvc -home ${install_path}/jdk1.6.0_30 -Xmx2000m -pidfile ${install_path}/$daemon_port.pid -cp ${install_path}/DispatchSystemDaemon.jar com.baofeng.dispatchexecutor.boot.DaemonBoot -p $daemon_port
+\techo \"starting cronhub daemon service...\"
+\t;;
+stop)
+\tkill \$(cat ${install_path}/$daemon_port.pid);
+\techo \"shutdown cronhub daemon service...\";
+\t;;
+restart)
+\t/sbin/service cronhub_daemon stop;
+\tsleep 2;
+\t/sbin/service cronhub_daemon start;
 \t;;
 esac
 " > /etc/init.d/cronhub_daemon
 /sbin/chkconfig --add cronhub_daemon
+
 #start daemon
 echo "adding to service done,now start daemon service..."
 chmod +x /etc/init.d/cronhub_daemon
 /sbin/service cronhub_daemon start
-echo "all done"
+echo "all done! now you can use /sbin/service cronhub_daemon [start|stop|restart] to boot."
 #the final start cmd
 #$jsvc_target_bin -home $java_home -Xmx2000m -pidfile $install_path"/"$daemon_port".pid" -cp $daemon_jar_path com.baofeng.dispatchexecutor.boot.DaemonBoot -p $daemon_port
 
