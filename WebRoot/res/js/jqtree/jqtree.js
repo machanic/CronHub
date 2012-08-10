@@ -26,17 +26,20 @@ AjaxModel.prototype.load = function() {
 		beforeSend: function() {
 			_this.beforeSend();
 		},
-		error: function() {
-			alert('jqTree Ajax load error');
+		error: function(data) {
+			//如果定义了errback,就调用errback
+			if(_this.hasOwnProperty("errback")){
+				_this.errback(data);
+			}else{
+				alert('jqTree Ajax load error');
+			}
 		},
 		success: function(data) {
 			data = _this.xmlParse(data);
-			//if($(data).find('node').size()>0 || $(data).find('menu').size() >0){
+			if(data!=null){//如果获取到空root节点(也就是说没有数据)
 				_this.success(data);
-				_this.callback(data);
-			//}else{
-			//	_this.callback(data);
-			//}
+			}
+			_this.callback(data);
 		}
 	});
 }

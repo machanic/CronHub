@@ -44,10 +44,7 @@ public class PageViewAction extends ActionSupport {
 			orderSql.delete(0, orderSql.length());
 			orderSql.append(" ORDER BY "
 					+ ServletActionContext.getRequest().getParameter(
-							"sort_column")
-					+ " "
-					+ ServletActionContext.getRequest().getParameter(
-							"sort_order"));
+							"sort_column")+ " " + ServletActionContext.getRequest().getParameter("sort_order"));
 		}
 		final String tableName = ServletActionContext.getRequest()
 				.getParameter("tableName");

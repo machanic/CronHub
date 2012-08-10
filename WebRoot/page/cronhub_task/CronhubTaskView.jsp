@@ -159,10 +159,12 @@ function btnImmediateExecClick(){
 		});		
 	});
 }
+
 function hideLongText(){
 	$(".grid tbody td.cmdClass").each(function(){
 		var innerStr = $(this).text();
-		if(innerStr.trim().length>11){
+		var innerStr = $.trim(innerStr);	
+		if(innerStr.length>11){
 			var ellipsis = $("<span class='toolbar' title='"+innerStr+"' name='unfoldBtn'><a>...</a></span>").click(function(){
 				var wholeStr = $(this).attr('title');
 				var currentFold = $(this).parent().contents().clone(true);

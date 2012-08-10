@@ -5,15 +5,20 @@
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 
 <script type="text/javascript" src="/res/js/jquery/jquery-1.6.2.min.js"></script>
-
 <script type="text/javascript" src="/res/js/jqtree/jqtree.js"></script>
-<script type="text/javascript" src="/res/js/zdialog/zDrag.js"></script>
-<script type="text/javascript" src="/res/js/zdialog/zDialog.js"></script>
 <script type="text/javascript" src="/res/js/contextmenu/jquery.contextmenu.js"></script>
 
 <link rel="stylesheet" type="text/css" href="/res/skin/all.css" />
 
 <script type="text/javascript">
+/** 如果没有加载的元素，就返回空记录提示 **/
+function redirectToNoRecordPage(){
+	var msg = arguments[0]?arguments[0]:"暂无数据";//js的默认参数
+	self.parent.frames["rightframe"].location.href = "/page/commons/no_record.html";
+	var tree_hint_msg = "<b style='color:red'>"+msg+"</b>";
+	$("#imgLoading").replaceWith(tree_hint_msg);
+}
+
 $(function() {
 	// jqtree
 	var firstLoad = true;
@@ -21,7 +26,7 @@ $(function() {
 		container: $('#tree'),
 		loadUrl: '/record_undo/createTree.action',//后台只有一个action地址,怎么知道到底是第一次请求过来的,还是点击树中某一节点请求过来的呢？全凭有没有id请求参数过来作为判断依据,java后台使用了if (request .getParameterMap().containsKey( "id"))
 		dataType: 'xml',
-		timeout: 10000,
+		timeout: 3000,
 		indent: 10,
 		createRequestParam: function(node) { //点击文件夹展开，加载下级时传入后台的id
 			node.data = { id: node.id };
@@ -39,24 +44,32 @@ $(function() {
 				node.toggle();//否则如果点击的是文件夹,就展开
 			}
 		},
+		errback:function(data){
+			redirectToNoRecordPage("数据获取异常");
+		},
 		callback:function(data){
-		
+			//如果该表彻底无数据,这是返回<root/>只有根的空xml的情况
+			if(data == null){
+				redirectToNoRecordPage();
+				firstLoad=false;
+				return;
+			}
 			if(firstLoad){
-				//if($(data).find('node').size()>0 ){
+				//check error data that tree only have folder
+				if($("span[type='day']").length == 0){//如果没有"天"的节点
+					redirectToNoRecordPage();
+					firstLoad=false;
+					return;
+				}
 				var dateId = $("span[type='day']:first").attr("id");//获取到span里第一个type为day的id（第一个使用了jq的:first）
 				var location =encodeURI("/record_undo/first_page_view.action?max_per_page=20&filter={'equal':{'DATE_FORMAT(start_datetime,\"%Y%m%d\")':"+dateId+"}}");
 				self.parent.frames["rightframe"].location.href = location;
-				//}else{
-				//	self.parent.frames["rightframe"].location.href = "/page/commons/no_record.html";
-				//	this.container.css("text-align","center").html("暂无记录");
-				//}
 				firstLoad=false;
 			}
 			$("#imgLoading").hide();//隐藏loading图标
 		}
 	});
 	tree.init();
-	
 });
 </script>
 </head>

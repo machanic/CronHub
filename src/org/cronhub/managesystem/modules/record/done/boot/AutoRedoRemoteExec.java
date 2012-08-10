@@ -55,6 +55,9 @@ public class AutoRedoRemoteExec  extends ContextLoaderListener{
 				public TaskTable getTasks() {
 					TaskTable table = new TaskTable();
 					final String tableName = RecordDoneUtils.getTableName(new Date());
+					if(!doneRecordDao.hasTableByName(tableName)){ //if not exists this table,return
+						return table;
+					}
 					FillConfig fillConfig =new FillConfig(false,false);
 					List<TaskRecordDone> records = doneRecordDao.findAll(tableName,allRedoWhereSql, fillConfig);
 					for(final TaskRecordDone record : records){

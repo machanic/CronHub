@@ -16,4 +16,5 @@ public interface IDoneRecordDao {
 	public void update(TaskRecordDone record);
 	public TaskRecordDone findById(Long id,String tableName,FillConfig config);
 	public List<TaskRecordDone> findByTaskId(Long taskId,String tableName,FillConfig config);
+	public boolean hasTableByName(String tableName);
 }

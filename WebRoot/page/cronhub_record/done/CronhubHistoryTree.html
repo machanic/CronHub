@@ -3,11 +3,25 @@
 <head>
 <title>tree</title>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
 <script type="text/javascript" src="/res/js/jquery/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="/res/js/jqtree/jqtree.js"></script>
 <script type="text/javascript" src="/res/js/contextmenu/jquery.contextmenu.js"></script>
+
 <link rel="stylesheet" type="text/css" href="/res/skin/all.css" />
+
 <script type="text/javascript">
+/** 如果没有加载的元素，就返回空记录提示 **/
+function redirectToNoRecordPage(){
+	var msg = arguments[0]?arguments[0]:"暂无数据";//js的默认参数
+	self.parent.frames["rightframe"].location.href = "/page/commons/no_record.html";
+	var tree_hint_msg = "<b style='color:red'>"+msg+"</b>";
+	if($("span[type='month']").length > 0){
+		var month_name=$("span[type='month']:first").attr("name");
+		tree_hint_msg = "<b style='color:red'>"+month_name+"表无数据</b>";
+	}
+	$("#imgLoading").replaceWith(tree_hint_msg);
+}
 $(function() {
 	var firstLoad = true;
 	// jqtree
@@ -15,7 +29,7 @@ $(function() {
 		container: $('#tree'),
 		loadUrl: '/record_done/createTree.action?unfold_current_month=true',//后台只有一个action地址,怎么知道到底是第一次请求过来的,还是点击树中某一节点请求过来的呢？全凭有没有id请求参数过来作为判断依据,java后台使用了if (request .getParameterMap().containsKey( "id"))
 		dataType: 'xml',
-		timeout: 10000,
+		timeout: 3000,
 		indent: 10,
 		createRequestParam: function(node) {
 			node.data = { id: node.id };
@@ -32,8 +46,23 @@ $(function() {
 				node.toggle();
 			}
 		},
+		errback:function(data){
+			redirectToNoRecordPage("数据获取异常");
+		},
 		callback:function(data){
+			//如果彻底"无月表"
+			if(data == null){
+				redirectToNoRecordPage();
+				firstLoad=false;
+				return;
+			}
 			if(firstLoad){
+				//check error data that tree only have folder
+				if($("span[type='day']").length == 0){//如果有月表,但表中无数据
+					redirectToNoRecordPage();
+					firstLoad=false;
+					return;
+				}
 				var tableName = $("span[type='day']:first").attr("tableName");
 				var todayId = $("span[type='day']:first").attr("id");
 				var location = "/record_done/first_page_view.action?max_per_page=20&tableName="+tableName+"&filter={'equal':{'DATE_FORMAT(start_datetime,\"%Y%m%d\")':"+todayId+"}}";
@@ -42,13 +71,6 @@ $(function() {
 			}
 			$("#imgLoading").hide();
 		}
-		/**
-		success:function(data){
-			//alert("success");
-			alert($("#2011").attr('type'));
-		}
-		**/
-		//contextmenu: ctxmenu
 	});
 	tree.init();
 });

@@ -89,7 +89,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/slf4j-api-1.5.8.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/slf4j-log4j12-1.5.8.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ant.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/DispatchSystemDaemon.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/libthrift-0.8.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/DispatchSystemDaemon.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

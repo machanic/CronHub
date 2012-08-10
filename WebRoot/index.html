@@ -9,11 +9,14 @@
 
 <script type="text/javascript" src="res/js/zdialog/zDrag.js"></script>
 <script type="text/javascript" src="res/js/zdialog/zDialog.js"></script>
-
+<script type="text/javascript" src="res/js/utils/navigator_test.js"></script>
 <link rel="stylesheet" type="text/css" href="res/skin/all.css" />
 
 <script>
 $(function() {
+	if(!isFireFox()){
+		Dialog.alert("检测到您所使用的不是火狐Firefox浏览器,本软件在其他浏览器上没做进一步兼容性测试,请您使用Mozilla Firefox浏览器");
+	}
 	// navi
 	var navi = new NaviTree({
 		container_horiz: $('#td-navi'),

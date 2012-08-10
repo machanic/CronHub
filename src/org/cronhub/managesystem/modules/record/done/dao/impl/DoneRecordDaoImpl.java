@@ -131,4 +131,11 @@ public class DoneRecordDaoImpl implements IDoneRecordDao {
 			FillConfig fillConfig) {
 		return findByPage(tableName,whereSql,fillConfig);
 	}
+	@Override
+	public boolean hasTableByName(String tableName) {
+		String sql = "SELECT COUNT(TABLE_NAME) FROM INFORMATION_SCHEMA.TABLES WHERE `TABLE_SCHEMA`='cronhub_manage_system' AND `TABLE_NAME` = '"+tableName+"' AND TABLE_TYPE='BASE TABLE'";
+		return this.jdbcTemplate.queryForInt(sql) > 0;
+	}
+	
+	
 }
