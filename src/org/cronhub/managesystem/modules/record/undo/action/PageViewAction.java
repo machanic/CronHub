@@ -32,7 +32,7 @@ public class PageViewAction extends ActionSupport {
 			orderSql.delete(0, orderSql.length());
 			orderSql.append(" ORDER BY "+ServletActionContext.getRequest().getParameter("sort_column")+" "+ServletActionContext.getRequest().getParameter("sort_order"));
 		}
-		final String join_table = "(task_record_undo LEFT JOIN task ON task_record_undo.task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id";
+		final String join_table = "(task_record_undo INNER JOIN task ON task_record_undo.task_id = task.id) INNER JOIN daemon ON task.daemon_id = daemon.id";
 		IFindByPage<TaskRecordUndo> ifinder = new IFindByPage<TaskRecordUndo>(){
 			@Override
 			public List<TaskRecordUndo> findByPage(int currentPage, int maxPerPage) {
@@ -53,7 +53,7 @@ public class PageViewAction extends ActionSupport {
 			orderSql.delete(0, orderSql.length());
 			orderSql.append(" ORDER BY "+ServletActionContext.getRequest().getParameter("sort_column")+" "+ServletActionContext.getRequest().getParameter("sort_order"));
 		}
-		final String join_table = "(task_record_undo LEFT JOIN task ON task_record_undo.task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id";
+		final String join_table = "(task_record_undo INNER JOIN task ON task_record_undo.task_id = task.id) INNER JOIN daemon ON task.daemon_id = daemon.id";
 		IFindByPage<TaskRecordUndo> ifinder = new IFindByPage<TaskRecordUndo>(){
 			@Override
 			public List<TaskRecordUndo> findByPage(int currentPage, int maxPerPage) {
@@ -74,7 +74,7 @@ public class PageViewAction extends ActionSupport {
 			orderSql.delete(0, orderSql.length());
 			orderSql.append(" ORDER BY "+ServletActionContext.getRequest().getParameter("sort_column")+" "+ServletActionContext.getRequest().getParameter("sort_order"));
 		}
-		final String join_table = "(task_record_undo LEFT JOIN task ON task_record_undo.task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id";
+		final String join_table = "(task_record_undo INNER JOIN task ON task_record_undo.task_id = task.id) INNER JOIN daemon ON task.daemon_id = daemon.id";
 		IFindByPage<TaskRecordUndo> ifinder = new IFindByPage<TaskRecordUndo>(){
 			@Override
 			public List<TaskRecordUndo> findByPage(int currentPage, int maxPerPage) {
@@ -95,7 +95,7 @@ public class PageViewAction extends ActionSupport {
 			orderSql.delete(0, orderSql.length());
 			orderSql.append(" ORDER BY "+ServletActionContext.getRequest().getParameter("sort_column")+" "+ServletActionContext.getRequest().getParameter("sort_order"));
 		}
-		final String join_table = "(task_record_undo LEFT JOIN task ON task_record_undo.task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id";
+		final String join_table = "(task_record_undo INNER JOIN task ON task_record_undo.task_id = task.id) INNER JOIN daemon ON task.daemon_id = daemon.id";
 		IFindByPage<TaskRecordUndo> ifinder = new IFindByPage<TaskRecordUndo>(){
 			@Override
 			public List<TaskRecordUndo> findByPage(int currentPage, int maxPerPage) {

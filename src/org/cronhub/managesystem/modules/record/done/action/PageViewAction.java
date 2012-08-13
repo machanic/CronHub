@@ -37,22 +37,13 @@ public class PageViewAction extends ActionSupport {
 		final String whereSql = FilterSqlGenerater.genWhereSql();
 		final FillConfig fillConfig = FillConfig.getFillAllInstance();
 		final StringBuilder orderSql = new StringBuilder(defaultOrderBy);
-		if (ServletActionContext.getRequest().getParameterMap().containsKey(
-				"sort_column")
-				&& ServletActionContext.getRequest().getParameterMap()
-						.containsKey("sort_order")) {
+		if (ServletActionContext.getRequest().getParameterMap().containsKey("sort_column") && ServletActionContext.getRequest().getParameterMap().containsKey("sort_order")) {
 			orderSql.delete(0, orderSql.length());
-			orderSql.append(" ORDER BY "
-					+ ServletActionContext.getRequest().getParameter(
-							"sort_column")+ " " + ServletActionContext.getRequest().getParameter("sort_order"));
+			orderSql.append(" ORDER BY " + ServletActionContext.getRequest().getParameter("sort_column")+ " " + ServletActionContext.getRequest().getParameter("sort_order"));
 		}
 		final String tableName = ServletActionContext.getRequest()
 				.getParameter("tableName");
-		final String join_table = "("
-				+ tableName
-				+ " LEFT JOIN task ON "
-				+ tableName
-				+ ".task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id";
+		final String join_table = "(" + tableName + " INNER JOIN task ON " + tableName + ".task_id = task.id) INNER JOIN daemon ON task.daemon_id = daemon.id";
 		IFindByPage<TaskRecordDone> ifinder = new IFindByPage<TaskRecordDone>() {
 			@Override
 			public List<TaskRecordDone> findByPage(int currentPage,
@@ -89,9 +80,9 @@ public class PageViewAction extends ActionSupport {
 				.getParameter("tableName");
 		final String join_table = "("
 				+ tableName
-				+ " LEFT JOIN task ON "
+				+ " INNER JOIN task ON "
 				+ tableName
-				+ ".task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id";
+				+ ".task_id = task.id) INNER JOIN daemon ON task.daemon_id = daemon.id";
 		IFindByPage<TaskRecordDone> ifinder = new IFindByPage<TaskRecordDone>() {
 			@Override
 			public List<TaskRecordDone> findByPage(int currentPage,
@@ -129,9 +120,9 @@ public class PageViewAction extends ActionSupport {
 				.getParameter("tableName");
 		final String join_table = "("
 				+ tableName
-				+ " LEFT JOIN task ON "
+				+ " INNER JOIN task ON "
 				+ tableName
-				+ ".task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id";
+				+ ".task_id = task.id) INNER JOIN daemon ON task.daemon_id = daemon.id";
 		IFindByPage<TaskRecordDone> ifinder = new IFindByPage<TaskRecordDone>() {
 			@Override
 			public List<TaskRecordDone> findByPage(int currentPage,
@@ -171,9 +162,9 @@ public class PageViewAction extends ActionSupport {
 				.getParameter("tableName");
 		final String join_table = "("
 				+ tableName
-				+ " LEFT JOIN task ON "
+				+ " INNER JOIN task ON "
 				+ tableName
-				+ ".task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id";
+				+ ".task_id = task.id) INNER JOIN daemon ON task.daemon_id = daemon.id";
 		IFindByPage<TaskRecordDone> ifinder = new IFindByPage<TaskRecordDone>() {
 			@Override
 			public List<TaskRecordDone> findByPage(int currentPage,

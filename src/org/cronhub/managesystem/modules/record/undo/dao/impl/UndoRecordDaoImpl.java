@@ -76,7 +76,7 @@ public class UndoRecordDaoImpl implements IUndoRecordDao {
 
 	@Override
 	public TaskRecordUndo findById(Long id) {
-		String sql = String.format("SELECT task_record_undo.id AS id,task_id,real_cmd,run_status,start_datetime,exec_type,daemon.machine_ip AS machine_ip,task.cron_exp AS cron_exp,task.is_process_node AS is_process_node,task.end_redo_times AS end_redo_times FROM (task_record_undo LEFT JOIN task ON task_record_undo.task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id WHERE task_record_undo.id = %s",id);
+		String sql = String.format("SELECT task_record_undo.id AS id,task_id,real_cmd,run_status,start_datetime,exec_type,daemon.machine_ip AS machine_ip,task.cron_exp AS cron_exp,task.is_process_node AS is_process_node,task.end_redo_times AS end_redo_times FROM (task_record_undo INNER JOIN task ON task_record_undo.task_id = task.id) INNER JOIN daemon ON task.daemon_id = daemon.id WHERE task_record_undo.id = %s",id);
 		return (TaskRecordUndo)this.jdbcTemplate.queryForObject(sql,new BaseRowMapper(TaskRecordUndo.class));
 	}
 

@@ -69,7 +69,8 @@ public class DoneRecordDaoImpl implements IDoneRecordDao {
 	@Override
 	public List<TaskRecordDone> findByPage(String tableName,String orderLimit,
 			FillConfig fillConfig) {
-		String sql = String.format("SELECT %s.id AS id,task_id,complete_success,exit_code,daemon.machine_ip AS machine_ip,daemon.conn_status AS conn_status,task.cron_exp AS cron_exp,real_cmd,start_datetime,end_datetime,task.run_mode AS run_mode,exec_type,task.is_process_node AS is_process_node,task.is_redo AS is_redo,current_redo_times,task.end_redo_times AS end_redo_times,on_processing FROM (%s LEFT JOIN task ON %s.task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id %s",tableName,tableName,tableName,orderLimit);
+		//修正bug改为INNER JOIN,这一句如果用LEFT JOIN会发生如果以前有个任务执行了一半，但是将task或daemon删除了，这个时候删完后，执行完了报告回来的任务由于提取不到ip地址等信息，就会发生报错。
+		String sql = String.format("SELECT %s.id AS id,task_id,complete_success,exit_code,daemon.machine_ip AS machine_ip,daemon.conn_status AS conn_status,task.cron_exp AS cron_exp,real_cmd,start_datetime,end_datetime,task.run_mode AS run_mode,exec_type,task.is_process_node AS is_process_node,task.is_redo AS is_redo,current_redo_times,task.end_redo_times AS end_redo_times,on_processing FROM (%s INNER JOIN task ON %s.task_id = task.id) INNER JOIN daemon ON task.daemon_id = daemon.id %s",tableName,tableName,tableName,orderLimit);
 		List<TaskRecordDone> taskRecordDones = this.jdbcTemplate.query(sql, new BaseRowMapper(TaskRecordDone.class));
 		if(fillConfig.getFillTask()){
 			for(TaskRecordDone done : taskRecordDones){
@@ -97,7 +98,7 @@ public class DoneRecordDaoImpl implements IDoneRecordDao {
 	}
 	@Override
 	public TaskRecordDone findById(Long id,String tableName,FillConfig fillConfig) {
-		String sql = String.format("SELECT %s.id AS id,task_id,complete_success,exit_code,daemon.machine_ip AS machine_ip,task.cron_exp AS cron_exp,exec_return_str,real_cmd,start_datetime,end_datetime,task.run_mode AS run_mode,exec_type,task.is_process_node AS is_process_node,current_redo_times,task.end_redo_times AS end_redo_times,on_processing FROM (%s LEFT JOIN task ON %s.task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id WHERE %s.id = %s",tableName,tableName,tableName,tableName,id);
+		String sql = String.format("SELECT %s.id AS id,task_id,complete_success,exit_code,daemon.machine_ip AS machine_ip,task.cron_exp AS cron_exp,exec_return_str,real_cmd,start_datetime,end_datetime,task.run_mode AS run_mode,exec_type,task.is_process_node AS is_process_node,current_redo_times,task.end_redo_times AS end_redo_times,on_processing FROM (%s INNER JOIN task ON %s.task_id = task.id) INNER JOIN daemon ON task.daemon_id = daemon.id WHERE %s.id = %s",tableName,tableName,tableName,tableName,id);
 		TaskRecordDone record =  (TaskRecordDone)this.jdbcTemplate.queryForObject(sql,new BaseRowMapper(TaskRecordDone.class));
 		if(fillConfig.getFillTask()){
 			FillConfig config = new FillConfig(false,false);
@@ -112,7 +113,7 @@ public class DoneRecordDaoImpl implements IDoneRecordDao {
 	@Override
 	public List<TaskRecordDone> findByTaskId(Long taskId, String tableName,
 			FillConfig fillConfig) {
-		String sql = String.format("SELECT %s.id AS id,task_id,complete_success,exit_code,daemon.machine_ip AS machine_ip,task.cron_exp AS cron_exp,exec_return_str,real_cmd,start_datetime,end_datetime,task.run_mode AS run_mode,exec_type,task.is_process_node AS is_process_node,current_redo_times,task.end_redo_times AS end_redo_times,on_processing FROM (%s LEFT JOIN task ON %s.task_id = task.id) LEFT JOIN daemon ON task.daemon_id = daemon.id WHERE %s.task_id = %s",tableName,tableName,tableName,tableName,taskId);
+		String sql = String.format("SELECT %s.id AS id,task_id,complete_success,exit_code,daemon.machine_ip AS machine_ip,task.cron_exp AS cron_exp,exec_return_str,real_cmd,start_datetime,end_datetime,task.run_mode AS run_mode,exec_type,task.is_process_node AS is_process_node,current_redo_times,task.end_redo_times AS end_redo_times,on_processing FROM (%s INNER JOIN task ON %s.task_id = task.id) INNER JOIN daemon ON task.daemon_id = daemon.id WHERE %s.task_id = %s",tableName,tableName,tableName,tableName,taskId);
 		List<TaskRecordDone> taskRecordDones = this.jdbcTemplate.query(sql, new BaseRowMapper(TaskRecordDone.class));
 		if(fillConfig.getFillTask()){
 			for(TaskRecordDone done : taskRecordDones){

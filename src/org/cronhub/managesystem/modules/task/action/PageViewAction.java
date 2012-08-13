@@ -19,7 +19,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class PageViewAction extends ActionSupport {
 	private PageSqlGenerater pageGen;
 	private ITaskDao dao;
-	private static final String join_table = " task LEFT JOIN daemon on task.daemon_id = daemon.id ";
+	private static final String join_table = " task INNER JOIN daemon on task.daemon_id = daemon.id ";
 	public void setPageGen(PageSqlGenerater pageGen) {
 		this.pageGen = pageGen;
 	}

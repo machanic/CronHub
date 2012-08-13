@@ -45,7 +45,7 @@ public class TaskDaoImpl implements ITaskDao {
 
 	@Override
 	public List<Task> findByPage(String orderLimit, FillConfig fillConfig) {
-		String sql = "SELECT task.id as id,daemon_id,cron_exp,shell_cmd,must_replace_cmd,run_mode,run_start_reportaddress,run_end_reportaddress,is_process_node,is_process_chain,process_tasks,task.comment as comment,operate_uid,task.update_time,is_redo,end_redo_times,daemon.machine_ip as machine_ip FROM task  left join daemon on task.daemon_id = daemon.id "+orderLimit;
+		String sql = "SELECT task.id as id,daemon_id,cron_exp,shell_cmd,must_replace_cmd,run_mode,run_start_reportaddress,run_end_reportaddress,is_process_node,is_process_chain,process_tasks,task.comment as comment,operate_uid,task.update_time,is_redo,end_redo_times,daemon.machine_ip as machine_ip FROM task  INNER JOIN daemon on task.daemon_id = daemon.id "+orderLimit;
 		List<Task> tasks = this.jdbcTemplate.query(sql, new BaseRowMapper(Task.class));
 		if(fillConfig.getFillDaemon()){
 			for(Task task : tasks){
@@ -57,7 +57,7 @@ public class TaskDaoImpl implements ITaskDao {
 
 	@Override
 	public List<Task> findAll(String whereSql, FillConfig fillConfig) {
-		String sql="SELECT task.id as id,daemon_id,cron_exp,shell_cmd,must_replace_cmd,run_mode,run_start_reportaddress,run_end_reportaddress,is_process_node,is_process_chain,process_tasks,task.comment as comment,operate_uid,task.update_time,is_redo,end_redo_times,daemon.machine_ip as machine_ip,daemon.conn_status as conn_status FROM task  LEFT JOIN daemon on task.daemon_id = daemon.id " + whereSql;
+		String sql="SELECT task.id as id,daemon_id,cron_exp,shell_cmd,must_replace_cmd,run_mode,run_start_reportaddress,run_end_reportaddress,is_process_node,is_process_chain,process_tasks,task.comment as comment,operate_uid,task.update_time,is_redo,end_redo_times,daemon.machine_ip as machine_ip,daemon.conn_status as conn_status FROM task  INNER JOIN daemon on task.daemon_id = daemon.id " + whereSql;
 		List<Task> tasks = this.jdbcTemplate.query(sql, new BaseRowMapper(Task.class));
 		if(fillConfig.getFillDaemon()){
 			for(Task task : tasks){
