@@ -42,7 +42,9 @@ $(function() {
 			{'执行命令':{id:$(this).attr("id"),icon:'/res/icons/16x16/application_osx_terminal.png',onclick:function(){
 				var _this = this;
 				var message = $("#btnRedo").attr("message");
-				redoRemoteExec(_this.id,message);
+				Dialog.confirm(message,function(){
+					redoRemoteExec(_this.id);
+				});
 			}}}
 		]/*,
 		{
@@ -124,18 +126,21 @@ function redoBtnClick(){
 	if(checkCount<=0){
 		Dialog.alert("请选中至少一条记录进行操作");
 		return;
+	}else{
+		Dialog.confirm("确定重新执行?",function(){
+		var message = $(this).attr("message");
+		$('.grid tbody input[type=checkbox]').each(function(i, o) {
+			if($(o).attr('checked')){
+				var id = $(o).val();
+				redoRemoteExec(id);	
+			}
+		});
+		});
 	}
-	var message = $(this).attr("message");
-	$('.grid tbody input[type=checkbox]').each(function(i, o) {
-		if($(o).attr('checked')){
-			var id = $(o).val();
-			redoRemoteExec(id,message);	
-		}
-	});
 }
-function redoRemoteExec(id,message){
-	Dialog.confirm(message,function(){
-		var tableName = $("#hidden_tableName").html();
+
+function redoRemoteExec(id){
+	var tableName = $("#hidden_tableName").html();
 	var loadingImg = "<img src='/res/images/gif/loading.gif'/>";
 	$("tr[id='"+id+"'] span[class][class!='toolbar']").html(loadingImg);
 			$.ajax({
@@ -160,7 +165,6 @@ function redoRemoteExec(id,message){
 					}
 				}
 			});	
-});
 }
 //命令展开与命令折叠
 function cmdfoldreverse(event){
