@@ -47,9 +47,9 @@ datadir=/var/lib/mysql
 
 socket=/var/lib/mysql/mysql.sock
 
-# Default to using old password format for compatibility with mysql 3.x
+> Default to using old password format for compatibility with mysql 3.x
 
-# clients (those using the mysqlclient10 compatibility package).
+> clients (those using the mysqlclient10 compatibility package).
 
 old_passwords=1　 ← 找到这一行，在这一行的下面添加新的规则，让MySQL的默认编码为UTF-8
 
@@ -431,7 +431,7 @@ PRIMARY KEY (`id`)
 
 例如：
 
-#这一项的ip和端口一定要改为mysql数据库的ip和端口
+> 这一项的ip和端口一定要改为mysql数据库的ip和端口
 
 db.jdbcurl=jdbc\:mysql\://192.168.101.9\:3306/cronhub_manage_system?useUnicode\=true&characterEncoding\=UTF-8
 
@@ -439,7 +439,7 @@ db.username=admin
 
 db.password=123456
 
-#这一项的ip和端口一定要改为中央服务器的tomcat启动该server的ip和端口
+> 这一项的ip和端口一定要改为中央服务器的tomcat启动该server的ip和端口
 
 undoReportHttpUrl=http\://192.168.101.9\:8085/record_undo/report.action
 
@@ -581,7 +581,7 @@ root 1965 1 0 Jul02 ? 00:00:00 jsvc.exec -home /opt/modules/daemon/jdk1.6.0_30 -
 
 root 1966 1965 0 Jul02 ? 00:00:48 jsvc.exec -home /opt/modules/daemon/jdk1.6.0_30 -Xmx2000m -pidfile /opt/modules/daemon/2012.pid -cp /opt/modules/daemon/DispatchSystemDaemon.jar com.baofeng.cronhubexecutor.boot.DaemonBoot -p 2012
 
-说明：
+### 说明：
 
 安装daemon脚本会加入chkconfig到linux系统启动项（加入service）里头
 
