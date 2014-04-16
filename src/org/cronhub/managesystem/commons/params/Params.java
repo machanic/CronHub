@@ -26,10 +26,12 @@ public class Params {
 	public static final Integer TYPE_START_DATETIME = 0;
 	public static final Integer TYPE_END_DATETIME = 1;
 	public static final SimpleDateFormat date_format_page = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	public static final SimpleDateFormat time_format_page = new SimpleDateFormat("MM.dd(HH:mm:ss)");
 	public static final String PAGE_RECORD_COMPLETE_STATS = "complete_stats";
 	public static final String PAGE_RECORD_EXIT_CODE = "exit_code";
 	public static final String PAGE_RECORD_END_DATETIME = "end_datetime";
 	public static final String PAGE_RECORD_START_DATETIME = "start_datetime";
+	public static final String PAGE_RECORD_DATETIME_INTERVAL = "datetime_interval";
 	public static final String PAGE_RECORD_EXEC_TYPE = "exec_type";
 	public static final String PAGE_RECORD_DURATION = "duration";
 	public static final String PAGE_RECORD_EXEC_RETURN_STR = "exec_return_str";

@@ -89,7 +89,7 @@ public class RemoteExecutCmdProcessor {
 		} catch (Exception e) {
 			record.setOn_processing(false);
 			record.setExec_type(execType);
-			if(execType != Params.EXECTYPE_AUTOREDO){
+			if(!execType.equals(Params.EXECTYPE_AUTOREDO)){
 				record.setStart_datetime(new Date());//不等于"自动重执行"类型时,重新设置初始时间
 			}else{//如果是"自动重执行"类型时,设置current_redo_times+1
 				record.setCurrent_redo_times(record.getCurrent_redo_times()+1);
@@ -104,6 +104,7 @@ public class RemoteExecutCmdProcessor {
 			errorJson.put(Params.PAGE_RECORD_DURATION, record.getDuration_ISO());
 			//errorJson.put(Params.PAGE_RECORD_EXIT_CODE, record.getExit_code_ISO());
 			errorJson.put(Params.PAGE_RECORD_END_DATETIME,record.getEnd_datetime_ISO());
+			errorJson.put(Params.PAGE_RECORD_DATETIME_INTERVAL,record.getDatetime_interval_ISO());
 			errorJson.put(Params.PAGE_RECORD_EXEC_TYPE, record.getExec_type_ISO());
 			errorJson.put(Params.PAGE_RECORD_EXEC_RETURN_STR, record.getExec_return_str());
 			errorJson.put(Params.PAGE_RECORD_START_DATETIME, record.getStart_datetime_ISO());

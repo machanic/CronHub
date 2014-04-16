@@ -137,6 +137,13 @@ public class TaskRecordDone {
 		}
 		return Params.date_format_page.format(this.end_datetime);
 	}
+	public String getDatetime_interval_ISO(){
+		if(this.on_processing){
+			return Params.PAGE_IMG_LOADING_TAG;
+		}
+		return TimeUtils.getDateTimeInterval(this.start_datetime, this.end_datetime);
+	}
+	
 	public String getExec_type_ISO(){
 		if(this.on_processing){
 			return Params.PAGE_IMG_LOADING_TAG;

@@ -100,7 +100,7 @@ $(function() {
 function hideLongText(){
 	$(".grid tbody td.cmdClass").each(function(){
 		var innerStr = $(this).text();
-		if(innerStr.length>10){
+		if(innerStr.length>18){
 			var ellipsis = $("<span class='toolbar' title='"+innerStr+"' name='unfoldBtn'><a>...</a></span>").click(function(){
 				var wholeStr = $(this).attr('title');
 				var currentFold = $(this).parent().contents().clone(true);
@@ -111,7 +111,7 @@ function hideLongText(){
 				});
 				$(this).parent().html(wholeStr).append(foldBtn);
 			});
-			var shortStr = innerStr.substr(0,10);
+			var shortStr = innerStr.substr(0,18);
 			$(this).html(shortStr).append(ellipsis);
 		}
 	});
@@ -310,11 +310,14 @@ img[src="/res/icons/16x16/magnifier.png"]{
 				<th><span>cron_exp</span></th>
 				<th><span>真实命令</span></th>
 				<th><span>运行时长</span></th>
-				<th><span>执行开始时间</span></th>
-				<th><span>执行结束时间</span></th>
+				<th><span>执行时段</span></th>
+				<!-- 
 				<th><span><select name="filter_state_run_mode" trigger="change" stat="equal" trigger_target="this"><option value="-1">模式</option><option  value="0">被动</option><option value="1">主动</option></select></span></th>
+				 -->
 				<th><span><select name="filter_state_exec_type" trigger="change" stat="equal" trigger_target="this"><option value="-1">执行类型</option><option  value="0">crontab执行</option><option value="1">手动重执行</option><option value="2">自动重执行</option><option value="3">当场执行</option></select></span></th>
+				<!-- 
 				<th><span><select name="filter_state_is_process_node" trigger="change" stat="equal" trigger_target="this"><option value="-1">任务类型</option><option  value="0">单任务</option><option value="1">流程节点</option></select></span></th>
+				 -->
 				<th><span>重执行次数</span></th>
 				<th><span>截止次数</span></th>
 			</tr>
@@ -332,11 +335,14 @@ img[src="/res/icons/16x16/magnifier.png"]{
 				<td align="center"><span><s:property value="#recordbean.task.cron_exp"/></span></td>
 				<td align="center" class="cmdClass"><s:property value="#recordbean.real_cmd"/></td>
 				<td align="center"><span class="duration"><s:property escape="false" value="#recordbean.duration_ISO"/></span></td>
-				<td align="center"><span class="start_datetime"><s:property escape="false" value="#recordbean.start_datetime_ISO"/></span></td>
-				<td align="center"><span class="end_datetime"><s:property escape="false" value="#recordbean.end_datetime_ISO"/></span></td>
+				<td align="center"><span class="datetime_interval"><s:property escape="false" value="#recordbean.datetime_interval_ISO"/></span></td>
+				<!-- 
 				<td align="center"><span><s:if test="#recordbean.task.run_mode==true"><font style="color:green">主动</font></s:if><s:else><font style="color:#D2691E">被动</font></s:else></span></td>
+				 -->
 				<td align="center"><span class="exec_type"><s:property escape="false" value="#recordbean.exec_type_ISO"/></span></td>
+				<!-- 
 				<td align="center"><span><s:if test="#recordbean.task.is_process_node==true">流程节点</s:if><s:else>单任务</s:else></span></td>
+				 -->
 				<td align="center"><span><s:property value="#recordbean.current_redo_times"/></span></td>
 				<td align="center"><span><s:property value="#recordbean.task.end_redo_times"/></span></td>
 			</tr>

@@ -2,6 +2,8 @@ package org.cronhub.managesystem.commons.utils.time;
 
 import java.util.Date;
 
+import org.cronhub.managesystem.commons.params.Params;
+
 public class TimeUtils {
 	public static String getDuration(Date endDate,Date beginDate){
 		long durationMillisecond= endDate.getTime() - beginDate.getTime();
@@ -27,4 +29,12 @@ public class TimeUtils {
 		}
 		return ret.toString();
 	}
+	
+	public static String getDateTimeInterval(Date startDate, Date endDate){
+		StringBuilder ret = new StringBuilder();
+		ret.append(Params.time_format_page.format(startDate)).append("~")
+		.append(Params.time_format_page.format(endDate));
+		return ret.toString();
+	}
+	
 }

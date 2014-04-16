@@ -38,6 +38,7 @@ public class RemoteExecuteCallerAction extends ActionSupport{
 		ajaxJson.put(Params.PAGE_RECORD_DURATION, record.getDuration_ISO());
 		ajaxJson.put(Params.PAGE_RECORD_EXIT_CODE, record.getExit_code_ISO());
 		ajaxJson.put(Params.PAGE_RECORD_END_DATETIME,record.getEnd_datetime_ISO());
+		ajaxJson.put(Params.PAGE_RECORD_DATETIME_INTERVAL, record.getDatetime_interval_ISO());
 		ajaxJson.put(Params.PAGE_RECORD_EXEC_TYPE, record.getExec_type_ISO());
 		ajaxJson.put(Params.PAGE_RECORD_EXEC_RETURN_STR, record.getExec_return_str());
 		ajaxJson.put(Params.PAGE_RECORD_START_DATETIME, record.getStart_datetime_ISO());
