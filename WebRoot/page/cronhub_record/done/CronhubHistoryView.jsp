@@ -318,8 +318,8 @@ img[src="/res/icons/16x16/magnifier.png"]{
 				<!-- 
 				<th><span><select name="filter_state_is_process_node" trigger="change" stat="equal" trigger_target="this"><option value="-1">任务类型</option><option  value="0">单任务</option><option value="1">流程节点</option></select></span></th>
 				 -->
-				<th><span>重执行次数</span></th>
-				<th><span>截止次数</span></th>
+				<th><span>重执行</span></th>
+				<th><span>备注</span></th>
 			</tr>
 			
 		</thead>
@@ -343,8 +343,8 @@ img[src="/res/icons/16x16/magnifier.png"]{
 				<!-- 
 				<td align="center"><span><s:if test="#recordbean.task.is_process_node==true">流程节点</s:if><s:else>单任务</s:else></span></td>
 				 -->
-				<td align="center"><span><s:property value="#recordbean.current_redo_times"/></span></td>
-				<td align="center"><span><s:property value="#recordbean.task.end_redo_times"/></span></td>
+				<td align="center"><span><s:property value="#recordbean.current_redo_times"/></span>&#47;<span><s:property value="#recordbean.task.end_redo_times"/></span></td>
+				<td align="center" class="cmdClass"><span><s:property value='#recordbean.task.comment' /></span></span></td>
 			</tr>
 			<tr class='hiddenReturnStr' style='display:none' name='<s:property value="#recordbean.id" />'><td align="center"><span><img  alt="<s:property value='#recordbean.id' />" src='/res/icons/16x16/comment_up.png' class="imgHideReturnStr" style="cursor:pointer"/></span></td><td colspan="15" ><span><img name="loading" src='/res/images/gif/loading.gif'/><span name="returnStrSpan"></span></span></td></tr>
 			<div id="task_comment_<s:property value='#recordbean.id' />" style="display:none"><s:property value='#recordbean.task.comment' /></div>

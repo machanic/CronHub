@@ -91,5 +91,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ant.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/libthrift-0.8.0.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/DispatchSystemDaemon.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

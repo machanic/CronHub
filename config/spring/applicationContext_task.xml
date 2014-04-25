@@ -48,6 +48,9 @@
 		<property name="processor">
 			<ref bean="remoteExecuteProcessor"/>
 		</property>
+		<property name="sinaAlert">
+			<ref bean="sinaAlertUtils"/>
+		</property>
 	</bean>
 	<bean id="immediateRemoteExecAction" class="org.cronhub.managesystem.modules.task.action.ImmediateRemoteExecuteAction">
 		<property name="processor">

@@ -25,6 +25,7 @@ import org.cronhub.managesystem.commons.thrift.gen.ExecuteDoneReportResult;
 import org.cronhub.managesystem.commons.thrift.gen.Extra;
 import org.cronhub.managesystem.commons.thrift.gen.ExecutorService.Client;
 import org.cronhub.managesystem.commons.thrift.process.RemoteExecutCmdProcessor;
+import org.cronhub.managesystem.commons.utils.SinaAlertUtils;
 import org.cronhub.managesystem.commons.utils.container.WebContainer;
 import org.cronhub.managesystem.modules.record.done.dao.IDoneRecordDao;
 import org.cronhub.managesystem.modules.record.undo.dao.IUndoRecordDao;
@@ -48,6 +49,13 @@ public class PassiveModeNotifyCrontab extends ContextLoaderListener{
 	
 	private RemoteExecutCmdProcessor processor;
 	
+	private SinaAlertUtils sinaAlert;
+	
+	
+	public void setSinaAlert(SinaAlertUtils sinaAlert) {
+		this.sinaAlert = sinaAlert;
+	}
+	
 	private Runnable crontabExecThread = new Runnable(){
 		@Override
 		public void run() {
@@ -63,7 +71,13 @@ public class PassiveModeNotifyCrontab extends ContextLoaderListener{
 							public void execute(TaskExecutionContext context)
 									throws RuntimeException {
 								try {
-									processor.remoteExecute(task, Params.EXECTYPE_CRONTAB);
+									boolean success = processor.remoteExecute(task, Params.EXECTYPE_CRONTAB);
+									if(!success){
+										sinaAlert.alertMail("调度系统报警:失败机器:"+task.getDaemon().getMachine_ip(),
+												"失败机器:"+task.getDaemon().getMachine_ip() + ",任务:"+task.getShell_cmd()+" ("+task.getComment()+")失败! 时间:"+Params.date_format_page.format(new Date())+" 请检查");
+										sinaAlert.alertSms("调度系统报警["+Params.date_format_page.format(new Date())+
+												"]!机器:"+task.getDaemon().getMachine_ip()+",任务失败:"+task.getShell_cmd()+", 描述:"+task.getComment());
+									}
 								} catch (Exception e) {
 									throw new RuntimeException("task is failed while executing task:"+task.getId());
 								}

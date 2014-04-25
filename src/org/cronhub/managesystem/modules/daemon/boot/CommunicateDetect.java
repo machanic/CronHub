@@ -18,6 +18,7 @@ import org.cronhub.managesystem.commons.dao.bean.Daemon;
 import org.cronhub.managesystem.commons.logger.AppLogger;
 import org.cronhub.managesystem.commons.params.Params;
 import org.cronhub.managesystem.commons.utils.PingUtils;
+import org.cronhub.managesystem.commons.utils.SinaAlertUtils;
 import org.cronhub.managesystem.commons.utils.container.WebContainer;
 import org.cronhub.managesystem.commons.utils.email.EmailUtils;
 import org.cronhub.managesystem.modules.daemon.dao.IDaemonDao;
@@ -34,8 +35,12 @@ public class CommunicateDetect extends ContextLoaderListener {
 	public void setEmail(EmailUtils email) {
 		this.email = email;
 	}
+	private SinaAlertUtils sinaAlert;
 	
 	
+	public void setSinaAlert(SinaAlertUtils sinaAlert) {
+		this.sinaAlert = sinaAlert;
+	}
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
 		CommunicateDetect detecter = (CommunicateDetect)WebContainer.getBean("communicateDetect",event.getServletContext());
@@ -81,7 +86,9 @@ public class CommunicateDetect extends ContextLoaderListener {
 											//alertMailCount.put(daemon, alertMailCount.get(daemon)+1);
 											int currentCount = alertMailCount.get(daemon)%noalertLimit;
 											if(alertMailCount.get(daemon) == noalertLimit){
-												email.sendMail(subject, current_content, mailDest);
+												//email.sendMail(subject, current_content, mailDest);
+												sinaAlert.alertMail(subject, current_content);
+												sinaAlert.alertSms(current_content);
 												alertMailCount.put(daemon,currentCount);
 											}else{
 												alertMailCount.put(daemon,alertMailCount.get(daemon)+1);
