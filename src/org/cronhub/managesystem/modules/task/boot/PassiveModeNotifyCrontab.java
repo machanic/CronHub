@@ -71,12 +71,14 @@ public class PassiveModeNotifyCrontab extends ContextLoaderListener{
 							public void execute(TaskExecutionContext context)
 									throws RuntimeException {
 								try {
-									boolean success = processor.remoteExecute(task, Params.EXECTYPE_CRONTAB);
+									TaskRecordDone record =  processor.remoteExecute(task, Params.EXECTYPE_CRONTAB);
+									boolean success = record.getComplete_success();
 									if(!success){
-										sinaAlert.alertMail("调度系统报警:失败机器:"+task.getDaemon().getMachine_ip(),
-												"失败机器:"+task.getDaemon().getMachine_ip() + ",任务:"+task.getShell_cmd()+" ("+task.getComment()+")失败! 时间:"+Params.date_format_page.format(new Date())+" 请检查");
-										sinaAlert.alertSms("调度系统报警["+Params.date_format_page.format(new Date())+
-												"]!机器:"+task.getDaemon().getMachine_ip()+",任务失败:"+task.getShell_cmd()+", 描述:"+task.getComment());
+										sinaAlert.alertMail(task.getUsers(),"调度系统报警:失败机器:"+task.getDaemon().getMachine_ip(),
+												"失败机器:"+task.getDaemon().getMachine_ip() + ",任务:"+record.getReal_cmd()+" ("+task.getComment()+")失败! 时间:"+Params.date_format_page.format(new Date())+" 请检查! \nlog打印如下:\n"+
+												 record.getExec_return_str());
+										sinaAlert.alertSms(task.getUsers(),"调度系统报警["+Params.date_format_page.format(new Date())+
+												"]!机器:"+task.getDaemon().getMachine_ip()+",任务失败:"+record.getReal_cmd() +", 描述:"+task.getComment());
 									}
 								} catch (Exception e) {
 									throw new RuntimeException("task is failed while executing task:"+task.getId());

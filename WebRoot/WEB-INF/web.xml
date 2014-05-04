@@ -61,24 +61,25 @@ http://java.sun.com/xml/ns/javaee/web-app_2_4.xsd">
 		<param-value>classpath:spring/*.xml</param-value>
 	</context-param>
 
-
 	<!-- 被动模式下中央服务器crontab通知执行的init方法 -->
 	<listener>
 		<listener-class>
 			org.cronhub.managesystem.modules.task.boot.PassiveModeNotifyCrontab
 		</listener-class>
 	</listener>
-
+		  
 	<!-- daemon通信报警检测功能模块 -->
 	<listener>
 		<listener-class>
 			org.cronhub.managesystem.modules.daemon.boot.CommunicateDetect
 		</listener-class>
 	</listener>
+	
 	<!-- 自动重执行功能模块 -->
 	<listener>
 		<listener-class>
 			org.cronhub.managesystem.modules.record.done.boot.AutoRedoRemoteExec
 		</listener-class>
 	</listener>
+
 </web-app>

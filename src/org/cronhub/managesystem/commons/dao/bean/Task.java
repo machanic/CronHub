@@ -1,6 +1,7 @@
 package org.cronhub.managesystem.commons.dao.bean;
 
 import java.util.Date;
+import java.util.List;
 
 public class Task {
 	private Long id;
@@ -20,6 +21,27 @@ public class Task {
 	private Boolean is_redo;
 	private Integer end_redo_times;
 	private Daemon daemon;
+	private List<User> users;
+	
+	public List<User> getUsers() {
+		return users;
+	}
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+	
+	public String getUsersISO(){
+		if(users.size() == 0){
+			return "";
+		}
+		StringBuilder sb = new StringBuilder("报警人: ");
+		for(User user : users){
+			sb.append(user.getUser_name()).append("(").append(user.getMail_name()).append(")").append(","); 
+		}
+		sb.deleteCharAt(sb.length()-1);
+		return sb.toString();
+	}
+	
 	public Daemon getDaemon() {
 		return daemon;
 	}

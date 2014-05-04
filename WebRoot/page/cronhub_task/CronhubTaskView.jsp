@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>list</title>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 
-<script type="text/javascript" src="/res/js/jquery/jquery-1.6.2.min.js"></script>
+<script src="/res/js/jquery-ui-1.10.4/js/jquery-1.10.2.js"></script>
 
 <script type="text/javascript" src="/res/js/list/list.js"></script>
 
@@ -23,6 +23,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="/res/js/utils/json2.js"></script>
 <script type="text/javascript" src="/res/js/pager/pager.js"></script>
 <script type="text/javascript" src="/res/js/utils/string_utils.js"></script>
+
+<!-- jquery ui -->
+<link rel="stylesheet" href="/res/js/jquery-ui-1.10.4/css/redmond/jquery-ui-1.10.4.custom.css" />
+
+<script src="/res/js/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.js"></script>  
+<script type="text/javascript" src="/res/js/jquery-ui/ui/tooltip.js"></script> 
+
 <link rel="stylesheet" type="text/css" href="/res/skin/all.css" />
 
 <script>
@@ -78,6 +85,15 @@ $(function() {
 	hideLongText();
 	$("#btnCmdUnfold").bind("click",{"name":"unfoldBtn"},cmdfoldreverse);
 	$("#btnCmdfold").bind("click",	{"name":"foldBtn"},cmdfoldreverse);
+	
+	/**
+	$("tr[title]").tooltip({
+		show: {
+			effect: "slideDown",
+			delay: 250,
+			}
+			});
+	**/
 	highlight_ok('crontab调度任务持续进行中...');
 	setInterval("highlight_ok('crontab调度任务持续进行中...')",11000);
 });
@@ -247,7 +263,7 @@ img[src="/res/icons/16x16/magnifier.png"]{
 		</thead>
 		<tbody>
 			<s:iterator value="#request.beanlist" id="taskbean" status="statu">
-			<tr id="<s:property value='#taskbean.id' />">
+			<tr id="<s:property value='#taskbean.id' />" title="<s:property value='#taskbean.usersISO' />">
 				<td align="center"><span><input type="checkbox" value="<s:property value='#taskbean.id' />" /></span></td>
 				<td align="center"><span><s:property value="#taskbean.id" /></span></td>
 				<td align="center"><span><s:property value="#taskbean.daemon_id" /><img title="指派新任务" onClick="parent.daemon_id=<s:property value="#taskbean.daemon_id" />;parent.machine_ip='<s:property value="#taskbean.daemon.machine_ip" />';parent.machine_port=<s:property value="#taskbean.daemon.machine_port" />;window.location='/page/cronhub_task/CronhubTaskAdd.jsp';" src="/res/icons/16x16/table_add.png" style="cursor:pointer"/></span></td>

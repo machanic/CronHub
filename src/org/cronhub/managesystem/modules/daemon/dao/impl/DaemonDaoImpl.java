@@ -54,6 +54,9 @@ public class DaemonDaoImpl implements IDaemonDao {
 		}
 		final String deleteSql = "DELETE FROM daemon WHERE id = ?";
 		this.jdbcTemplate.update(deleteSql, new Object[]{id});
+		
+		
+		
 	}
 
 	@Override

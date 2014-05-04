@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.ServletContextEvent;
 
 import org.cronhub.managesystem.commons.dao.bean.Daemon;
+import org.cronhub.managesystem.commons.dao.bean.User;
 import org.cronhub.managesystem.commons.logger.AppLogger;
 import org.cronhub.managesystem.commons.params.Params;
 import org.cronhub.managesystem.commons.utils.PingUtils;
@@ -22,15 +23,21 @@ import org.cronhub.managesystem.commons.utils.SinaAlertUtils;
 import org.cronhub.managesystem.commons.utils.container.WebContainer;
 import org.cronhub.managesystem.commons.utils.email.EmailUtils;
 import org.cronhub.managesystem.modules.daemon.dao.IDaemonDao;
+import org.cronhub.managesystem.modules.user.dao.IUserDao;
 import org.springframework.web.context.ContextLoaderListener;
 
 
 public class CommunicateDetect extends ContextLoaderListener {
 	private IDaemonDao daemonDao;
-	
+	private IUserDao userDao;
 	public void setDaemonDao(IDaemonDao daemonDao) {
 		this.daemonDao = daemonDao;
 	}
+	
+	public void setUserDao(IUserDao userDao) {
+		this.userDao = userDao;
+	}
+
 	private EmailUtils email;
 	public void setEmail(EmailUtils email) {
 		this.email = email;
@@ -57,6 +64,7 @@ public class CommunicateDetect extends ContextLoaderListener {
 	private Runnable communicateThread = new Runnable(){
 		@Override
 		public void run() {
+			final List<User> users = userDao.findAll();
 			Scheduler sch = new Scheduler();
 			sch.addTaskCollector(new TaskCollector(){
 				@Override
@@ -77,7 +85,7 @@ public class CommunicateDetect extends ContextLoaderListener {
 								if(!ping){
 									AppLogger.daemonErrorLogger.error("daemon id:"+daemon.getId()+",ip:"+daemon.getMachine_ip()+",port:"+daemon.getMachine_port()+" can not communicate ping! UPDATE TO table daemon in DB");
 									if(daemon.getMust_lostconn_email()){
-										String current_content = "["+dateStr+"] 错误报警:调度系统中央服务器不能与ip地址:"+daemon.getMachine_ip()+",端口号port:"+daemon.getMachine_port()+",daemon_id:"+daemon.getId()+",取得通信,请检查!";
+										String current_content = "["+dateStr+"] 错误报警:调度系统中央服务器不能与 ip地址:"+daemon.getMachine_ip()+"("+daemon.getDaemon_version_name()+"),端口号port:"+daemon.getMachine_port()+",daemon_id:"+daemon.getId()+",取得通信,请检查!";
 										List<String> mailDest = Arrays.asList(daemon.getLostconn_emailaddress().split("#"));
 										if(mailDest.size()>0){
 											if(!alertMailCount.containsKey(daemon)){
@@ -87,8 +95,8 @@ public class CommunicateDetect extends ContextLoaderListener {
 											int currentCount = alertMailCount.get(daemon)%noalertLimit;
 											if(alertMailCount.get(daemon) == noalertLimit){
 												//email.sendMail(subject, current_content, mailDest);
-												sinaAlert.alertMail(subject, current_content);
-												sinaAlert.alertSms(current_content);
+												sinaAlert.alertMail(users, subject, current_content);
+												sinaAlert.alertSms(users, current_content);
 												alertMailCount.put(daemon,currentCount);
 											}else{
 												alertMailCount.put(daemon,alertMailCount.get(daemon)+1);

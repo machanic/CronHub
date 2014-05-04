@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
+import org.cronhub.managesystem.commons.dao.bean.TaskRecordDone;
 import org.cronhub.managesystem.commons.thrift.process.RemoteExecutCmdProcessor;
 import org.cronhub.managesystem.commons.utils.PageIOUtils;
 
@@ -23,7 +24,8 @@ public class ImmediateRemoteExecuteAction extends ActionSupport {
 		boolean success = false;
 		JSONObject ajaxJson = new JSONObject(); 
 		try {
-			success = this.processor.remoteExecuteOnSpot(id);
+			TaskRecordDone record = this.processor.remoteExecuteOnSpot(id);
+			success = record.getComplete_success();
 		} catch (Exception e) {
 			ajaxJson.put("error",e.getMessage());
 		}

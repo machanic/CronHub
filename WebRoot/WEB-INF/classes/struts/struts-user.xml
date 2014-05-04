@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+	
+<struts>
+	<package name="user" namespace="/user" extends="interceptors">
+		<action name="user_find_all" class="userPageView" method="findUserJson" />
+		<action name="userPageView"  class="userPageView" method="findPage">
+			<result name="success" >
+				/page/cronhub_user/UserEdit.jsp
+			</result>
+		</action>
+		<action name="user_add_submit" class="userPageView" method="insertNewUser">
+			<result name="success" type="redirect">
+				/user/userPageView.action
+			</result>
+		</action>
+		<action name="user_delete" class="userPageView" method="deleteById"/>
+	</package>
+</struts>

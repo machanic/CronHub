@@ -84,6 +84,9 @@ public class DoneRecordDaoImpl implements IDoneRecordDao {
 		}
 		return taskRecordDones;
 	}
+	
+	
+	
 	public void setTaskDao(ITaskDao taskDao) {
 		this.taskDao = taskDao;
 	}

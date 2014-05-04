@@ -27,5 +27,10 @@
 			url="page/cronhub_daemon/CronhubDaemonAdd.jsp" />
 		<menu id="22" name="daemon检测和管理" icon="res/icons/16x16/server_connect.png" url="/daemon/daemon_first_page_view.action?max_per_page=20" />
 	</menu>
+	
+	<menu id="24" name="用户管理">
+		<menu id="22" name="用户增删" icon="res/icons/16x16/user.png"
+			url="/user/userPageView.action" />
+	</menu>
 </menu>
 </root>

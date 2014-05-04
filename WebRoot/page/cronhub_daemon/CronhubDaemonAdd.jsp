@@ -65,6 +65,8 @@ $(function(){
  		$("#emailBox").html(optionStr);
 	}); 
 });
+
+
 </script>
 </head>
 
@@ -112,7 +114,7 @@ $(function(){
 			</td>
 		</tr>
 		
-		<tr>
+		<tr style="display:none">
 			<td>
 				<label>通信检测邮件报警：</label>
 			</td>

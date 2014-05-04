@@ -11,7 +11,13 @@
 		<property name="dao">
 			<ref bean="taskDao"/>
 		</property>
+		
+		<property name="taskUserDao">
+			<ref bean="taskUserDao" />
+		</property>
+		
 	</bean>
+	
 	<bean id="taskPageViewAction" class="org.cronhub.managesystem.modules.task.action.PageViewAction">	
 		<property name="dao">
 			<ref bean="taskDao"/>

@@ -10,17 +10,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>form</title>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 
-<script type="text/javascript" src="../../res/js/jquery/jquery-1.6.2.min.js"></script>
+<script src="/res/js/jquery-ui-1.10.4/js/jquery-1.10.2.js"></script>
 
 <script type="text/javascript" src="../../res/js/validate/jquery.metadata.js"></script>
 <script type="text/javascript" src="../../res/js/validate/jquery.validate.min.js"></script>
 <script type="text/javascript" src="../../res/js/validate/messages_cn.js"></script>
 <script type="text/javascript" src="../../res/js/validate/extension.js"></script><!-- 这个是我用来自定义一些验证函数的,比如到后台验证crontab表达式的有效性等 -->
 <script type="text/javascript" src="/res/js/zdialog/zDialog.js"></script> 
+
+
+<!-- jquery & jq ui add -->
+<link rel="stylesheet" href="/res/js/jquery-ui-1.10.4/css/redmond/jquery-ui-1.10.4.custom.css" />
+<script src="/res/js/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.js"></script>  
+
 <link rel="stylesheet" type="text/css" href="../../res/skin/all.css" />
 
 <script>
 $(function(){
+	//ajax初始化报警人
+	initAlertPeople();
+	
 	// 表单校验属性设置
 	$.metadata.setType("attr", "validate");
 	
@@ -47,10 +56,11 @@ $(function(){
 			$("#div_machineip").show();
 		}
 	});
+	
 	initByParentDaemonPage();
 	
 	
-	
+
 	//一期暂不支持被动模式
 	$("input[@type=radio][name='task.run_mode']").change(function(){
 		if("false"!=$(this).val())
@@ -71,6 +81,45 @@ function initByParentDaemonPage(){
 	parent.daemon_id=0;
 	parent.machine_ip="";
 	parent.machine_port=0;
+}
+
+
+function initAlertPeople(){
+	var innerTable = "";
+	var rowCount = 0;
+	$.ajax({
+		url: "/user/user_find_all.action",
+		cache: false,
+		async: true,
+		type: 'POST',
+		dataType: 'json',
+		timeout: 10000,
+		error: function() {
+			Dialog.alert('对不起，服务器响应超时，请联系管理员');
+		},
+		success: function(data) {
+			for(var index =0;index < data.length;index++){
+				
+				var user=data[index];
+				
+				if(rowCount >= 3){
+					rowCount = 0;
+					innerTable += "</tr>";
+				}
+				if(rowCount == 0){
+					innerTable += "<tr >";
+				}
+				rowCount ++;
+				innerTable += "<td  title='"+user.user_name+"'>" 
+				+"<input type='checkbox' name='alert_users' value='"+user.id+"'>" + user.user_name + "&nbsp;"+ user.mail_name + "</input></td>";
+			}
+			innerTable += "</tr>";
+			$("#tbody_alert_user").html(innerTable);
+			
+		}
+	});	
+
+	
 }
 </script>
 </head>
@@ -185,8 +234,8 @@ function initByParentDaemonPage(){
 				<span>主动模式:crontab刷至执行daemon程序,由daemon执行程序自主执行,无需中央服务器通知调度.被动模式:由中央服务器定时调度</span>
 				</div>
 			</td>
-			</tr>
-			<tr>
+		</tr>
+		<tr>
 			<td>
 				<label>失败时自动重新执行</label></td><td>
 				<div>
@@ -200,6 +249,34 @@ function initByParentDaemonPage(){
 				</div>
 			</td>
 		</tr>
+		
+		<tr>
+			<td>
+				<label>失败报警</td><td>
+				<div>
+						<table class="grid">
+							<thead>
+							<tr>
+								<th colspan="3"><span>短信 和 邮件报警</span></th>
+							</tr>
+							</thead>
+							<tbody id="tbody_alert_user">
+							<!-- 
+							<tr>
+								<td>a</td><td>a</td><td>a</td>
+								<td>b</td><td>b</td><td>b</td>
+							</tr>
+							 -->
+							</tbody>
+						</table>
+						<span>包括 短信报警 和 邮件报警</span>
+				</span>
+				</div>
+			</td>
+		</tr>
+		
+		
+		
 			<tr>
 			<td>
 				<label>描述：</label>
