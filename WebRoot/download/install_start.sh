@@ -126,7 +126,7 @@ start)
 \techo \"error!You don't have permission to execute ${install_path}/jsvc/jsvc OR to write pid_file in ${install_path} ,please check!\";
 \texit 1;
 \tfi;
-\t${install_path}/jsvc/jsvc -home ${install_path}/jdk1.6.0_30 -Xmx2000m -pidfile ${install_path}/$daemon_port.pid -cp ${install_path}/DispatchSystemDaemon.jar com.baofeng.dispatchexecutor.boot.DaemonBoot -p $daemon_port
+\t${install_path}/jsvc/jsvc -home ${java_home} -Xmx2000m -pidfile ${install_path}/$daemon_port.pid -cp ${install_path}/DispatchSystemDaemon.jar com.baofeng.dispatchexecutor.boot.DaemonBoot -p $daemon_port
 \techo \"starting cronhub daemon service...\"
 \t;;
 stop)

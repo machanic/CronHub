@@ -36,6 +36,7 @@ var dialog = null;
 var default_mail="请输入邮箱前缀";
 var default_user="请输入用户姓名";
 $(function() {
+	notifyOne();
 	deleteOne();
 	
 	$("#txtMailName").val(default_mail).attr("title",default_mail).click(function(){if($(this).val()==default_mail) $(this).val("");}).tooltip({
@@ -93,6 +94,36 @@ function deleteOne(){
 	});
 }
 
+
+function notifyOne(){
+	$(".grid tr img[name='notify']").click(function(){
+		var user_json = $.parseJSON($(this).attr("title"));
+		Dialog.confirm("是否要测试相应报警人?将会发出短信和邮件",function(){
+			$.ajax({
+				url: "/user/user_notify.action",
+				data: user_json,
+				cache: false,
+				async: true,
+				type: 'POST',
+				dataType: 'text',
+				timeout: 10000,
+				error: function() {
+					Dialog.alert('对不起，服务器响应超时，请联系管理员');
+				},
+				success: function(data) {
+					if(data == "success"){
+						Dialog.alert("报警发送成功,请查收!");
+					}else{
+						Dialog.alert("报警id:"+del_id+"时出现错误.");
+					}
+				}
+			});	
+		});
+	});
+}
+
+
+
 </script>
 <style type="text/css">
 img[src="/res/icons/16x16/magnifier.png"]{
@@ -115,22 +146,27 @@ img[src="/res/icons/16x16/magnifier.png"]{
 		
 	</div>
 	
+	<s:bean name="com.google.gson.Gson" id="gson" />
+	
 	<table class="grid">
 		<thead>
 			<tr>
 			<th><span>id</span></th>
 				<th><span>用户姓名</span></th>
 				<th><span>用户邮箱前缀(报警用)</span></th>
+				<th><span>测试报警</span></th>
 				<th><span>删除</span></th>				
 			</tr>
 		</thead>
 		<tbody>
 			<s:iterator value="#request.beanlist" id="userbean" status="statu">
+				
 				<tr id="<s:property value='#userbean.id' />">
 				<td align="center"><span><s:property value='#userbean.id' /></span></td>
 					<td align="center"><span><s:property value="#userbean.user_name" /></span></td>
 					<td align="center"><span><s:property value="#userbean.mail_name" /></span></td>
-					<td align="center"><span><img title="<s:property value='#userbean.id' />" name="del" style="cursor:pointer" src="/res/icons/16x16/cancel.png"/></span></td>
+					<td align="center"><span><img title="<s:property value='#gson.toJson(#userbean)' />" name="notify" style="cursor:pointer" src="/res/icons/16x16/phone_sound.png"/></span></td>
+					<td align="center"><span><img title='<s:property value="#userbean.id" />' name="del" style="cursor:pointer" src="/res/icons/16x16/cancel.png"/></span></td>
 				</tr>
 			</s:iterator>
 		</tbody>

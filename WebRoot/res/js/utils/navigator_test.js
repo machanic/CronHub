@@ -20,3 +20,6 @@ function isFireFox() {
 	return !isIE && isFirefox;
 }
 
+function isChrome(){
+	return window.navigator.userAgent.indexOf("Chrome") !== -1;
+}

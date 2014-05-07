@@ -17,5 +17,7 @@
 			</result>
 		</action>
 		<action name="user_delete" class="userPageView" method="deleteById"/>
+		
+		<action name="user_notify" class="userPageView" method="notifyById"/>
 	</package>
 </struts>

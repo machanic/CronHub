@@ -19,6 +19,9 @@
 	</bean>
 	
 	<bean id="userPageView" class="org.cronhub.managesystem.modules.user.action.PageViewAction">
+	<property name="sinaAlert">
+		<ref bean="sinaAlertUtils"/>
+	</property>
 		<property name="dao">
 			<ref bean="userDao"/>
 		</property>

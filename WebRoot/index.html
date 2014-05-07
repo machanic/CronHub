@@ -14,8 +14,8 @@
 
 <script>
 $(function() {
-	if(!isFireFox()){
-		Dialog.alert("检测到您所使用的不是火狐Firefox浏览器,本软件在其他浏览器上没做进一步兼容性测试,请您使用Mozilla Firefox浏览器");
+	if(!isFireFox() && !isChrome()){
+		Dialog.alert("请使用<span style='color:red'>火狐Firefox浏览器</span>或<span style='color:red'>chrome浏览器</span>,以获得最佳浏览体验");
 	}
 	// navi
 	var navi = new NaviTree({
