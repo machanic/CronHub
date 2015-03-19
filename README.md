@@ -22,7 +22,6 @@ limitations under the License.
 
 
 From SQLite: The author disclaims copyright to this source code. In place of a legal notice, here is a blessing:
-------------
 
 > May you do good and not evil.
 
