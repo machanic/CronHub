@@ -4,6 +4,7 @@ CronHub
 CronHub is a better crontab, it is a web application which can monitor a large number of machine's crontab, and easy to manage it from web page
 
 statement(声明)
+------------
 
 Copyright [2015] [ma chen(马晨)]
 
@@ -19,8 +20,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-------------
+
 From SQLite: The author disclaims copyright to this source code. In place of a legal notice, here is a blessing:
+------------
 
 > May you do good and not evil.
 
