@@ -8,15 +8,21 @@ statement(声明)
 From SQLite: The author disclaims copyright to this source code. In place of a legal notice, here is a blessing:
 
 > May you do good and not evil.
+
 > May you find forgiveness for yourself and forgive others.
+
 > May you share freely
+
 > May you never taking more than you give.
 
 摘自SQLite：作者声明对源代码拥有版权。以下是作者的一些企盼，而非法律公告：
 
 > 希望你行善不为恶
+
 > 希望你恕已亦恕人
+
 > 希望你自由地共享
+
 > 希望永远不要索取甚于付出
 
 Introduction
