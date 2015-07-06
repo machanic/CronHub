@@ -3,6 +3,14 @@ CronHub
 
 CronHub is a better crontab, it is a web application which can monitor a large number of machine's crontab, and easy to manage it from web page
 
+Introduction
+------------
+Manage a large number of cluster's Linux crontab is nasty thing, especially system administrators always must login multiple machines to 
+check whether the crontab job has been SUCCESSFULLY executed. If it is not SUCCESSFULLY done, administrators had to RE-EXECUTE job one by one. 
+This cronhub project aim to ease this burden, and supply a friendly web interface to manage it within JUST A MOUSE CLICK.
+
+NOTE:this project only have chinese language edition up to now, but English edition will come very soon.
+
 statement(声明)
 ------------
 
@@ -40,14 +48,6 @@ From SQLite: The author disclaims copyright to this source code. In place of a l
 > 希望你自由地共享
 
 > 希望永远不要索取甚于付出
-
-Introduction
-------------
-Manage a large number of cluster's Linux crontab is nasty thing, especially system administrators always must login multiple machines to 
-check whether the crontab job has been SUCCESSFULLY executed. If it is not SUCCESSFULLY done, administrators had to RE-EXECUTE job one by one. 
-This cronhub project aim to ease this burden, and supply a friendly web interface to manage it within JUST A MOUSE CLICK.
-
-NOTE:this project only have chinese language edition up to now, but English edition will come very soon.
 
 Installation(Chinese)
 ------------
