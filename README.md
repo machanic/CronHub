@@ -52,13 +52,13 @@ Installation(Chinese)
 
 **1.安装MySQL**
 
-[root@sample ~]# yum -y install mysql-server　 ← 安装MySQL
+[root@sample ~]# `yum -y install mysql-server`　 ← 安装MySQL
 
-[root@sample ~]# yum -y install php-mysql　 ← 安装php-mysql
+[root@sample ~]# `yum -y install php-mysql`　 ← 安装php-mysql
 
 配置MySQL
 
-[root@sample ~]#vim /etc/my.cnf　 ← 编辑MySQL的配置文件
+[root@sample ~]# `vim /etc/my.cnf`　 ← 编辑MySQL的配置文件
 ```
 [mysqld]
 
@@ -81,9 +81,9 @@ default-character-set = utf8
 [root@sample ~]# `chkconfig mysqld on`　 ← 设置MySQL服务随系统启动自启动
 
 [root@sample ~]# `chkconfig --list mysqld`　 ← 确认MySQL自启动
-
+```
 mysqld 0:off 1:off 2:on 3:on 4:on 5:on 6:off　 ← 如果2--5为on的状态就OK
-
+```
 [root@sample ~]# `/etc/rc.d/init.d/mysqld start`　 ← 启动MySQL服务
 ```
 
@@ -93,7 +93,7 @@ Starting MySQL: 　　　　　　　　　　　　　[ OK ]
 ```
 MySQL初始环境设定
 
-[1]为MySQL的root用户设置密码
+**(1) 为MySQL的root用户设置密码**
 
 MySQL在刚刚被安装的时候，它的root用户是没有被设置密码的。首先来设置MySQL的root密码。
 
@@ -203,7 +203,7 @@ mysql> exit　 ← 退出MySQL服务器
 
 Bye
 ```
-[2] 删除匿名用户
+**(2) 删除匿名用户**
 
 在MySQL刚刚被安装后，存在用户名、密码为空的用户。这使得数据库服务器有无需密码被登录的可能性。为消除隐患，将匿名用户删除。
 
@@ -523,6 +523,9 @@ log4j.appender.recordDoneError.layout=org.apache.log4j.PatternLayout
 
 第四步：修改一键安装daemon端的shell脚本，并在各个需要被调度的奴隶机上一键执行shell安装
 ------------
+
+daemon程序是分布在各个被调度的机器上的守护进程，中央服务器与daemon通信发布调度命令，因此本教程使用方便易用的一键安装脚本在哥哥机器上一键安装daemon程序。
+
 **7.安装daemon**
 
 **(1)下载daemon端安装脚本：**
@@ -556,4 +559,4 @@ root 1966 1965 0 Jul02 ? 00:00:48 jsvc.exec -home /opt/modules/daemon/jdk1.6.0_3
 
 安装daemon脚本会加入chkconfig到linux系统启动项（加入service）里头
 
-最后,大功告成，当你在浏览器敲入http://xxx.xxx.xxx.xxx:8080/时，你就会看到一个这个系统的界面，直接点击daemon执行器管理下的增加daemon执行器将你刚刚添加的daemonIP和端口填入吧！
+最后,大功告成，当你在浏览器敲入http://xxx.xxx.xxx.xxx:8080/ (xxx.xxx.xxx.xxx是中央服务器的ip地址)时，你就会看到一个这个系统的界面，直接点击daemon执行器管理下的增加daemon执行器将你刚刚添加的daemonIP和端口填入吧！
