@@ -16,7 +16,7 @@ NOTE:this project only have chinese language edition up to now, but English edit
 statement(声明)
 ------------
 
-Copyright [2015] [ma chen(马晨)]
+Copyright [2015]
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
