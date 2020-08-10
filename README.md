@@ -13,10 +13,23 @@ This cronhub project aim to ease this burden, and supply a friendly web interfac
 
 NOTE:this project only have chinese language edition up to now, but English edition will come very soon.
 
-statement(声明)
+Citation
+----------------
+I kindly ask anybody who uses this code cite the following BibTeX entry：
+```
+@software{CronHub,
+  title = {{CronHub}: Scheduling and Controlling of Programs in Cluster Servers via Web Applications.},
+  author = {Chen Ma},
+  url = {https://github.com/machanic/CronHub},
+  version = {1.0.0},
+  date = {2020-08-10},
+}
+```
+
+Statement
 ------------
 
-Copyright [2015]
+Copyright
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -560,3 +573,4 @@ root 1966 1965 0 Jul02 ? 00:00:48 jsvc.exec -home /opt/modules/daemon/jdk1.6.0_3
 安装daemon脚本会加入chkconfig到linux系统启动项（加入service）里头
 
 最后,大功告成，当你在浏览器敲入http://xxx.xxx.xxx.xxx:8080/ (xxx.xxx.xxx.xxx是中央服务器的ip地址)时，你就会看到一个这个系统的界面，直接点击daemon执行器管理下的增加daemon执行器将你刚刚添加的daemonIP和端口填入吧！
+
