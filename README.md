@@ -1,7 +1,7 @@
 CronHub
 =======
 
-CronHub is a better crontab, it is a web application which can monitor a large number of machine's crontab, and easy to manage it from web page
+CronHub is a better crontab, it is a web application which can schedule, monitor and control the crontabs of multiple machines from the web page.
 
 Introduction
 ------------
@@ -19,7 +19,7 @@ Citation
 I kindly ask anybody who uses this code cite the following BibTeX entry：
 ```
 @software{CronHub,
-  title = {{CronHub}: Scheduling and Controlling of Programs in Cluster Servers via Web Applications.},
+  title = {{CronHub}: Scheduling, Monitoring and Controlling the Programs in Cluster Servers via a Web Application.},
   author = {Chen Ma},
   url = {https://github.com/machanic/CronHub},
   version = {1.0.0},
