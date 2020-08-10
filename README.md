@@ -5,9 +5,9 @@ CronHub is a better crontab, it is a web application which can schedule, monitor
 
 Introduction
 ------------
-Manage a large number of cluster's Linux crontab is nasty thing, especially system administrators always must login multiple machines to 
-check whether the crontab job has been SUCCESSFULLY executed. If it is not SUCCESSFULLY done, administrators had to RE-EXECUTE job one by one. 
-This cronhub project aim to ease this burden, and supply a friendly web interface to manage it within JUST A MOUSE CLICK.
+Managing the UNIX/Linux crontabs in a large number of machines is a nasty thing, especially in the case that the system administrator must log in multiple machines to 
+check whether the scheduled programs have been successfully executed. If the programs were failed to be done, the administrator has to re-execute them one by one. 
+CronHub aims to ease this burden by offering a friendly web interface to manage such job. The users can schedule, monitor and control the programs by using the mouse click.
 
 **The cronhub system consists of 2 parts : the center server part and the slave part. The slave listens the instructions from the center server and then conducts actions.
 It is located in this repository: [CronHub Daemon](https://github.com/machanic/CronHub_daemon). Please go to there to download it.**
