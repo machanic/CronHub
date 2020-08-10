@@ -12,6 +12,8 @@ CronHub aims to ease this burden by offering a friendly web interface to manage 
 **The cronhub system consists of 2 parts : the center server part and the slave part. The slave listens the instructions from the center server and then conducts actions.
 It is located in this repository: [CronHub Daemon](https://github.com/machanic/CronHub_daemon). Please go to there to download it.**
 
+[![Repo Card](https://github-readme-stats.vercel.app/api/pin/?username=machanic&repo=CronHub_daemon&theme=solarized-light)](https://github-readme-stats.vercel.app/api/pin/?username=machanic&repo=CronHub_daemon&theme=solarized-light)
+
 NOTE: The language of this software is Chinese now, but the English version will be released soon.
 
 Citation
