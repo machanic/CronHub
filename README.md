@@ -9,9 +9,10 @@ Manage a large number of cluster's Linux crontab is nasty thing, especially syst
 check whether the crontab job has been SUCCESSFULLY executed. If it is not SUCCESSFULLY done, administrators had to RE-EXECUTE job one by one. 
 This cronhub project aim to ease this burden, and supply a friendly web interface to manage it within JUST A MOUSE CLICK.
 
-**The cronhub system consists of 2 parts : the center server part and the daemon slave program part(In my repository : https://github.com/sharpstill/CronHub_daemon), If you want to study the daemon slave part, please go to there to download.**
+**The cronhub system consists of 2 parts : the center server part and the slave part. The slave listens the instructions from the center server and then conducts actions.
+It is located in this repository: [CronHub Daemon](https://github.com/machanic/CronHub_daemon). Please go to there to download it.**
 
-NOTE:this project only have chinese language edition up to now, but English edition will come very soon.
+NOTE: The language of this software is Chinese now, but the English version will be released soon.
 
 Citation
 ----------------
